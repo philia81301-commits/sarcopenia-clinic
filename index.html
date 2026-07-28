@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>肌少症篩檢紀錄工具｜門診・社區</title>
+<style>
+:root{
+  --bg:#f6f7f9; --card:#fff; --ink:#1c2024; --muted:#5c6670; --line:#dde1e6;
+  --accent:#1f6f8b; --accent-ink:#fff; --ok:#1f7a4d; --warn:#a35a00; --bad:#a32020;
+  --okbg:#e8f5ee; --warnbg:#fdf3e3; --badbg:#fbeaea;
+  --radius:12px;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#15181b;--card:#1e2226;--ink:#e8eaed;--muted:#a0a8b0;--line:#333a40;
+        --accent:#4aa3bf;--accent-ink:#0d1114;--ok:#5fc48d;--warn:#e0a44a;--bad:#e57373;
+        --okbg:#172a20;--warnbg:#2b2416;--badbg:#2b1a1a;}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Noto Sans TC","Microsoft JhengHei",system-ui,-apple-system,sans-serif;
+  font-size:17px;line-height:1.6}
+.wrap{max-width:640px;margin:0 auto;padding:16px 14px 40px}
+h1{font-size:1.35rem;margin:0 0 2px}
+.sub{color:var(--muted);font-size:.9rem;margin:0 0 16px}
+.tabs{display:flex;gap:8px;margin-bottom:16px}
+.tabs button{flex:1;padding:12px;font-size:1rem;border:1px solid var(--line);
+  background:var(--card);color:var(--ink);border-radius:var(--radius);cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:700}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px;margin-bottom:14px}
+.card h2{font-size:1.05rem;margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.step{color:var(--accent);font-weight:700;margin-right:6px}
+label{display:block;font-weight:600;margin:14px 0 6px}
+label:first-of-type{margin-top:0}
+input[type=text],input[type=number],select{width:100%;padding:12px;font-size:1.05rem;
+  border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
+.hint{color:var(--muted);font-size:.85rem;margin:4px 0 0}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts label{flex:1;min-width:90px;margin:0;font-weight:400;text-align:center;
+  border:1px solid var(--line);border-radius:8px;padding:11px 6px;cursor:pointer;background:var(--card)}
+.opts input{position:absolute;width:1px;height:1px;opacity:0;margin:0}
+.opts label:has(input:checked){background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:700}
+.opts label:has(input:focus-visible){outline:3px solid var(--accent);outline-offset:2px}
+.q{margin:0 0 6px;font-weight:600}
+.qblock{padding:12px 0;border-top:1px dashed var(--line)}
+.qblock:first-of-type{border-top:none;padding-top:0}
+details{margin-top:8px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:var(--bg)}
+summary{cursor:pointer;font-weight:600;font-size:.92rem}
+details ol{margin:8px 0 0;padding-left:20px;font-size:.9rem;color:var(--muted)}
+button.primary{width:100%;padding:15px;font-size:1.05rem;font-weight:700;border:none;
+  border-radius:var(--radius);background:var(--accent);color:var(--accent-ink);cursor:pointer;margin-top:14px}
+button.ghost{padding:10px 14px;font-size:.95rem;border:1px solid var(--line);border-radius:8px;
+  background:var(--card);color:var(--ink);cursor:pointer}
+button:disabled{opacity:.5;cursor:not-allowed}
+.row{display:flex;gap:8px;align-items:center}
+.row input{flex:1}
+.timer{font-variant-numeric:tabular-nums;font-size:1.6rem;font-weight:700;min-width:88px;text-align:center}
+.result{border-radius:var(--radius);padding:14px;margin-bottom:12px;border:1px solid}
+.r-ok{background:var(--okbg);border-color:var(--ok)}
+.r-warn{background:var(--warnbg);border-color:var(--warn)}
+.r-bad{background:var(--badbg);border-color:var(--bad)}
+.result h3{margin:0 0 6px;font-size:1.15rem}
+.result p{margin:6px 0 0;font-size:.95rem}
+.flags{list-style:none;padding:0;margin:10px 0 0;font-size:.95rem}
+.flags li{padding:3px 0}
+.qr{text-align:center;padding:14px;background:#fff;border-radius:var(--radius);margin-top:12px}
+.qr svg{width:190px;height:190px;display:block;margin:0 auto}
+.qr p{color:#444;font-size:.85rem;margin:8px 0 0}
+.stat{display:flex;gap:10px;text-align:center;margin-bottom:8px}
+.stat div{flex:1;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px 6px}
+.stat b{display:block;font-size:1.7rem;line-height:1.2}
+.stat span{font-size:.82rem;color:var(--muted)}
+.err{color:var(--bad);font-weight:600;margin-top:10px}
+.hidden{display:none}
+footer{margin-top:24px;padding-top:14px;border-top:1px solid var(--line);
+  color:var(--muted);font-size:.8rem;line-height:1.8}
+footer a{color:var(--accent)}
+.todo{background:var(--warnbg);border:1px solid var(--warn);border-radius:8px;
+  padding:10px 12px;font-size:.85rem;margin-bottom:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>肌少症篩檢紀錄工具</h1>
+<p class="sub">門診／社區通用｜SARC-CalF 初篩 → AWGS 2019 判定</p>
+
+<div class="todo" id="setupNotice">
+  <b>上線前待辦：</b>尚未設定 Google 表單，送出的資料會先存在這台裝置的本機佇列，
+  設定後可一鍵補送。SARC-F 題目措辭亦待替換為指定的已驗證中文版。
+</div>
+
+<div class="tabs">
+  <button id="tabScreen" aria-selected="true" onclick="showView('screen')">篩檢</button>
+  <button id="tabStats" aria-selected="false" onclick="showView('stats')">今日統計</button>
+</div>
+
+<!-- ============ 篩檢 ============ -->
+<div id="viewScreen">
+<form id="form" autocomplete="off" onsubmit="return false">
+
+  <div class="card">
+    <h2><span class="step">1</span>基本資料</h2>
+    <label for="station">本機工作站代碼</label>
+    <div class="row">
+      <select id="station" onchange="setStation()">
+        <option value="">請選擇…</option>
+        <option value="A">A</option><option value="B">B</option>
+        <option value="C">C</option><option value="D">D</option>
+        <option value="E">E</option><option value="F">F</option>
+        <option value="G">G</option><option value="H">H</option>
+      </select>
+    </div>
+    <p class="hint"><b>每台平板／筆電各給一個不同的字母</b>，一整天不要改。
+      沒設定的話，兩台裝置會產生一樣的代號，紙本對照表就會對到錯的人。</p>
+
+    <label>受檢場域</label>
+    <div class="opts">
+      <label><input type="radio" name="site" value="clinic">門診</label>
+      <label><input type="radio" name="site" value="community">社區</label>
+    </div>
+    <p class="hint">同一天在兩個場域篩檢時，統計會分開列。</p>
+
+    <label for="code">受檢者代號</label>
+    <div class="row">
+      <input type="text" id="code" inputmode="numeric">
+      <button type="button" class="ghost" onclick="newCode()">重新產生</button>
+    </div>
+    <p class="hint">系統自動產生「日期＋流水號」。姓名請記在現場紙本對照表，<b>不要輸入這裡</b>。</p>
+
+    <label for="birthYear">出生年（西元）</label>
+    <input type="number" id="birthYear" inputmode="numeric" min="1900" max="2015" placeholder="例如 1948">
+
+    <label>生理性別</label>
+    <div class="opts">
+      <label><input type="radio" name="gender" value="0">女</label>
+      <label><input type="radio" name="gender" value="1">男</label>
+    </div>
+    <p class="hint">切點依性別不同，務必先選。</p>
+  </div>
+
+  <div class="card">
+    <h2><span class="step">2</span>初篩：SARC-F ＋ 小腿圍</h2>
+
+    <div class="qblock">
+      <p class="q">① 肌力：提起或搬運約 4.5 公斤（一袋米）有多困難？</p>
+      <div class="opts">
+        <label><input type="radio" name="s1" value="0">沒有困難</label>
+        <label><input type="radio" name="s1" value="1">有點困難</label>
+        <label><input type="radio" name="s1" value="2">很困難／無法</label>
+      </div>
+    </div>
+
+    <div class="qblock">
+      <p class="q">② 行走：走過一個房間有多困難？</p>
+      <div class="opts">
+        <label><input type="radio" name="s2" value="0">沒有困難</label>
+        <label><input type="radio" name="s2" value="1">有點困難</label>
+        <label><input type="radio" name="s2" value="2">很困難／需人扶／無法</label>
+      </div>
+    </div>
+
+    <div class="qblock">
+      <p class="q">③ 起身：從床上或椅子起身有多困難？</p>
+      <div class="opts">
+        <label><input type="radio" name="s3" value="0">沒有困難</label>
+        <label><input type="radio" name="s3" value="1">有點困難</label>
+        <label><input type="radio" name="s3" value="2">很困難／需人扶／無法</label>
+      </div>
+    </div>
+
+    <div class="qblock">
+      <p class="q">④ 爬樓梯：連續爬 10 階樓梯有多困難？</p>
+      <div class="opts">
+        <label><input type="radio" name="s4" value="0">沒有困難</label>
+        <label><input type="radio" name="s4" value="1">有點困難</label>
+        <label><input type="radio" name="s4" value="2">很困難／無法</label>
+      </div>
+    </div>
+
+    <div class="qblock">
+      <p class="q">⑤ 跌倒：過去一年跌倒幾次？</p>
+      <input type="number" id="falls" inputmode="numeric" min="0" max="99" placeholder="填次數，沒有請填 0">
+      <p class="hint" id="fallsScore">0 次 = 0 分｜1–3 次 = 1 分｜4 次以上 = 2 分</p>
+    </div>
+
+    <div class="qblock">
+      <p class="q">小腿圍（公分）</p>
+      <input type="number" id="calf" inputmode="decimal" step="0.1" min="15" max="70" placeholder="例如 30.5">
+      <details>
+        <summary>量測方式（每位受檢者都照這個做，數字才能互相比較）</summary>
+        <ol>
+          <li>受檢者<b>坐在椅子上</b>，雙腳自然平放地面。</li>
+          <li>膝關節與踝關節都彎成<b>約 90 度</b>。</li>
+          <li><b>不隔褲子或襪子</b>，皮尺直接貼皮膚，捲起褲管。</li>
+          <li>找小腿<b>最粗處</b>水平環繞，皮尺服貼但不壓陷皮膚。</li>
+          <li>量<b>兩次取較大值</b>，記到小數點一位。</li>
+        </ol>
+      </details>
+    </div>
+
+    <button type="button" class="primary" onclick="doStage1()">計算初篩結果</button>
+    <p class="err hidden" id="err1"></p>
+  </div>
+
+  <div class="card hidden" id="cardStage2">
+    <h2><span class="step">3</span>AWGS 2019 判定</h2>
+    <p class="hint" style="margin-bottom:14px">初篩陽性，請繼續完成握力與五次起坐。</p>
+
+    <label for="grip">最大握力（公斤）</label>
+    <input type="number" id="grip" inputmode="decimal" step="0.1" min="0" max="100" placeholder="慣用手兩次取最大值">
+    <p class="hint">切點：男性 &lt; 28 kg、女性 &lt; 18 kg 為低肌力。</p>
+
+    <label for="sts">五次起坐時間（秒）</label>
+    <div class="row">
+      <input type="number" id="sts" inputmode="decimal" step="0.1" min="0" max="120" placeholder="例如 13.5">
+      <span class="timer" id="clock">0.0</span>
+      <button type="button" class="ghost" id="btnTimer" onclick="toggleTimer()">開始</button>
+    </div>
+    <p class="hint">雙手抱胸，不用手撐，連續起立坐下 5 次。<b>≥ 12 秒</b>為低體能表現。</p>
+
+    <button type="button" class="primary" onclick="doStage2()">產生判定結果</button>
+    <p class="err hidden" id="err2"></p>
+  </div>
+
+</form>
+
+<div class="card hidden" id="cardResult">
+  <h2>判定結果</h2>
+  <div id="resultBox"></div>
+  <ul class="flags" id="flags"></ul>
+  <div class="qr hidden" id="qrBox">
+    <!-- QR:BEGIN -->
+    <svg version="1.1" viewBox="0 0 41 41" xmlns="http://www.w3.org/2000/svg"><rect width="41" height="41" fill="#ffffff"/><path d="M2,2H3V3H2zM3,2H4V3H3zM4,2H5V3H4zM5,2H6V3H5zM6,2H7V3H6zM7,2H8V3H7zM8,2H9V3H8zM10,2H11V3H10zM15,2H16V3H15zM18,2H19V3H18zM21,2H22V3H21zM22,2H23V3H22zM23,2H24V3H23zM24,2H25V3H24zM25,2H26V3H25zM27,2H28V3H27zM29,2H30V3H29zM30,2H31V3H30zM32,2H33V3H32zM33,2H34V3H33zM34,2H35V3H34zM35,2H36V3H35zM36,2H37V3H36zM37,2H38V3H37zM38,2H39V3H38zM2,3H3V4H2zM8,3H9V4H8zM12,3H13V4H12zM13,3H14V4H13zM15,3H16V4H15zM19,3H20V4H19zM20,3H21V4H20zM21,3H22V4H21zM26,3H27V4H26zM27,3H28V4H27zM28,3H29V4H28zM32,3H33V4H32zM38,3H39V4H38zM2,4H3V5H2zM4,4H5V5H4zM5,4H6V5H5zM6,4H7V5H6zM8,4H9V5H8zM11,4H12V5H11zM12,4H13V5H12zM18,4H19V5H18zM19,4H20V5H19zM23,4H24V5H23zM25,4H26V5H25zM28,4H29V5H28zM29,4H30V5H29zM32,4H33V5H32zM34,4H35V5H34zM35,4H36V5H35zM36,4H37V5H36zM38,4H39V5H38zM2,5H3V6H2zM4,5H5V6H4zM5,5H6V6H5zM6,5H7V6H6zM8,5H9V6H8zM10,5H11V6H10zM11,5H12V6H11zM12,5H13V6H12zM16,5H17V6H16zM17,5H18V6H17zM27,5H28V6H27zM29,5H30V6H29zM32,5H33V6H32zM34,5H35V6H34zM35,5H36V6H35zM36,5H37V6H36zM38,5H39V6H38zM2,6H3V7H2zM4,6H5V7H4zM5,6H6V7H5zM6,6H7V7H6zM8,6H9V7H8zM10,6H11V7H10zM11,6H12V7H11zM16,6H17V7H16zM17,6H18V7H17zM19,6H20V7H19zM20,6H21V7H20zM24,6H25V7H24zM25,6H26V7H25zM27,6H28V7H27zM29,6H30V7H29zM32,6H33V7H32zM34,6H35V7H34zM35,6H36V7H35zM36,6H37V7H36zM38,6H39V7H38zM2,7H3V8H2zM8,7H9V8H8zM10,7H11V8H10zM13,7H14V8H13zM15,7H16V8H15zM17,7H18V8H17zM18,7H19V8H18zM19,7H20V8H19zM21,7H22V8H21zM24,7H25V8H24zM27,7H28V8H27zM32,7H33V8H32zM38,7H39V8H38zM2,8H3V9H2zM3,8H4V9H3zM4,8H5V9H4zM5,8H6V9H5zM6,8H7V9H6zM7,8H8V9H7zM8,8H9V9H8zM10,8H11V9H10zM12,8H13V9H12zM14,8H15V9H14zM16,8H17V9H16zM18,8H19V9H18zM20,8H21V9H20zM22,8H23V9H22zM24,8H25V9H24zM26,8H27V9H26zM28,8H29V9H28zM30,8H31V9H30zM32,8H33V9H32zM33,8H34V9H33zM34,8H35V9H34zM35,8H36V9H35zM36,8H37V9H36zM37,8H38V9H37zM38,8H39V9H38zM10,9H11V10H10zM11,9H12V10H11zM17,9H18V10H17zM18,9H19V10H18zM22,9H23V10H22zM23,9H24V10H23zM24,9H25V10H24zM25,9H26V10H25zM26,9H27V10H26zM28,9H29V10H28zM29,9H30V10H29zM30,9H31V10H30zM2,10H3V11H2zM6,10H7V11H6zM8,10H9V11H8zM9,10H10V11H9zM10,10H11V11H10zM12,10H13V11H12zM18,10H19V11H18zM21,10H22V11H21zM22,10H23V11H22zM23,10H24V11H23zM24,10H25V11H24zM25,10H26V11H25zM26,10H27V11H26zM29,10H30V11H29zM31,10H32V11H31zM32,10H33V11H32zM33,10H34V11H33zM34,10H35V11H34zM35,10H36V11H35zM38,10H39V11H38zM4,11H5V12H4zM6,11H7V12H6zM7,11H8V12H7zM12,11H13V12H12zM13,11H14V12H13zM16,11H17V12H16zM19,11H20V12H19zM20,11H21V12H20zM21,11H22V12H21zM25,11H26V12H25zM27,11H28V12H27zM28,11H29V12H28zM29,11H30V12H29zM30,11H31V12H30zM34,11H35V12H34zM35,11H36V12H35zM37,11H38V12H37zM3,12H4V13H3zM5,12H6V13H5zM8,12H9V13H8zM12,12H13V13H12zM14,12H15V13H14zM16,12H17V13H16zM17,12H18V13H17zM20,12H21V13H20zM21,12H22V13H21zM23,12H24V13H23zM25,12H26V13H25zM27,12H28V13H27zM29,12H30V13H29zM31,12H32V13H31zM36,12H37V13H36zM3,13H4V14H3zM4,13H5V14H4zM6,13H7V14H6zM15,13H16V14H15zM16,13H17V14H16zM17,13H18V14H17zM18,13H19V14H18zM19,13H20V14H19zM21,13H22V14H21zM22,13H23V14H22zM23,13H24V14H23zM24,13H25V14H24zM26,13H27V14H26zM28,13H29V14H28zM29,13H30V14H29zM31,13H32V14H31zM33,13H34V14H33zM34,13H35V14H34zM36,13H37V14H36zM37,13H38V14H37zM3,14H4V15H3zM6,14H7V15H6zM8,14H9V15H8zM11,14H12V15H11zM12,14H13V15H12zM13,14H14V15H13zM15,14H16V15H15zM19,14H20V15H19zM23,14H24V15H23zM24,14H25V15H24zM25,14H26V15H25zM26,14H27V15H26zM28,14H29V15H28zM30,14H31V15H30zM31,14H32V15H31zM32,14H33V15H32zM36,14H37V15H36zM37,14H38V15H37zM38,14H39V15H38zM2,15H3V16H2zM3,15H4V16H3zM5,15H6V16H5zM7,15H8V16H7zM11,15H12V16H11zM12,15H13V16H12zM13,15H14V16H13zM14,15H15V16H14zM15,15H16V16H15zM17,15H18V16H17zM18,15H19V16H18zM20,15H21V16H20zM23,15H24V16H23zM24,15H25V16H24zM25,15H26V16H25zM27,15H28V16H27zM29,15H30V16H29zM34,15H35V16H34zM35,15H36V16H35zM2,16H3V17H2zM5,16H6V17H5zM8,16H9V17H8zM10,16H11V17H10zM11,16H12V17H11zM12,16H13V17H12zM14,16H15V17H14zM15,16H16V17H15zM17,16H18V17H17zM18,16H19V17H18zM19,16H20V17H19zM23,16H24V17H23zM25,16H26V17H25zM26,16H27V17H26zM27,16H28V17H27zM29,16H30V17H29zM31,16H32V17H31zM32,16H33V17H32zM33,16H34V17H33zM34,16H35V17H34zM35,16H36V17H35zM36,16H37V17H36zM3,17H4V18H3zM4,17H5V18H4zM5,17H6V18H5zM9,17H10V18H9zM12,17H13V18H12zM15,17H16V18H15zM18,17H19V18H18zM19,17H20V18H19zM20,17H21V18H20zM23,17H24V18H23zM25,17H26V18H25zM26,17H27V18H26zM28,17H29V18H28zM29,17H30V18H29zM30,17H31V18H30zM33,17H34V18H33zM34,17H35V18H34zM36,17H37V18H36zM37,17H38V18H37zM2,18H3V19H2zM4,18H5V19H4zM6,18H7V19H6zM7,18H8V19H7zM8,18H9V19H8zM9,18H10V19H9zM13,18H14V19H13zM16,18H17V19H16zM20,18H21V19H20zM23,18H24V19H23zM24,18H25V19H24zM25,18H26V19H25zM26,18H27V19H26zM31,18H32V19H31zM32,18H33V19H32zM33,18H34V19H33zM35,18H36V19H35zM36,18H37V19H36zM38,18H39V19H38zM4,19H5V20H4zM11,19H12V20H11zM12,19H13V20H12zM13,19H14V20H13zM14,19H15V20H14zM18,19H19V20H18zM19,19H20V20H19zM21,19H22V20H21zM22,19H23V20H22zM25,19H26V20H25zM26,19H27V20H26zM27,19H28V20H27zM28,19H29V20H28zM29,19H30V20H29zM30,19H31V20H30zM34,19H35V20H34zM35,19H36V20H35zM36,19H37V20H36zM37,19H38V20H37zM6,20H7V21H6zM8,20H9V21H8zM10,20H11V21H10zM11,20H12V21H11zM14,20H15V21H14zM16,20H17V21H16zM18,20H19V21H18zM19,20H20V21H19zM22,20H23V21H22zM24,20H25V21H24zM25,20H26V21H25zM29,20H30V21H29zM31,20H32V21H31zM32,20H33V21H32zM33,20H34V21H33zM34,20H35V21H34zM35,20H36V21H35zM3,21H4V22H3zM4,21H5V22H4zM5,21H6V22H5zM9,21H10V22H9zM14,21H15V22H14zM19,21H20V22H19zM20,21H21V22H20zM23,21H24V22H23zM26,21H27V22H26zM31,21H32V22H31zM36,21H37V22H36zM37,21H38V22H37zM2,22H3V23H2zM4,22H5V23H4zM5,22H6V23H5zM8,22H9V23H8zM9,22H10V23H9zM12,22H13V23H12zM14,22H15V23H14zM16,22H17V23H16zM17,22H18V23H17zM18,22H19V23H18zM19,22H20V23H19zM21,22H22V23H21zM22,22H23V23H22zM23,22H24V23H23zM25,22H26V23H25zM26,22H27V23H26zM28,22H29V23H28zM29,22H30V23H29zM31,22H32V23H31zM32,22H33V23H32zM33,22H34V23H33zM36,22H37V23H36zM4,23H5V24H4zM5,23H6V24H5zM6,23H7V24H6zM7,23H8V24H7zM9,23H10V24H9zM10,23H11V24H10zM11,23H12V24H11zM12,23H13V24H12zM13,23H14V24H13zM14,23H15V24H14zM16,23H17V24H16zM17,23H18V24H17zM18,23H19V24H18zM19,23H20V24H19zM20,23H21V24H20zM23,23H24V24H23zM25,23H26V24H25zM27,23H28V24H27zM29,23H30V24H29zM30,23H31V24H30zM33,23H34V24H33zM34,23H35V24H34zM37,23H38V24H37zM2,24H3V25H2zM4,24H5V25H4zM5,24H6V25H5zM6,24H7V25H6zM8,24H9V25H8zM9,24H10V25H9zM10,24H11V25H10zM11,24H12V25H11zM16,24H17V25H16zM17,24H18V25H17zM20,24H21V25H20zM23,24H24V25H23zM25,24H26V25H25zM26,24H27V25H26zM29,24H30V25H29zM32,24H33V25H32zM33,24H34V25H33zM34,24H35V25H34zM35,24H36V25H35zM36,24H37V25H36zM3,25H4V26H3zM4,25H5V26H4zM5,25H6V26H5zM6,25H7V26H6zM7,25H8V26H7zM9,25H10V26H9zM10,25H11V26H10zM13,25H14V26H13zM15,25H16V26H15zM16,25H17V26H16zM17,25H18V26H17zM18,25H19V26H18zM22,25H23V26H22zM23,25H24V26H23zM24,25H25V26H24zM26,25H27V26H26zM28,25H29V26H28zM29,25H30V26H29zM30,25H31V26H30zM31,25H32V26H31zM32,25H33V26H32zM33,25H34V26H33zM34,25H35V26H34zM36,25H37V26H36zM38,25H39V26H38zM4,26H5V27H4zM5,26H6V27H5zM7,26H8V27H7zM8,26H9V27H8zM10,26H11V27H10zM11,26H12V27H11zM12,26H13V27H12zM13,26H14V27H13zM16,26H17V27H16zM18,26H19V27H18zM21,26H22V27H21zM22,26H23V27H22zM25,26H26V27H25zM26,26H27V27H26zM29,26H30V27H29zM31,26H32V27H31zM32,26H33V27H32zM33,26H34V27H33zM35,26H36V27H35zM36,26H37V27H36zM37,26H38V27H37zM2,27H3V28H2zM3,27H4V28H3zM4,27H5V28H4zM10,27H11V28H10zM12,27H13V28H12zM13,27H14V28H13zM16,27H17V28H16zM19,27H20V28H19zM20,27H21V28H20zM21,27H22V28H21zM23,27H24V28H23zM25,27H26V28H25zM27,27H28V28H27zM29,27H30V28H29zM34,27H35V28H34zM36,27H37V28H36zM4,28H5V29H4zM6,28H7V29H6zM8,28H9V29H8zM10,28H11V29H10zM11,28H12V29H11zM12,28H13V29H12zM15,28H16V29H15zM16,28H17V29H16zM17,28H18V29H17zM20,28H21V29H20zM21,28H22V29H21zM25,28H26V29H25zM26,28H27V29H26zM29,28H30V29H29zM31,28H32V29H31zM32,28H33V29H32zM33,28H34V29H33zM36,28H37V29H36zM4,29H5V30H4zM5,29H6V30H5zM7,29H8V30H7zM11,29H12V30H11zM12,29H13V30H12zM14,29H15V30H14zM15,29H16V30H15zM17,29H18V30H17zM18,29H19V30H18zM19,29H20V30H19zM20,29H21V30H20zM21,29H22V30H21zM22,29H23V30H22zM23,29H24V30H23zM24,29H25V30H24zM26,29H27V30H26zM28,29H29V30H28zM30,29H31V30H30zM33,29H34V30H33zM34,29H35V30H34zM36,29H37V30H36zM37,29H38V30H37zM38,29H39V30H38zM2,30H3V31H2zM3,30H4V31H3zM7,30H8V31H7zM8,30H9V31H8zM9,30H10V31H9zM12,30H13V31H12zM14,30H15V31H14zM16,30H17V31H16zM19,30H20V31H19zM20,30H21V31H20zM23,30H24V31H23zM24,30H25V31H24zM25,30H26V31H25zM26,30H27V31H26zM28,30H29V31H28zM30,30H31V31H30zM31,30H32V31H31zM32,30H33V31H32zM33,30H34V31H33zM34,30H35V31H34zM36,30H37V31H36zM37,30H38V31H37zM38,30H39V31H38zM10,31H11V32H10zM15,31H16V32H15zM17,31H18V32H17zM18,31H19V32H18zM20,31H21V32H20zM23,31H24V32H23zM25,31H26V32H25zM27,31H28V32H27zM28,31H29V32H28zM30,31H31V32H30zM34,31H35V32H34zM2,32H3V33H2zM3,32H4V33H3zM4,32H5V33H4zM5,32H6V33H5zM6,32H7V33H6zM7,32H8V33H7zM8,32H9V33H8zM10,32H11V33H10zM11,32H12V33H11zM12,32H13V33H12zM13,32H14V33H13zM14,32H15V33H14zM17,32H18V33H17zM19,32H20V33H19zM22,32H23V33H22zM25,32H26V33H25zM26,32H27V33H26zM28,32H29V33H28zM30,32H31V33H30zM32,32H33V33H32zM34,32H35V33H34zM2,33H3V34H2zM8,33H9V34H8zM11,33H12V34H11zM12,33H13V34H12zM14,33H15V34H14zM16,33H17V34H16zM18,33H19V34H18zM19,33H20V34H19zM20,33H21V34H20zM24,33H25V34H24zM30,33H31V34H30zM34,33H35V34H34zM35,33H36V34H35zM36,33H37V34H36zM38,33H39V34H38zM2,34H3V35H2zM4,34H5V35H4zM5,34H6V35H5zM6,34H7V35H6zM8,34H9V35H8zM10,34H11V35H10zM12,34H13V35H12zM13,34H14V35H13zM14,34H15V35H14zM15,34H16V35H15zM16,34H17V35H16zM20,34H21V35H20zM24,34H25V35H24zM26,34H27V35H26zM30,34H31V35H30zM31,34H32V35H31zM32,34H33V35H32zM33,34H34V35H33zM34,34H35V35H34zM35,34H36V35H35zM36,34H37V35H36zM38,34H39V35H38zM2,35H3V36H2zM4,35H5V36H4zM5,35H6V36H5zM6,35H7V36H6zM8,35H9V36H8zM11,35H12V36H11zM12,35H13V36H12zM14,35H15V36H14zM18,35H19V36H18zM19,35H20V36H19zM21,35H22V36H21zM22,35H23V36H22zM25,35H26V36H25zM28,35H29V36H28zM31,35H32V36H31zM32,35H33V36H32zM33,35H34V36H33zM38,35H39V36H38zM2,36H3V37H2zM4,36H5V37H4zM5,36H6V37H5zM6,36H7V37H6zM8,36H9V37H8zM11,36H12V37H11zM14,36H15V37H14zM15,36H16V37H15zM18,36H19V37H18zM20,36H21V37H20zM22,36H23V37H22zM25,36H26V37H25zM26,36H27V37H26zM28,36H29V37H28zM31,36H32V37H31zM32,36H33V37H32zM36,36H37V37H36zM2,37H3V38H2zM8,37H9V38H8zM11,37H12V38H11zM19,37H20V38H19zM20,37H21V38H20zM23,37H24V38H23zM25,37H26V38H25zM28,37H29V38H28zM29,37H30V38H29zM31,37H32V38H31zM32,37H33V38H32zM34,37H35V38H34zM35,37H36V38H35zM36,37H37V38H36zM37,37H38V38H37zM2,38H3V39H2zM3,38H4V39H3zM4,38H5V39H4zM5,38H6V39H5zM6,38H7V39H6zM7,38H8V39H7zM8,38H9V39H8zM10,38H11V39H10zM12,38H13V39H12zM13,38H14V39H13zM14,38H15V39H14zM15,38H16V39H15zM16,38H17V39H16zM17,38H18V39H17zM18,38H19V39H18zM19,38H20V39H19zM21,38H22V39H21zM22,38H23V39H22zM23,38H24V39H23zM24,38H25V39H24zM25,38H26V39H25zM26,38H27V39H26zM29,38H30V39H29zM31,38H32V39H31zM32,38H33V39H32zM33,38H34V39H33zM36,38H37V39H36zM37,38H38V39H37zM38,38H39V39H38z" id="qr-path" fill="#000000" fill-opacity="1" fill-rule="nonzero" stroke="none"/></svg>
+    <!-- QR:END -->
+    <p>請受檢者用手機掃描，看「肌少症怎麼吃、怎麼練」<br>（此頁不含任何個人資料）</p>
+  </div>
+  <button type="button" class="primary" onclick="submitRecord()" id="btnSubmit">送出並開始下一位</button>
+  <p class="err hidden" id="err3"></p>
+</div>
+</div>
+
+<!-- ============ 統計 ============ -->
+<div id="viewStats" class="hidden">
+  <div class="card">
+    <h2>今日篩檢（這台裝置）</h2>
+    <div class="stat">
+      <div><b id="stTotal">0</b><span>完成人數</span></div>
+      <div><b id="stPos">0</b><span>陽性人數</span></div>
+      <div><b id="stRate">—</b><span>陽性率</span></div>
+    </div>
+    <p class="hint" id="stBySite" style="margin-bottom:8px"></p>
+    <p class="hint">只統計<b>這台裝置（工作站 <span id="stStation">—</span>）今天送出的紀錄</b>。
+      多台裝置的數字不會在這裡合併——<b>全場合計請看 Google 表單的回應試算表</b>，
+      各台送出的紀錄會自動彙整在那一份。
+      當日人數少於 10 人時不顯示百分比（小樣本比例不穩定）。</p>
+  </div>
+
+  <div class="card">
+    <h2>待補送</h2>
+    <div class="stat">
+      <div><b id="stQueue">0</b><span>尚未送出的紀錄</span></div>
+    </div>
+    <button type="button" class="primary" onclick="flushQueue()" id="btnFlush">一鍵補送</button>
+    <p class="hint" id="flushMsg">沒有網路時填的紀錄會先存在本機，回到有網路的地方按這顆。</p>
+    <div class="row" style="margin-top:12px">
+      <button type="button" class="ghost" onclick="exportCsv()">匯出 CSV 備份</button>
+      <button type="button" class="ghost" onclick="clearLocal()">清除本機資料</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  製作：潘湘如醫師｜家醫科　·　v0.1.0（2026-07-29）<br>
+  問題回報：<a href="https://github.com/philia81301-commits/sarcopenia-clinic/issues" target="_blank" rel="noopener">GitHub Issues</a><br>
+  判定依據 AWGS 2019 共識；小腿圍僅作為社區篩檢的肌肉量代理指標，確診須以 DXA 或 BIA 評估。<br>
+  SARC-F 題目中文措辭為暫用版本，正式使用前將替換為指定之已驗證中文版並標註引用出處。<br>
+  相關工具：<a href="https://philia81301-commits.github.io/osteoporosis-clinic/" target="_blank" rel="noopener">骨質疏鬆門診工具</a><br>
+  © 2026 潘湘如　·　本著作採 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh-hant" target="_blank" rel="noopener">CC BY-NC-ND 4.0</a> 授權<br>
+  介面與程式實作由 Claude 協助
+</footer>
+
+</div>
+
+<script>
+"use strict";
+
+/* ===== 設定 ===== */
+// 建好 Google 表單後填入 formId 與各欄位 entry.xxx，見 docs/google-form-fields.md
+const FORM_ID = "";
+const ENTRY = {
+  site:"", code:"", birthYear:"", gender:"", sarcf:"", falls:"", calf:"",
+  grip:"", sts:"", stage1:"", result:""
+};
+
+const K_QUEUE = "sarc_queue_v1";
+const K_LOG   = "sarc_log_v1";
+const K_SEQ   = "sarc_seq_v1";
+const K_CUR   = "sarc_cur_v1";
+const K_WS    = "sarc_ws_v1";   // 本機工作站代碼，防止多台裝置撞號
+
+/* ===== 小工具 ===== */
+const $ = id => document.getElementById(id);
+const load = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch(e){ return d; } };
+const save = (k, v) => localStorage.setItem(k, JSON.stringify(v));
+const today = () => { const d=new Date();
+  return d.getFullYear() + String(d.getMonth()+1).padStart(2,"0") + String(d.getDate()).padStart(2,"0"); };
+const radio = name => { const el = document.querySelector(`input[name="${name}"]:checked`); return el ? el.value : null; };
+
+let state = {};
+
+/* ===== 代號 =====
+   流水號在「送出」時才真的消耗，重新整理不會跳號，
+   現場紙本對照表才對得起來。 */
+function station(){ return load(K_WS, "") || ""; }
+
+function setStation(){
+  const v = $("station").value;
+  save(K_WS, v);
+  localStorage.removeItem(K_CUR);
+  newCode();
+}
+
+function newCode(){
+  const d = today();
+  const ws = station();
+  if (!ws){ $("code").value = ""; return; }
+  const seq = load(K_SEQ, {});
+  const code = `${d}-${ws}${String((seq[d] || 0) + 1).padStart(3,"0")}`;
+  save(K_CUR, code);
+  $("code").value = code;
+}
+
+function resumeCode(){
+  $("station").value = station();
+  const cur = load(K_CUR, null);
+  if (cur && String(cur).startsWith(today() + "-" + station()) && station()) $("code").value = cur;
+  else newCode();
+}
+function commitCode(){
+  const d = today();
+  const seq = load(K_SEQ, {});
+  seq[d] = (seq[d] || 0) + 1;
+  save(K_SEQ, seq);
+  localStorage.removeItem(K_CUR);
+}
+
+/* ===== 分頁 ===== */
+function showView(v){
+  $("viewScreen").classList.toggle("hidden", v !== "screen");
+  $("viewStats").classList.toggle("hidden", v !== "stats");
+  $("tabScreen").setAttribute("aria-selected", v === "screen");
+  $("tabStats").setAttribute("aria-selected", v === "stats");
+  if (v === "stats") renderStats();
+}
+
+/* ===== 跌倒次數 → SARC-F 第 5 題分數 ===== */
+function fallScore(n){ return n >= 4 ? 2 : (n >= 1 ? 1 : 0); }
+$("falls").addEventListener("input", () => {
+  const n = parseInt($("falls").value, 10);
+  $("fallsScore").textContent = Number.isNaN(n)
+    ? "0 次 = 0 分｜1–3 次 = 1 分｜4 次以上 = 2 分"
+    : `${n} 次 → 這題 ${fallScore(n)} 分`;
+});
+
+/* ===== 五次起坐計時器 ===== */
+let timerId = null, t0 = 0;
+function toggleTimer(){
+  if (timerId){
+    clearInterval(timerId); timerId = null;
+    const sec = (Date.now() - t0) / 1000;
+    $("sts").value = sec.toFixed(1);
+    $("clock").textContent = sec.toFixed(1);
+    $("btnTimer").textContent = "重新計時";
+  } else {
+    t0 = Date.now();
+    $("btnTimer").textContent = "停止";
+    timerId = setInterval(() => {
+      $("clock").textContent = ((Date.now() - t0) / 1000).toFixed(1);
+    }, 100);
+  }
+}
+
+/* ===== 第一段：SARC-CalF 初篩 ===== */
+function doStage1(){
+  const e = $("err1"); e.classList.add("hidden");
+  const site = radio("site");
+  const gender = radio("gender");
+  const birthYear = parseInt($("birthYear").value, 10);
+  const falls = parseInt($("falls").value, 10);
+  const calf = parseFloat($("calf").value);
+  const items = ["s1","s2","s3","s4"].map(radio);
+
+  const missing = [];
+  if (!station()) missing.push("本機工作站代碼");
+  if (site === null) missing.push("受檢場域");
+  if (!$("code").value.trim()) missing.push("代號");
+  if (Number.isNaN(birthYear)) missing.push("出生年");
+  if (gender === null) missing.push("性別");
+  if (items.some(v => v === null)) missing.push("SARC-F 第 1–4 題");
+  if (Number.isNaN(falls)) missing.push("跌倒次數");
+  if (Number.isNaN(calf)) missing.push("小腿圍");
+  if (missing.length){
+    e.textContent = "還沒填：" + missing.join("、");
+    e.classList.remove("hidden");
+    return;
+  }
+
+  const sarcf = items.reduce((a,v) => a + Number(v), 0) + fallScore(falls);
+  const calfLow = gender === "1" ? calf < 34 : calf < 33;
+  const sarcCalF = sarcf + (calfLow ? 10 : 0);
+  const positive = sarcf >= 4 || sarcCalF >= 11;
+
+  state = { site, code:$("code").value.trim(), birthYear, gender, falls, calf,
+            sarcf, sarcCalF, calfLow, positive };
+
+  if (positive){
+    $("cardStage2").classList.remove("hidden");
+    $("cardResult").classList.add("hidden");
+    $("cardStage2").scrollIntoView({behavior:"smooth", block:"start"});
+  } else {
+    state.result = "screen_negative";
+    renderResult();
+  }
+}
+
+/* ===== 第二段：AWGS 2019 ===== */
+function doStage2(){
+  const e = $("err2"); e.classList.add("hidden");
+  const grip = parseFloat($("grip").value);
+  const sts  = parseFloat($("sts").value);
+  const missing = [];
+  if (Number.isNaN(grip)) missing.push("握力");
+  if (Number.isNaN(sts))  missing.push("五次起坐時間");
+  if (missing.length){
+    e.textContent = "還沒填：" + missing.join("、");
+    e.classList.remove("hidden");
+    return;
+  }
+
+  const gripLow = state.gender === "1" ? grip < 28 : grip < 18;
+  const stsLow  = sts >= 12;
+  const muscleLow = state.calfLow;
+
+  let result;
+  if (muscleLow && gripLow && stsLow)      result = "severe";
+  else if (muscleLow && (gripLow||stsLow)) result = "sarcopenia";
+  else if (gripLow || stsLow)              result = "possible";
+  else                                     result = "no_finding";
+
+  Object.assign(state, { grip, sts, gripLow, stsLow, muscleLow, result });
+  renderResult();
+}
+
+/* ===== 結果 ===== */
+const RESULTS = {
+  screen_negative: { cls:"r-ok",   title:"初篩陰性",
+    body:"目前沒有肌少症的警訊。建議維持每週規律的阻抗運動與足夠蛋白質攝取，明年再篩一次。" },
+  no_finding: { cls:"r-ok", title:"初篩陽性，但肌力與體能未達切點",
+    body:"握力與五次起坐都在正常範圍。建議 3–6 個月後再評估一次，並先開始阻抗運動與蛋白質衛教。" },
+  possible: { cls:"r-warn", title:"肌少症可能（Possible sarcopenia）",
+    body:"肌力或體能表現已低於切點。依 AWGS 2019，社區場域此時就應開始介入，不必等確診。建議轉介評估並立即開始運動與營養衛教。" },
+  sarcopenia: { cls:"r-bad", title:"疑似肌少症",
+    body:"小腿圍偏低且肌力或體能表現低下。<b>小腿圍只是肌肉量的代理指標</b>，請轉介以 DXA 或 BIA 確認肌肉量，並同步開始運動與營養介入。" },
+  severe: { cls:"r-bad", title:"疑似嚴重肌少症",
+    body:"小腿圍偏低，且肌力與體能表現<b>同時</b>低下。請優先安排轉介評估（含跌倒風險與骨質疏鬆評估），並立即開始介入。" }
+};
+
+function renderResult(){
+  const r = RESULTS[state.result];
+  $("resultBox").innerHTML =
+    `<div class="result ${r.cls}"><h3>${r.title}</h3><p>${r.body}</p></div>`;
+
+  const f = [];
+  f.push(`SARC-F 分數：<b>${state.sarcf}</b> 分（≥4 為陽性）`);
+  f.push(`SARC-CalF 分數：<b>${state.sarcCalF}</b> 分（≥11 為陽性）`);
+  f.push(`小腿圍 <b>${state.calf}</b> cm　${state.calfLow ? "🔻 低於切點" : "✅ 正常範圍"}`);
+  if (state.result !== "screen_negative"){
+    f.push(`握力 <b>${state.grip}</b> kg　${state.gripLow ? "🔻 低肌力" : "✅ 正常範圍"}`);
+    f.push(`五次起坐 <b>${state.sts}</b> 秒　${state.stsLow ? "🔻 低體能表現" : "✅ 正常範圍"}`);
+  }
+  f.push(`過去一年跌倒 <b>${state.falls}</b> 次`);
+  $("flags").innerHTML = f.map(x => `<li>${x}</li>`).join("");
+
+  $("qrBox").classList.toggle("hidden", state.result === "screen_negative");
+  $("cardResult").classList.remove("hidden");
+  $("err3").classList.add("hidden");
+  $("btnSubmit").disabled = false;
+  $("cardResult").scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+/* ===== 送出 ===== */
+function isPositive(s){ return s.result !== "screen_negative" && s.result !== "no_finding"; }
+
+function submitRecord(){
+  const rec = {
+    site: state.site, code: state.code, birthYear: state.birthYear, gender: state.gender,
+    falls: state.falls, calf: state.calf, sarcf: state.sarcf,
+    stage1: state.positive ? "positive" : "negative",
+    grip: state.grip ?? "", sts: state.sts ?? "", result: state.result,
+    date: today(), ts: new Date().toISOString()
+  };
+
+  const log = load(K_LOG, []);
+  log.push({ d: rec.date, site: rec.site, pos: isPositive(state) });
+  save(K_LOG, log);
+
+  const queue = load(K_QUEUE, []);
+  queue.push(rec);
+  save(K_QUEUE, queue);
+  commitCode();
+
+  send(rec).then(ok => {
+    if (ok){
+      const q = load(K_QUEUE, []).filter(r => r.ts !== rec.ts);
+      save(K_QUEUE, q);
+    }
+    resetAll();
+  });
+}
+
+function formUrl(){ return `https://docs.google.com/forms/d/e/${FORM_ID}/formResponse`; }
+
+function send(rec){
+  if (!FORM_ID) return Promise.resolve(false);
+  const p = new URLSearchParams();
+  for (const k in ENTRY){ if (ENTRY[k]) p.append(ENTRY[k], rec[k]); }
+  return fetch(formUrl(), { method:"POST", mode:"no-cors", body:p })
+    .then(() => true).catch(() => false);
+}
+
+function flushQueue(){
+  const q = load(K_QUEUE, []);
+  if (!q.length){ $("flushMsg").textContent = "沒有待補送的紀錄。"; return; }
+  if (!FORM_ID){ $("flushMsg").textContent = "尚未設定 Google 表單，無法補送。請先用「匯出 CSV 備份」保存資料。"; return; }
+  $("btnFlush").disabled = true;
+  $("flushMsg").textContent = `補送中…（${q.length} 筆）`;
+  Promise.all(q.map(send)).then(oks => {
+    const left = q.filter((_, i) => !oks[i]);
+    save(K_QUEUE, left);
+    $("btnFlush").disabled = false;
+    $("flushMsg").textContent = left.length
+      ? `還有 ${left.length} 筆沒送成功，確認網路後再按一次。`
+      : "全部補送完成。";
+    renderStats();
+  });
+}
+
+/* ===== 統計 ===== */
+function renderStats(){
+  const d = today();
+  $("stStation").textContent = station() || "尚未設定";
+  const log = load(K_LOG, []).filter(x => x.d === d);
+  const total = log.length;
+  const pos = log.filter(x => x.pos).length;
+  $("stTotal").textContent = total;
+  $("stPos").textContent = pos;
+  $("stRate").textContent = total >= 10
+    ? Math.round(pos / total * 100) + "%"
+    : (total ? `${pos}／${total}` : "—");
+
+  const by = s => {
+    const rows = log.filter(x => x.site === s);
+    return `${rows.length} 人（陽性 ${rows.filter(x => x.pos).length}）`;
+  };
+  const untagged = log.filter(x => x.site !== "clinic" && x.site !== "community").length;
+  $("stBySite").innerHTML = total
+    ? `場域分開看：門診 <b>${by("clinic")}</b>　·　社區 <b>${by("community")}</b>`
+      + (untagged ? `　·　未標記場域 <b>${untagged} 人</b>` : "")
+    : "";
+
+  $("stQueue").textContent = load(K_QUEUE, []).length;
+}
+
+function exportCsv(){
+  const q = load(K_QUEUE, []);
+  if (!q.length){ $("flushMsg").textContent = "本機沒有待匯出的紀錄。"; return; }
+  const cols = ["site","code","date","birthYear","gender","falls","calf","sarcf","stage1","grip","sts","result","ts"];
+  const csv = "﻿" + cols.join(",") + "\n" +
+    q.map(r => cols.map(c => `"${String(r[c] ?? "").replace(/"/g,'""')}"`).join(",")).join("\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([csv], {type:"text/csv"}));
+  a.download = `sarcopenia_${today()}_${station() || "NA"}.csv`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function clearLocal(){
+  const q = load(K_QUEUE, []).length;
+  const msg = q ? `本機還有 ${q} 筆「尚未送出」的紀錄，清除後救不回來。確定要清除嗎？`
+                : "確定要清除這台裝置的今日統計與代號流水號嗎？";
+  if (!confirm(msg)) return;
+  localStorage.removeItem(K_QUEUE);
+  localStorage.removeItem(K_LOG);
+  localStorage.removeItem(K_SEQ);
+  localStorage.removeItem(K_CUR);
+  newCode();
+  renderStats();
+  $("flushMsg").textContent = "本機資料已清除。";
+}
+
+/* ===== 換下一位：強制清空 ===== */
+function resetAll(){
+  $("form").reset();
+  $("station").value = station();   // 工作站代碼是裝置設定，不隨受檢者清空
+  if (timerId){ clearInterval(timerId); timerId = null; }
+  $("clock").textContent = "0.0";
+  $("btnTimer").textContent = "開始";
+  $("fallsScore").textContent = "0 次 = 0 分｜1–3 次 = 1 分｜4 次以上 = 2 分";
+  $("cardStage2").classList.add("hidden");
+  $("cardResult").classList.add("hidden");
+  $("err1").classList.add("hidden");
+  $("err2").classList.add("hidden");
+  state = {};
+  newCode();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+/* ===== 啟動：載入時一律清空，防止殘留上一位 ===== */
+window.addEventListener("load", () => {
+  $("form").reset();
+  state = {};
+  resumeCode();
+  renderStats();
+  if (FORM_ID) $("setupNotice").classList.add("hidden");
+});
+</script>
+</body>
+</html>
