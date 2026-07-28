@@ -14,11 +14,17 @@
 - 衛教頁 QR 已用 `tools/make-qr.py` 產生並內嵌，無外部相依
 - Console 無錯誤
 
+## 已上線
+
+- **repo**：https://github.com/philia81301-commits/sarcopenia-clinic （公開，main 的 root）
+- **線上版**：https://philia81301-commits.github.io/sarcopenia-clinic/
+- **衛教頁**：https://philia81301-commits.github.io/sarcopenia-clinic/education.html
+
+更新方式：本機改檔 → commit → push，Pages 約 1–2 分鐘重建。
+
 ## 下一步（依順序）
 
-1. **建 GitHub repo `sarcopenia-clinic`（公開）並開 Pages** —— 尚未建立。
-   建好後確認 `https://philia81301-commits.github.io/sarcopenia-clinic/` 可開，
-   並實際用手機掃一次結果頁的 QR，確認連得到 `education.html`。
+1. **用手機實際掃一次結果頁的 QR**，確認連得到衛教頁（自動化測不了這一步）。
 2. **建 Google 表單**，依 `docs/google-form-fields.md` 建 11 個簡答題，
    把 formId 與各 `entry.xxx` 填進 `index.html` 最上方的 `FORM_ID` 與 `ENTRY`。
    填好後頁面上方的「上線前待辦」提示會自動消失。送一筆測試資料確認欄位對得上。
