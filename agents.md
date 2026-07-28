@@ -9,6 +9,7 @@
 
 | 檔案 | 用途 |
 |---|---|
+| `README.md` | 公開 repo 首頁：用途、現場注意事項、限制與授權 |
 | `index.html` | 主工具（單頁、原生 JS、無外部相依、可離線） |
 | `education.html` | 靜態衛教頁，QR code 指向這裡，**不含任何個人資料** |
 | `docs/google-form-fields.md` | Google 表單欄位對照表與建表注意事項 |
@@ -35,6 +36,18 @@
 | 小腿圍 | < 34 cm | < 33 cm |
 
 初篩陽性：SARC-F ≥ 4 或 SARC-CalF ≥ 11。
+
+## 路線圖
+
+- [x] RDQ 需求訪談與規格卡（`status: confirmed`）
+- [x] 主工具 `index.html`：兩段式判定、計時器、離線佇列、本機當日統計
+- [x] 靜態衛教頁 `education.html` 與固定 QR
+- [x] 場域（門診／社區）與工作站代碼（A–H，防多台撞號）
+- [x] 建立公開 repo 並開啟 GitHub Pages
+- [ ] 建立 Google 表單並填入 `FORM_ID` 與 `ENTRY`（**未完成前不可正式收案**）
+- [ ] 手機實掃 QR 驗證
+- [ ] 替換 SARC-F 為指定的已驗證中文版並補引用出處
+- [ ] 骨鬆專案入口頁互放連結
 
 ## 部署
 
