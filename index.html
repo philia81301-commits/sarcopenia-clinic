@@ -145,7 +145,8 @@ footer a{color:var(--accent)}
       <input type="text" id="code" inputmode="numeric">
       <button type="button" class="ghost" onclick="newCode()">重新產生</button>
     </div>
-    <p class="hint">系統自動產生「日期＋流水號」。姓名請記在現場紙本對照表，<b>不要輸入這裡</b>。</p>
+    <p class="hint">系統自動產生「<b>日期＋工作站＋流水號</b>」，例 <code>20260729-B007</code>。
+      選好上面的工作站代碼後，流水號才會補上。姓名請記在現場紙本對照表，<b>不要輸入這裡</b>。</p>
 
     <label for="birthYear">出生年（西元）</label>
     <input type="number" id="birthYear" inputmode="numeric" min="1900" max="2015" placeholder="例如 1948">
@@ -356,7 +357,8 @@ function setStation(){
 function newCode(){
   const d = today();
   const ws = station();
-  if (!ws){ $("code").value = ""; return; }
+  // 還沒選工作站時仍先顯示日期字首，讓人一眼看出代號長什麼樣、缺的是哪一段
+  if (!ws){ $("code").value = d + "-"; return; }
   const seq = load(K_SEQ, {});
   const code = `${d}-${ws}${String((seq[d] || 0) + 1).padStart(3,"0")}`;
   save(K_CUR, code);
@@ -426,7 +428,8 @@ function doStage1(){
   const missing = [];
   if (!station()) missing.push("本機工作站代碼");
   if (site === null) missing.push("受檢場域");
-  if (!$("code").value.trim()) missing.push("代號");
+  // 只有日期字首、還沒補上工作站與流水號的代號視同未填
+  if (!/\S/.test($("code").value) || /-\s*$/.test($("code").value)) missing.push("代號");
   if (Number.isNaN(birthYear)) missing.push("出生年");
   if (gender === null) missing.push("性別");
   if (items.some(v => v === null)) missing.push("SARC-F 第 1–4 題");
@@ -735,7 +738,7 @@ function resetAll(){
 /* ===== 離線支援 =====
    改版時 APP_VERSION 要和 sw.js 的 VERSION 一起改。
    版本號印在頁尾，是為了能當場問「這台跑的是哪一版」。 */
-const APP_VERSION = "0.2.1";
+const APP_VERSION = "0.2.2";
 let waitingWorker = null;
 
 function applyUpdate(){

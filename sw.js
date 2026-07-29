@@ -9,7 +9,7 @@
  * 改版時記得同步更新 VERSION，以及 index.html 裡的 APP_VERSION。
  */
 
-const VERSION = "0.2.1";
+const VERSION = "0.2.2";
 const CACHE = `sarc-v${VERSION}`;
 const NET_TIMEOUT = 3000;   // 網路多久沒回應就改用快取（毫秒）
 
