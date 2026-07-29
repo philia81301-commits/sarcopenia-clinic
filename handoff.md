@@ -35,12 +35,12 @@
 兩項都空與「填了沒按計算」的擋下、送出後清空與流水號進位、
 **關掉伺服器後仍能載入並完成判定**、Console 無錯誤。
 
-**評估結果目前沒有連到任何 Google 表單。** `index.html` 的 `FORM_ID` 與 `ENTRY`
-都是空字串，送出的紀錄**只存在各台裝置的 localStorage**，「一鍵補送」也會直接回報無法補送。
-這是 2026-07-29 的決定，不是待辦（見下方「🔮 未來視使用情形再決定」）。
+**評估結果已連上 Google 表單**（2026-07-29 接上並實測通過，見下方「🔗 Google 表單」）。
+送出即進回應試算表，那份試算表就是將來統計分析的資料來源。
+沒網路時紀錄先存本機佇列，回到有網路按「一鍵補送」。
 
-> **因此每天收工必須在每一台裝置按「匯出 CSV 備份」。**
-> 清瀏覽器資料、換裝置、裝置遺失都會讓當日紀錄消失，沒有第二份。
+> 「匯出 CSV 備份」現在是**備援**，不是唯一出路。但長時間離線作業、或裝置要換／要清瀏覽器
+> 資料之前，仍請先按一次匯出——本機佇列裡沒送出的紀錄清掉就沒了。
 
 ## ➡️ 下一步
 
@@ -50,16 +50,19 @@
 3. **替換 SARC-F 中文題目** —— 目前是暫用措辭，頁尾已誠實標註。
 4. 骨鬆專案入口頁加一條連到本工具的連結（要動另一個 repo）。
 
-## 🔗 接 Google 表單（進行中）
+## 🔗 Google 表單（已接上，2026-07-29）
 
-決定**要接**，作為將來統計分析的資料來源。做法已備妥 `tools/create-google-form.gs`：
-到 script.google.com 新增專案 → 貼上該檔內容 → 執行 `createSarcopeniaForm` → 授權 →
-看執行紀錄，把印出來的 `FORM_ID` 與 `ENTRY` 兩段貼回 `index.html` 最上方。
-腳本會一併建好回應試算表並連結，題目全部簡答、全部非必填。
+用 `tools/create-google-form.gs` 建的，`FORM_ID` 與 11 個 `entry.xxx` 已填進 `index.html` 最上方。
 
-**要用個人 Google 帳號跑**（Workspace 帳號可能限制僅組織內可填，平板會靜默送不出去）。
-接上後頁面上方的「上線前待辦」提示會自動消失，務必實際送一筆測試資料確認回應表有進資料。
-程式的送出與補送邏輯早就寫好，填完兩個常數即生效，不需要改其他地方。
+- 表單編輯：https://docs.google.com/forms/d/1PU792zBD1c9CMvfjKcisUZvGA1WbYe8l1M0YDpd8DJc/edit
+- **回應試算表（統計分析的資料來源）**：
+  https://docs.google.com/spreadsheets/d/1-OSC6jePQB5-FkQkD3iE4HY6Z8Ye2gzuHdNwNBYoL7c/edit
+
+**已端到端驗證**：從工具送出一筆 → 回應試算表 12 欄全部對位，
+性別交叉驗證通過（介面選「女」→ 試算表存 `0`）。測試列的代號是 `TEST-請刪除`。
+
+日後要改題目：**不要動題目順序或刪題重建**，`entry` 編號會變，改了要重跑腳本並更新
+`index.html`。只改題目文字不影響 `entry` 編號。
 
 ## ⚠️ 注意事項
 
@@ -98,6 +101,6 @@ git clone https://github.com/philia81301-commits/sarcopenia-clinic.git C:\projec
 
 ## 🕐 最後更新
 
-2026-07-29　·　阿克（Claude Code）@ DESKTOP-LVSV9Q5（家）　·　v0.2.2　·　Git push：✅ 已推（`efbab93`）
+2026-07-29　·　阿克（Claude Code）@ DESKTOP-LVSV9Q5（家）　·　v0.2.3　·　Git push：待推
 
 前一筆：2026-07-29 @ X108521（醫院）· v0.2.1 · `95db796`

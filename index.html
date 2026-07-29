@@ -310,11 +310,22 @@ footer a{color:var(--accent)}
 
 /* ===== 設定 ===== */
 // 建好 Google 表單後填入 formId 與各欄位 entry.xxx，見 docs/google-form-fields.md
-const FORM_ID = "";
+const FORM_ID = "1FAIpQLSe8mKlgtlcv3WJ0OJ-tbV_ZwNHtlyThoqBx7KdjZHey1zFoEQ";
 const ENTRY = {
-  site:"", code:"", birthYear:"", gender:"", sarcf:"", falls:"", calf:"",
-  grip:"", sts:"", stage1:"", result:""
+  site:      "entry.1390480843",
+  code:      "entry.1749574632",
+  birthYear: "entry.2062045766",
+  gender:    "entry.2076490495",
+  falls:     "entry.922899462",
+  calf:      "entry.737146188",
+  sarcf:     "entry.26413966",
+  stage1:    "entry.1461506792",
+  grip:      "entry.550962266",
+  sts:       "entry.1379677846",
+  result:    "entry.422419592"
 };
+// 表單編輯：https://docs.google.com/forms/d/1PU792zBD1c9CMvfjKcisUZvGA1WbYe8l1M0YDpd8DJc/edit
+// 回應試算表：https://docs.google.com/spreadsheets/d/1-OSC6jePQB5-FkQkD3iE4HY6Z8Ye2gzuHdNwNBYoL7c/edit
 
 const K_QUEUE = "sarc_queue_v1";
 const K_LOG   = "sarc_log_v1";
@@ -738,7 +749,7 @@ function resetAll(){
 /* ===== 離線支援 =====
    改版時 APP_VERSION 要和 sw.js 的 VERSION 一起改。
    版本號印在頁尾，是為了能當場問「這台跑的是哪一版」。 */
-const APP_VERSION = "0.2.2";
+const APP_VERSION = "0.2.3";
 let waitingWorker = null;
 
 function applyUpdate(){
