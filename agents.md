@@ -12,8 +12,12 @@
 | `README.md` | 公開 repo 首頁：用途、現場注意事項、限制與授權 |
 | `index.html` | 主工具（單頁、原生 JS、無外部相依、可離線） |
 | `education.html` | 靜態衛教頁，QR code 指向這裡，**不含任何個人資料** |
+| `sw.js` | Service Worker。網頁 network-first、其餘 cache-first |
+| `manifest.webmanifest` | PWA 設定 |
+| `icon-*.png` | PWA 圖示（`tools/make-icons.py` 產生） |
 | `docs/google-form-fields.md` | Google 表單欄位對照表與建表注意事項 |
 | `tools/make-qr.py` | 重新產生並嵌入衛教頁 QR（只有網址變更時才需要跑） |
+| `tools/make-icons.py` | 重新產生 PWA 圖示 |
 | `rdq/` | RDQ 需求規格卡 |
 
 ## 臨床與資料守則（不可違反）
@@ -26,6 +30,11 @@
    `YYYYMMDD-<工作站><流水號>`。沒有這個字母，兩台裝置會產生一樣的代號。
 6. 小腿圍只是肌肉量的**代理指標**，結果文字一律寫「疑似」，並提示轉介 DXA／BIA 確認。
 7. 給付條文不寫死，只註明核對當期公告。
+8. **初篩陰性也要開放加測握力／五次起坐**（選填）。SARC-F 敏感度有限，初篩陰性不等於
+   沒有肌少症；加測才發現低下的個案要在結果卡標註「以實測為準」。不要把這條「簡化」掉。
+9. **少測一項就不是完整判定**。五次起坐留空時不得宣稱「肌力與體能均未達切點」，
+   要標為部分評估並寫明無法排除嚴重肌少症。沒測到的項目在明細寫「未測」，不可留白。
+10. **判定用的切點要顯示在數字旁邊**（男女不同），現場才能當場核對、事後才能回查。
 
 ## 切點（AWGS 2019）
 
@@ -44,6 +53,11 @@
 - [x] 靜態衛教頁 `education.html` 與固定 QR
 - [x] 場域（門診／社區）與工作站代碼（A–H，防多台撞號）
 - [x] 建立公開 repo 並開啟 GitHub Pages
+- [x] 修正初篩陽性按鈕「按了沒反應」（只靠 smooth 捲動當回饋，捲動失效就全無變化）
+- [x] 初篩陰性開放加測（選填）、五次起坐改選填並標示部分評估
+- [x] 判定切點顯示在數字旁；未測項目明寫「未測」
+- [x] PWA 離線（`sw.js` + manifest + 圖示）、版本顯示與更新提示
+- [x] 首頁使用說明（含離線操作），首次自動展開
 - [ ] 建立 Google 表單並填入 `FORM_ID` 與 `ENTRY`（**未完成前不可正式收案**）
 - [ ] 手機實掃 QR 驗證
 - [ ] 替換 SARC-F 為指定的已驗證中文版並補引用出處
@@ -52,6 +66,12 @@
 ## 部署
 
 公開 repo ＋ GitHub Pages，root 的 `index.html`。改檔 → commit → push，Pages 約 1–2 分鐘重建。
+
+**改版務必同步兩個版本號**：`sw.js` 的 `VERSION` 與 `index.html` 的 `APP_VERSION`。
+沒改的話，既有裝置上 cache-first 的檔案（圖示、manifest）不會更新。
+網頁本身是 network-first，只要裝置連得上網就一定拿到最新版，這是刻意的取捨——
+臨床工具最怕平板卡在舊版沒人發現。
+
 **GitHub 為 canonical**，repo 放在 `C:\projects\`，不要放進 OneDrive（`.git` 會產生衝突複本）。
 醫院電腦沒有 `G:`，流程不依賴 Google Drive。
 
@@ -61,4 +81,7 @@
 python -m http.server 8765 --directory C:\projects\sarcopenia-clinic
 ```
 
-直接雙擊開 `index.html` 也可以（無外部相依），但用 http 比較接近實際部署環境。
+直接雙擊開 `index.html` 也可以（無外部相依），但**以 `file://` 開啟時 Service Worker
+不會註冊**，測不到離線與更新提示，頁尾會顯示「不支援（此頁未透過網址開啟）」。
+要驗離線就得走 http。驗證方式：連著開一次讓 SW 裝好 → 關掉伺服器 → 重新整理，
+頁面應該照常出現。

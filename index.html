@@ -4,6 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>肌少症篩檢紀錄工具｜門診・社區</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#1f6f8b">
+<link rel="icon" href="./icon-192.png">
+<link rel="apple-touch-icon" href="./icon-192.png">
 <style>
 :root{
   --bg:#f6f7f9; --card:#fff; --ink:#1c2024; --muted:#5c6670; --line:#dde1e6;
@@ -78,6 +82,18 @@ footer{margin-top:24px;padding-top:14px;border-top:1px solid var(--line);
 footer a{color:var(--accent)}
 .todo{background:var(--warnbg);border:1px solid var(--warn);border-radius:8px;
   padding:10px 12px;font-size:.85rem;margin-bottom:14px}
+.bar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+  border-radius:8px;padding:10px 12px;font-size:.85rem;margin-bottom:14px}
+.bar-update{background:var(--okbg);border:1px solid var(--ok)}
+.bar-offline{background:var(--warnbg);border:1px solid var(--warn)}
+.bar button{flex:none}
+.guide{margin:0 0 14px;background:var(--card)}
+.guide summary{font-size:1rem}
+.guide h4{margin:14px 0 4px;font-size:.95rem}
+.guide h4:first-of-type{margin-top:10px}
+.guide ol,.guide ul{margin:4px 0 0;padding-left:20px;font-size:.9rem;color:var(--ink);line-height:1.7}
+.guide li{margin:3px 0}
+.guide .warn-note{color:var(--warn);font-weight:600}
 </style>
 </head>
 <body>
@@ -86,10 +102,62 @@ footer a{color:var(--accent)}
 <h1>肌少症篩檢紀錄工具</h1>
 <p class="sub">門診／社區通用｜SARC-CalF 初篩 → AWGS 2019 判定</p>
 
+<div class="bar bar-update hidden" id="updateBar">
+  <span><b>已有新版本</b>　更新會重新載入頁面，請先送出目前這一位。</span>
+  <button type="button" class="ghost" onclick="applyUpdate()">立即更新</button>
+</div>
+
+<div class="bar bar-offline hidden" id="offlineBar">
+  <span><b>目前離線</b>　仍可正常篩檢，紀錄會存在本機，回到有網路再按「一鍵補送」。</span>
+</div>
+
 <div class="todo" id="setupNotice">
   <b>上線前待辦：</b>尚未設定 Google 表單，送出的資料會先存在這台裝置的本機佇列，
   設定後可一鍵補送。SARC-F 題目措辭亦待替換為指定的已驗證中文版。
 </div>
+
+<details class="guide" id="guide">
+  <summary>使用說明（含離線操作）</summary>
+
+  <h4>這是什麼</h4>
+  <ul>
+    <li>兩段式肌少症篩檢：先做 <b>SARC-F ＋ 小腿圍</b> 初篩，再依 <b>AWGS 2019</b> 用握力與五次起坐判定。</li>
+    <li>門診與社區通用。資料只送出代號與數值，<b>不含姓名與電話</b>。</li>
+  </ul>
+
+  <h4>每天開工前（每台裝置各做一次）</h4>
+  <ol>
+    <li>選<b>本機工作站代碼</b>（A–H）。<span class="warn-note">每台平板／筆電要各給一個不同的字母，一整天不要改</span>——沒設定的話兩台會產生一樣的代號，紙本對照表就會對到錯的人。</li>
+    <li>選<b>受檢場域</b>（門診／社區），統計會分開列。</li>
+  </ol>
+
+  <h4>每位受檢者</h4>
+  <ol>
+    <li>代號<b>自動產生</b>。姓名請寫在現場紙本對照表，<span class="warn-note">不要輸入這個工具</span>。</li>
+    <li>填 SARC-F 五題與小腿圍 → 按<b>「計算初篩結果」</b>。</li>
+    <li><b>初篩陽性</b>：接著量握力，五次起坐有時間就做。<br>
+        <b>初篩陰性</b>：第 3 段一樣可以填（選填）。SARC-F 對早期肌少症敏感度有限，<b>初篩陰性不等於沒有肌少症</b>，時間允許建議仍量握力。</li>
+    <li>按<b>「產生判定結果」</b>看判定，確認無誤後按<b>「送出並開始下一位」</b>。</li>
+  </ol>
+
+  <h4>容易踩的兩個坑</h4>
+  <ul>
+    <li>握力／五次起坐<b>填了就一定要按「產生判定結果」</b>，否則那兩個數字不會被記錄（系統會擋下來提醒你）。</li>
+    <li>五次起坐<b>留空</b>時，結果會標為「部分評估」——嚴重肌少症需肌力與體能同時低下才能認定，<b>留空就無法排除</b>。</li>
+  </ul>
+
+  <h4>離線使用</h4>
+  <ol>
+    <li><b>第一次一定要連著網路開啟一次</b>，工具才會存進這台裝置。<span class="warn-note">從沒開過的裝置，離線是打不開的</span>。</li>
+    <li>建議用瀏覽器選單的<b>「加到主畫面」</b>，之後像 App 一樣點圖示就開（深藍底白色「肌」字）。</li>
+    <li>之後<b>斷網也能正常篩檢</b>。離線時最上方會出現橘色「目前離線」提示列。</li>
+    <li>離線期間的紀錄<b>存在這台裝置</b>。回到有網路後切到<b>「今日統計」</b>分頁，按<b>「一鍵補送」</b>。</li>
+    <li>要離線很久、或收工前要換裝置，先按<b>「匯出 CSV 備份」</b>。清瀏覽器資料會把未送出的紀錄一起清掉。</li>
+    <li>出現綠色<b>「已有新版本」</b>時，<span class="warn-note">先把手上這位送出</span>再按「立即更新」——更新會重新載入頁面。</li>
+  </ol>
+  <p class="hint">頁尾會顯示目前版本與離線狀態，可以用來確認每台裝置跑的是不是同一版。<br>
+     病人掃結果頁的衛教 QR 時，需要<b>他自己手機的網路</b>，這點離線功能幫不上。</p>
+</details>
 
 <div class="tabs">
   <button id="tabScreen" aria-selected="true" onclick="showView('screen')">篩檢</button>
@@ -188,6 +256,7 @@ footer a{color:var(--accent)}
     <div class="qblock">
       <p class="q">小腿圍（公分）</p>
       <input type="number" id="calf" inputmode="decimal" step="0.1" min="15" max="70" placeholder="例如 30.5">
+      <p class="hint">切點：男性 &lt; 34 cm、女性 &lt; 33 cm 為偏低。</p>
       <details>
         <summary>量測方式（每位受檢者都照這個做，數字才能互相比較）</summary>
         <ol>
@@ -206,19 +275,21 @@ footer a{color:var(--accent)}
 
   <div class="card hidden" id="cardStage2">
     <h2><span class="step">3</span>AWGS 2019 判定</h2>
-    <p class="hint" style="margin-bottom:14px">初篩陽性，請繼續完成握力與五次起坐。</p>
+    <div id="stage1Sum"></div>
+    <p class="hint" id="stage2Hint" style="margin-bottom:14px">請繼續完成握力與五次起坐。</p>
 
     <label for="grip">最大握力（公斤）</label>
     <input type="number" id="grip" inputmode="decimal" step="0.1" min="0" max="100" placeholder="慣用手兩次取最大值">
     <p class="hint">切點：男性 &lt; 28 kg、女性 &lt; 18 kg 為低肌力。</p>
 
-    <label for="sts">五次起坐時間（秒）</label>
+    <label for="sts">五次起坐時間（秒）<span style="font-weight:400;color:var(--muted)">· 選填</span></label>
     <div class="row">
       <input type="number" id="sts" inputmode="decimal" step="0.1" min="0" max="120" placeholder="例如 13.5">
       <span class="timer" id="clock">0.0</span>
       <button type="button" class="ghost" id="btnTimer" onclick="toggleTimer()">開始</button>
     </div>
-    <p class="hint">雙手抱胸，不用手撐，連續起立坐下 5 次。<b>≥ 12 秒</b>為低體能表現。</p>
+    <p class="hint">雙手抱胸，不用手撐，連續起立坐下 5 次。<b>≥ 12 秒</b>為低體能表現。<br>
+      沒時間做可以留空，但<b>留空就無法認定嚴重肌少症</b>（需肌力與體能同時低下），結果會標為部分評估。</p>
 
     <button type="button" class="primary" onclick="doStage2()">產生判定結果</button>
     <p class="err hidden" id="err2"></p>
@@ -272,7 +343,7 @@ footer a{color:var(--accent)}
 </div>
 
 <footer>
-  製作：潘湘如醫師｜家醫科　·　v0.1.0（2026-07-29）<br>
+  製作：潘湘如醫師｜家醫科　·　v<span id="appVer">—</span>　·　離線狀態：<span id="swState">檢查中…</span><br>
   問題回報：<a href="https://github.com/philia81301-commits/sarcopenia-clinic/issues" target="_blank" rel="noopener">GitHub Issues</a><br>
   判定依據 AWGS 2019 共識；小腿圍僅作為社區篩檢的肌肉量代理指標，確診須以 DXA 或 BIA 評估。<br>
   SARC-F 題目中文措辭為暫用版本，正式使用前將替換為指定之已驗證中文版並標註引用出處。<br>
@@ -299,6 +370,7 @@ const K_LOG   = "sarc_log_v1";
 const K_SEQ   = "sarc_seq_v1";
 const K_CUR   = "sarc_cur_v1";
 const K_WS    = "sarc_ws_v1";   // 本機工作站代碼，防止多台裝置撞號
+const K_GUIDE = "sarc_guide_v1"; // 使用說明展開與否（第一次開工具預設展開）
 
 /* ===== 小工具 ===== */
 const $ = id => document.getElementById(id);
@@ -307,6 +379,16 @@ const save = (k, v) => localStorage.setItem(k, JSON.stringify(v));
 const today = () => { const d=new Date();
   return d.getFullYear() + String(d.getMonth()+1).padStart(2,"0") + String(d.getDate()).padStart(2,"0"); };
 const radio = name => { const el = document.querySelector(`input[name="${name}"]:checked`); return el ? el.value : null; };
+
+/* 捲到指定卡片。
+   smooth 捲動在部分瀏覽器會靜靜失效，手機上使用者手指碰到螢幕也會中斷它。
+   捲動失敗就等於「按了沒反應」，所以補一道保險：沒捲到就直接跳過去。 */
+function goTo(el){
+  const y = Math.max(0, el.getBoundingClientRect().top + window.scrollY - 8);
+  try { window.scrollTo({ top:y, behavior:"smooth" }); }
+  catch(e){ window.scrollTo(0, y); }
+  setTimeout(() => { if (Math.abs(window.scrollY - y) > 40) window.scrollTo(0, y); }, 400);
+}
 
 let state = {};
 
@@ -415,14 +497,36 @@ function doStage1(){
   state = { site, code:$("code").value.trim(), birthYear, gender, falls, calf,
             sarcf, sarcCalF, calfLow, positive };
 
+  /* 把「實際套用的切點」寫在數字旁邊。
+     男女切點不同，現場看不到用了哪一個就沒辦法當場核對。 */
+  const sumLine =
+    `SARC-F <b>${sarcf}</b> 分（≥4 為陽性）　·　SARC-CalF <b>${sarcCalF}</b> 分（≥11 為陽性）<br>` +
+    `小腿圍 <b>${calf}</b> cm（${gender === "1" ? "男" : "女"}性切點 &lt;${gender === "1" ? 34 : 33}）　` +
+    `${calfLow ? "🔻 低於切點" : "✅ 正常範圍"}`;
+
+  /* 初篩結果一律當場寫出來。
+     只解除隱藏、靠捲動帶使用者下去，捲動一失效畫面就完全沒變化，
+     看起來就像按鈕壞掉。 */
+  $("stage1Sum").innerHTML = positive
+    ? `<div class="result r-warn"><h3>初篩陽性</h3><p>${sumLine}</p></div>`
+    : `<div class="result r-ok"><h3>初篩陰性</h3><p>${sumLine}<br>` +
+      `以下為<b>選填</b>。SARC-F 對早期肌少症的敏感度有限，時間允許時建議仍量握力與五次起坐。</p></div>`;
+
+  $("stage2Hint").textContent = positive
+    ? "請繼續完成握力與五次起坐。"
+    : "選填：可直接送出，或量完按「產生判定結果」更新判定。";
+
+  /* 初篩陰性也開放第二段。SARC-F 敏感度有限，
+     初篩沒抓到但握力／體能已低下的人，不量就會被整個放掉。 */
+  $("cardStage2").classList.remove("hidden");
+
   if (positive){
-    $("cardStage2").classList.remove("hidden");
     $("cardResult").classList.add("hidden");
-    $("cardStage2").scrollIntoView({behavior:"smooth", block:"start"});
   } else {
     state.result = "screen_negative";
-    renderResult();
+    renderResult(false);   // 陰性先給結果卡，現場可直接送出；捲動交給下面統一處理
   }
+  goTo($("cardStage2"));
 }
 
 /* ===== 第二段：AWGS 2019 ===== */
@@ -430,26 +534,37 @@ function doStage2(){
   const e = $("err2"); e.classList.add("hidden");
   const grip = parseFloat($("grip").value);
   const sts  = parseFloat($("sts").value);
-  const missing = [];
-  if (Number.isNaN(grip)) missing.push("握力");
-  if (Number.isNaN(sts))  missing.push("五次起坐時間");
-  if (missing.length){
-    e.textContent = "還沒填：" + missing.join("、");
+  const hasGrip = !Number.isNaN(grip), hasSts = !Number.isNaN(sts);
+
+  /* 五次起坐改選填 —— 現場常常沒時間做。
+     但兩項都空就沒有東西可以判，至少要有一項。 */
+  if (!hasGrip && !hasSts){
+    e.textContent = "握力與五次起坐至少要填一項才能判定。";
     e.classList.remove("hidden");
     return;
   }
 
-  const gripLow = state.gender === "1" ? grip < 28 : grip < 18;
-  const stsLow  = sts >= 12;
+  /* 沒測到的項目記成 null，不要當成「正常」。
+     嚴重肌少症要肌力與體能同時低下，少一項就不能認定。 */
+  const gripLow = hasGrip ? (state.gender === "1" ? grip < 28 : grip < 18) : null;
+  const stsLow  = hasSts  ? sts >= 12 : null;
   const muscleLow = state.calfLow;
+  const anyLow  = gripLow === true || stsLow === true;
+  const bothLow = gripLow === true && stsLow === true;
 
   let result;
-  if (muscleLow && gripLow && stsLow)      result = "severe";
-  else if (muscleLow && (gripLow||stsLow)) result = "sarcopenia";
-  else if (gripLow || stsLow)              result = "possible";
-  else                                     result = "no_finding";
+  if (muscleLow && bothLow)     result = "severe";
+  else if (muscleLow && anyLow) result = "sarcopenia";
+  else if (anyLow)              result = "possible";
+  else                          result = "no_finding";
 
-  Object.assign(state, { grip, sts, gripLow, stsLow, muscleLow, result });
+  Object.assign(state, {
+    grip: hasGrip ? grip : undefined,
+    sts:  hasSts  ? sts  : undefined,
+    gripLow, stsLow, muscleLow, result,
+    partial: !(hasGrip && hasSts),
+    stage2Done: true
+  });
   renderResult();
 }
 
@@ -457,7 +572,7 @@ function doStage2(){
 const RESULTS = {
   screen_negative: { cls:"r-ok",   title:"初篩陰性",
     body:"目前沒有肌少症的警訊。建議維持每週規律的阻抗運動與足夠蛋白質攝取，明年再篩一次。" },
-  no_finding: { cls:"r-ok", title:"初篩陽性，但肌力與體能未達切點",
+  no_finding: { cls:"r-ok", title:"肌力與體能均未達切點",
     body:"握力與五次起坐都在正常範圍。建議 3–6 個月後再評估一次，並先開始阻抗運動與蛋白質衛教。" },
   possible: { cls:"r-warn", title:"肌少症可能（Possible sarcopenia）",
     body:"肌力或體能表現已低於切點。依 AWGS 2019，社區場域此時就應開始介入，不必等確診。建議轉介評估並立即開始運動與營養衛教。" },
@@ -467,19 +582,55 @@ const RESULTS = {
     body:"小腿圍偏低，且肌力與體能表現<b>同時</b>低下。請優先安排轉介評估（含跌倒風險與骨質疏鬆評估），並立即開始介入。" }
 };
 
-function renderResult(){
+function renderResult(scroll = true){
   const r = RESULTS[state.result];
+
+  /* 初篩沒抓到、加測才發現低下的個案要標出來。
+     這正是開放陰性加測的理由，報表回頭看時也要知道是怎麼抓到的。 */
+  const missedByScreen = state.positive === false &&
+    ["possible","sarcopenia","severe"].includes(state.result);
+  const note = missedByScreen
+    ? `<p><b>注意：</b>本案初篩未達切點，是加測後才發現肌力或體能低下。` +
+      `SARC-F 對早期肌少症敏感度有限，<b>以實測結果為準</b>。</p>`
+    : "";
+
+  /* 少測一項就不是完整判定，要講明白，
+     否則「疑似肌少症」看起來會像已經排除了嚴重肌少症。 */
+  const partialNote = state.partial
+    ? `<p><b>部分評估：</b>本次未測${state.grip === undefined ? "握力" : "五次起坐"}。` +
+      (state.sts === undefined
+        ? `嚴重肌少症需肌力與體能<b>同時</b>低下才能認定，本案<b>無法排除</b>，請補測或轉介。`
+        : `判定僅依五次起坐，建議補測握力。`) +
+      `</p>`
+    : "";
+
+  /* 少測一項時不能宣稱「肌力與體能均未達切點」—— 沒測的那項根本沒資料 */
+  const incomplete = state.partial && state.result === "no_finding";
+  const title = incomplete ? "已測項目均未達切點" : r.title;
+  const body  = incomplete
+    ? "已完成的項目都在正常範圍。建議 3–6 個月後再評估一次，並先開始阻抗運動與蛋白質衛教。"
+    : r.body;
+
   $("resultBox").innerHTML =
-    `<div class="result ${r.cls}"><h3>${r.title}</h3><p>${r.body}</p></div>`;
+    `<div class="result ${r.cls}"><h3>${title}</h3><p>${body}</p>${note}${partialNote}</div>`;
 
   const f = [];
   f.push(`SARC-F 分數：<b>${state.sarcf}</b> 分（≥4 為陽性）`);
   f.push(`SARC-CalF 分數：<b>${state.sarcCalF}</b> 分（≥11 為陽性）`);
-  f.push(`小腿圍 <b>${state.calf}</b> cm　${state.calfLow ? "🔻 低於切點" : "✅ 正常範圍"}`);
-  if (state.result !== "screen_negative"){
-    f.push(`握力 <b>${state.grip}</b> kg　${state.gripLow ? "🔻 低肌力" : "✅ 正常範圍"}`);
-    f.push(`五次起坐 <b>${state.sts}</b> 秒　${state.stsLow ? "🔻 低體能表現" : "✅ 正常範圍"}`);
-  }
+  /* 明細一律標出實際套用的切點，男女不同，事後回查才有依據 */
+  const male = state.gender === "1";
+  f.push(`小腿圍 <b>${state.calf}</b> cm（切點 &lt;${male ? 34 : 33}）　${state.calfLow ? "🔻 低於切點" : "✅ 正常範圍"}`);
+  /* 兩項各自判斷有沒有量到。沒量到就明寫「未測」，
+     不要讓空白看起來像「測了、正常」。 */
+  if (state.grip !== undefined)
+    f.push(`握力 <b>${state.grip}</b> kg（切點 &lt;${male ? 28 : 18}）　${state.gripLow ? "🔻 低肌力" : "✅ 正常範圍"}`);
+  else if (state.stage2Done)
+    f.push(`握力 <b>未測</b>`);
+
+  if (state.sts !== undefined)
+    f.push(`五次起坐 <b>${state.sts}</b> 秒（切點 ≥12）　${state.stsLow ? "🔻 低體能表現" : "✅ 正常範圍"}`);
+  else if (state.stage2Done)
+    f.push(`五次起坐 <b>未測</b>`);
   f.push(`過去一年跌倒 <b>${state.falls}</b> 次`);
   $("flags").innerHTML = f.map(x => `<li>${x}</li>`).join("");
 
@@ -487,13 +638,25 @@ function renderResult(){
   $("cardResult").classList.remove("hidden");
   $("err3").classList.add("hidden");
   $("btnSubmit").disabled = false;
-  $("cardResult").scrollIntoView({behavior:"smooth", block:"start"});
+  if (scroll) goTo($("cardResult"));
 }
 
 /* ===== 送出 ===== */
 function isPositive(s){ return s.result !== "screen_negative" && s.result !== "no_finding"; }
 
 function submitRecord(){
+  /* 第二段變成選填之後，最容易犯的錯是量了、填了，卻沒按「產生判定結果」就送出，
+     那兩個數字會被默默丟掉。擋下來，不要讓現場白量。 */
+  const num = v => { const n = parseFloat(v); return Number.isNaN(n) ? null : n; };
+  if (num($("grip").value) !== (state.grip ?? null) ||
+      num($("sts").value)  !== (state.sts  ?? null)){
+    const e = $("err2");   // 訊息要落在「產生判定結果」那顆按鈕旁邊，不是下方的結果卡
+    e.textContent = "握力／五次起坐的數字和目前判定不一致，請先按「產生判定結果」重新計算，否則不會被記錄。";
+    e.classList.remove("hidden");
+    goTo($("cardStage2"));
+    return;
+  }
+
   const rec = {
     site: state.site, code: state.code, birthYear: state.birthYear, gender: state.gender,
     falls: state.falls, calf: state.calf, sarcf: state.sarcf,
@@ -610,11 +773,79 @@ function resetAll(){
   $("fallsScore").textContent = "0 次 = 0 分｜1–3 次 = 1 分｜4 次以上 = 2 分";
   $("cardStage2").classList.add("hidden");
   $("cardResult").classList.add("hidden");
+  $("stage1Sum").innerHTML = "";
+  $("stage2Hint").textContent = "請繼續完成握力與五次起坐。";
   $("err1").classList.add("hidden");
   $("err2").classList.add("hidden");
   state = {};
   newCode();
-  window.scrollTo({top:0, behavior:"smooth"});
+  try { window.scrollTo({top:0, behavior:"smooth"}); } catch(e){ window.scrollTo(0,0); }
+  setTimeout(() => { if (window.scrollY > 40) window.scrollTo(0,0); }, 400);
+}
+
+/* ===== 使用說明 =====
+   第一次開這個工具時展開，之後記住使用者自己的選擇。
+   現場熟手每天被一大段說明擋住會很煩，新手又需要看到。 */
+function initGuide(){
+  const g = $("guide");
+  g.open = load(K_GUIDE, true);
+  g.addEventListener("toggle", () => save(K_GUIDE, g.open));
+}
+
+/* ===== 離線支援 =====
+   改版時 APP_VERSION 要和 sw.js 的 VERSION 一起改。
+   版本號印在頁尾，是為了能當場問「這台跑的是哪一版」。 */
+const APP_VERSION = "0.2.0";
+let waitingWorker = null;
+
+function applyUpdate(){
+  if (!waitingWorker){ location.reload(); return; }
+  waitingWorker.postMessage({ type:"SKIP_WAITING" });
+}
+
+function updateOnlineState(){
+  $("offlineBar").classList.toggle("hidden", navigator.onLine);
+}
+window.addEventListener("online",  updateOnlineState);
+window.addEventListener("offline", updateOnlineState);
+
+function initOffline(){
+  $("appVer").textContent = APP_VERSION;
+  updateOnlineState();
+
+  if (!("serviceWorker" in navigator) || location.protocol === "file:"){
+    $("swState").textContent = "不支援（此頁未透過網址開啟）";
+    return;
+  }
+
+  /* 首次安裝時 Service Worker 也會接手頁面，那不算「更新」，不能重載，
+     否則現場第一次開工具就會在填到一半時被刷掉。 */
+  const hadController = !!navigator.serviceWorker.controller;
+  let reloading = false;
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    if (!hadController || reloading) return;
+    reloading = true;
+    location.reload();
+  });
+
+  navigator.serviceWorker.register("./sw.js").then(reg => {
+    $("swState").textContent = hadController ? "可離線使用" : "安裝中…";
+
+    const watch = w => {
+      if (!w) return;
+      w.addEventListener("statechange", () => {
+        if (w.state === "installed" && navigator.serviceWorker.controller){
+          waitingWorker = w;                              // 新版待命，等使用者決定何時換
+          $("updateBar").classList.remove("hidden");
+        }
+        if (w.state === "activated") $("swState").textContent = "可離線使用";
+      });
+    };
+
+    if (reg.waiting){ waitingWorker = reg.waiting; $("updateBar").classList.remove("hidden"); }
+    watch(reg.installing);
+    reg.addEventListener("updatefound", () => watch(reg.installing));
+  }).catch(() => { $("swState").textContent = "離線功能無法啟用"; });
 }
 
 /* ===== 啟動：載入時一律清空，防止殘留上一位 ===== */
@@ -623,6 +854,8 @@ window.addEventListener("load", () => {
   state = {};
   resumeCode();
   renderStats();
+  initGuide();
+  initOffline();
   if (FORM_ID) $("setupNotice").classList.add("hidden");
 });
 </script>
