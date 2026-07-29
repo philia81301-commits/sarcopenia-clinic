@@ -87,13 +87,6 @@ footer a{color:var(--accent)}
 .bar-update{background:var(--okbg);border:1px solid var(--ok)}
 .bar-offline{background:var(--warnbg);border:1px solid var(--warn)}
 .bar button{flex:none}
-.guide{margin:0 0 14px;background:var(--card)}
-.guide summary{font-size:1rem}
-.guide h4{margin:14px 0 4px;font-size:.95rem}
-.guide h4:first-of-type{margin-top:10px}
-.guide ol,.guide ul{margin:4px 0 0;padding-left:20px;font-size:.9rem;color:var(--ink);line-height:1.7}
-.guide li{margin:3px 0}
-.guide .warn-note{color:var(--warn);font-weight:600}
 </style>
 </head>
 <body>
@@ -115,49 +108,6 @@ footer a{color:var(--accent)}
   <b>上線前待辦：</b>尚未設定 Google 表單，送出的資料會先存在這台裝置的本機佇列，
   設定後可一鍵補送。SARC-F 題目措辭亦待替換為指定的已驗證中文版。
 </div>
-
-<details class="guide" id="guide">
-  <summary>使用說明（含離線操作）</summary>
-
-  <h4>這是什麼</h4>
-  <ul>
-    <li>兩段式肌少症篩檢：先做 <b>SARC-F ＋ 小腿圍</b> 初篩，再依 <b>AWGS 2019</b> 用握力與五次起坐判定。</li>
-    <li>門診與社區通用。資料只送出代號與數值，<b>不含姓名與電話</b>。</li>
-  </ul>
-
-  <h4>每天開工前（每台裝置各做一次）</h4>
-  <ol>
-    <li>選<b>本機工作站代碼</b>（A–H）。<span class="warn-note">每台平板／筆電要各給一個不同的字母，一整天不要改</span>——沒設定的話兩台會產生一樣的代號，紙本對照表就會對到錯的人。</li>
-    <li>選<b>受檢場域</b>（門診／社區），統計會分開列。</li>
-  </ol>
-
-  <h4>每位受檢者</h4>
-  <ol>
-    <li>代號<b>自動產生</b>。姓名請寫在現場紙本對照表，<span class="warn-note">不要輸入這個工具</span>。</li>
-    <li>填 SARC-F 五題與小腿圍 → 按<b>「計算初篩結果」</b>。</li>
-    <li><b>初篩陽性</b>：接著量握力，五次起坐有時間就做。<br>
-        <b>初篩陰性</b>：第 3 段一樣可以填（選填）。SARC-F 對早期肌少症敏感度有限，<b>初篩陰性不等於沒有肌少症</b>，時間允許建議仍量握力。</li>
-    <li>按<b>「產生判定結果」</b>看判定，確認無誤後按<b>「送出並開始下一位」</b>。</li>
-  </ol>
-
-  <h4>容易踩的兩個坑</h4>
-  <ul>
-    <li>握力／五次起坐<b>填了就一定要按「產生判定結果」</b>，否則那兩個數字不會被記錄（系統會擋下來提醒你）。</li>
-    <li>五次起坐<b>留空</b>時，結果會標為「部分評估」——嚴重肌少症需肌力與體能同時低下才能認定，<b>留空就無法排除</b>。</li>
-  </ul>
-
-  <h4>離線使用</h4>
-  <ol>
-    <li><b>第一次一定要連著網路開啟一次</b>，工具才會存進這台裝置。<span class="warn-note">從沒開過的裝置，離線是打不開的</span>。</li>
-    <li>建議用瀏覽器選單的<b>「加到主畫面」</b>，之後像 App 一樣點圖示就開（深藍底白色「肌」字）。</li>
-    <li>之後<b>斷網也能正常篩檢</b>。離線時最上方會出現橘色「目前離線」提示列。</li>
-    <li>離線期間的紀錄<b>存在這台裝置</b>。回到有網路後切到<b>「今日統計」</b>分頁，按<b>「一鍵補送」</b>。</li>
-    <li>要離線很久、或收工前要換裝置，先按<b>「匯出 CSV 備份」</b>。清瀏覽器資料會把未送出的紀錄一起清掉。</li>
-    <li>出現綠色<b>「已有新版本」</b>時，<span class="warn-note">先把手上這位送出</span>再按「立即更新」——更新會重新載入頁面。</li>
-  </ol>
-  <p class="hint">頁尾會顯示目前版本與離線狀態，可以用來確認每台裝置跑的是不是同一版。<br>
-     病人掃結果頁的衛教 QR 時，需要<b>他自己手機的網路</b>，這點離線功能幫不上。</p>
-</details>
 
 <div class="tabs">
   <button id="tabScreen" aria-selected="true" onclick="showView('screen')">篩檢</button>
@@ -370,7 +320,6 @@ const K_LOG   = "sarc_log_v1";
 const K_SEQ   = "sarc_seq_v1";
 const K_CUR   = "sarc_cur_v1";
 const K_WS    = "sarc_ws_v1";   // 本機工作站代碼，防止多台裝置撞號
-const K_GUIDE = "sarc_guide_v1"; // 使用說明展開與否（第一次開工具預設展開）
 
 /* ===== 小工具 ===== */
 const $ = id => document.getElementById(id);
@@ -783,19 +732,10 @@ function resetAll(){
   setTimeout(() => { if (window.scrollY > 40) window.scrollTo(0,0); }, 400);
 }
 
-/* ===== 使用說明 =====
-   第一次開這個工具時展開，之後記住使用者自己的選擇。
-   現場熟手每天被一大段說明擋住會很煩，新手又需要看到。 */
-function initGuide(){
-  const g = $("guide");
-  g.open = load(K_GUIDE, true);
-  g.addEventListener("toggle", () => save(K_GUIDE, g.open));
-}
-
 /* ===== 離線支援 =====
    改版時 APP_VERSION 要和 sw.js 的 VERSION 一起改。
    版本號印在頁尾，是為了能當場問「這台跑的是哪一版」。 */
-const APP_VERSION = "0.2.0";
+const APP_VERSION = "0.2.1";
 let waitingWorker = null;
 
 function applyUpdate(){
@@ -854,7 +794,6 @@ window.addEventListener("load", () => {
   state = {};
   resumeCode();
   renderStats();
-  initGuide();
   initOffline();
   if (FORM_ID) $("setupNotice").classList.add("hidden");
 });
