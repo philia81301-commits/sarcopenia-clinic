@@ -29,6 +29,20 @@
 | `sarcopenia` | 疑似肌少症 |
 | `severe` | 疑似嚴重肌少症 |
 
+## 最快的建法：用 `tools/create-google-form.gs`
+
+手動建 11 題再逐一抓 `entry.` 編號很容易漏。改用附的 Apps Script 一次做完：
+
+1. 開 https://script.google.com/ → **新增專案**
+2. 把 `tools/create-google-form.gs` 的內容整個貼進去，取代原本的 `myFunction`
+3. 上方函式選 **`createSarcopeniaForm`** → **執行** → 第一次會要求授權，允許
+4. 執行完成後看**執行紀錄**，把印出來的 `FORM_ID` 與 `ENTRY` 兩段直接貼回 `index.html` 最上方
+
+它會一併建好回應試算表並連結好，題目全部是簡答、全部非必填。
+
+> **要用個人 Google 帳號跑。** 醫院或公司的 Workspace 帳號可能預設限制「僅組織內可填寫」，
+> 那樣現場平板會靜默送不出去。跑完務必實際送一筆測試資料確認回應表有進資料。
+
 ## 建立表單時的注意事項
 
 - **全部用「簡答」題型**，不要用下拉或單選。程式是背景 POST，選項題只要值對不上就會被 Google 靜默拒收。

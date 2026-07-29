@@ -18,6 +18,7 @@
 | `docs/google-form-fields.md` | Google 表單欄位對照表與建表注意事項 |
 | `tools/make-qr.py` | 重新產生並嵌入衛教頁 QR（只有網址變更時才需要跑） |
 | `tools/make-icons.py` | 重新產生 PWA 圖示 |
+| `tools/create-google-form.gs` | Apps Script：一鍵建立表單與回應試算表，並印出 `FORM_ID`／`ENTRY` |
 | `rdq/` | RDQ 需求規格卡 |
 
 ## 臨床與資料守則（不可違反）
@@ -62,8 +63,9 @@
 - [ ] 手機實掃 QR 驗證
 - [ ] 替換 SARC-F 為指定的已驗證中文版並補引用出處
 - [ ] 骨鬆專案入口頁互放連結
-- 🔮 **接 Google 表單（`FORM_ID`／`ENTRY`）——未來視使用情形再決定**，不是待辦。
-      目前資料只存各台裝置本機，**每日收工必須匯出 CSV**（見 `handoff.md`）。
+- [ ] **接 Google 表單**（`FORM_ID`／`ENTRY`）作為將來統計分析的資料來源。
+      用 `tools/create-google-form.gs` 一鍵建表並取得 entry 編號。
+      **接上之前**資料只存各台裝置本機，每日收工必須匯出 CSV。
 
 ## 部署
 
