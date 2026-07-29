@@ -83,4 +83,4 @@ git clone https://github.com/philia81301-commits/sarcopenia-clinic.git C:\projec
 
 ## 🕐 最後更新
 
-2026-07-29　·　阿克（Claude Code）@ X108521（醫院）　·　v0.2.1　·　Git push：待推
+2026-07-29　·　阿克（Claude Code）@ X108521（醫院）　·　v0.2.1　·　Git push：✅ 已推（`95db796`）
