@@ -2,9 +2,10 @@
 
 ## ⏯️ 目前做到哪
 
-**v0.2.2**。2026-07-29 在醫院那台（X108521）修掉一個會讓現場誤判「工具壞掉」的 bug，
+**v0.2.4**。2026-07-30 把三個版本號統一（`education.html` 原本一路停在 v0.1.0）。
+在此之前：2026-07-29 在醫院那台（X108521）修掉一個會讓現場誤判「工具壞掉」的 bug，
 依門診實際需求擴充判定流程，補上真正的離線能力；回到家裡這台後修復代號的日期字首預設，
-並確定**暫不接 Google 表單**。
+並接上 Google 表單。
 
 - **線上版**：https://philia81301-commits.github.io/sarcopenia-clinic/
 - **衛教頁（QR 指向處）**：https://philia81301-commits.github.io/sarcopenia-clinic/education.html
@@ -25,6 +26,17 @@
 7. ~~首頁使用說明~~ ——**已於 v0.2.1 移除**（現場判斷太複雜）。離線操作說明改放 README。
 8. **v0.2.2**：加入工作站代碼後，未選工作站時代號欄變成全空，失去原本一載入就看得到
    日期字首的行為。現在一律先填 `20260729-`，選好工作站才補上流水號；只有字首時送出會被擋。
+
+### 2026-07-30 改了什麼
+
+**只有版本號，功能與內容一字未動。** 三處統一到 **0.2.4（2026-07-30）**：
+`sw.js` 的 `VERSION`、`index.html` 的 `APP_VERSION`、`education.html` 頁尾的硬編字串。
+
+- **為什麼要 bump 而不是把 education 標成 0.2.3**：`sw.js` 的 `PRECACHE` 有快取
+  `education.html`，不動 `VERSION` 的話已「加到主畫面」的裝置不會拿到新版。
+- 根因是 `agents.md` 的部署段只寫「同步**兩個**版本號」，漏了 `education.html`
+  ——它是硬編、沒有 JS 會漏改。已改成三個並做成表格，`sw.js` 與 `index.html` 的註解也補上。
+- **已用本機 http 伺服器驗過**：三處都顯示 0.2.4、Service Worker 狀態「可離線使用」、Console 無錯誤。
 
 ## 🚦 目前狀態
 
@@ -47,6 +59,8 @@
 1. **在真實平板上驗離線**：連網開一次 →「加到主畫面」→ 關 WiFi → 重開。
    （桌機已驗過，平板未驗。）
 2. **用手機實際掃一次結果頁的 QR**，確認連得到衛教頁。尚未實際掃描驗證。
+   > 衛教 QR **已經存在、不需重產**：`tools/qr-education.svg`（原始檔）＋ `index.html`
+   > 內嵌的同一份 inline SVG。指向的網址沒變過，改版本號不影響它。
 3. **替換 SARC-F 中文題目** —— 目前是暫用措辭，頁尾已誠實標註。
 4. 骨鬆專案入口頁加一條連到本工具的連結（要動另一個 repo）。
 
@@ -66,8 +80,9 @@
 
 ## ⚠️ 注意事項
 
-- **改版務必同步 `sw.js` 的 `VERSION` 與 `index.html` 的 `APP_VERSION`**，
-  否則既有裝置上的圖示、manifest 不會更新。網頁本身是 network-first，連得上網就拿最新版。
+- **改版務必同步三個版本號**：`sw.js` 的 `VERSION`、`index.html` 的 `APP_VERSION`、
+  **`education.html` 頁尾的硬編 `v?.?.?`**（第三項最容易漏，2026-07-30 就是這樣不同步的）。
+  否則既有裝置上的圖示、manifest、衛教頁不會更新。網頁本身是 network-first，連得上網就拿最新版。
 - **從沒連網開過的裝置離線打不開**；`file://` 直接開啟時 Service Worker 不會註冊，
   頁尾會顯示「不支援（此頁未透過網址開啟）」。要驗離線就得走 http。
 - **病人掃衛教 QR 需要他自己手機的網路**，離線功能保護不到。
@@ -83,10 +98,10 @@
   `git clone https://github.com/mathruffian-dot/rdq-skill.git $env:USERPROFILE\.claude\skills\rdq`
   醫院這台（X108521）今天已補裝。`chezmoi update` 不會帶進來。
 
-## 🔁 下次在家裡筆電接手
+## 🔁 跨電腦接手
 
-今天在**醫院電腦 X108521** 收工，下次在**家裡筆電**繼續。
-**開工第一件事：`git pull`**，否則會蓋掉今天的成果。
+2026-07-30 在**家裡筆電 DESKTOP-LVSV9Q5** 收工。
+**開工第一件事：`git pull`**，否則會蓋掉上次的成果。
 
 ```
 cd C:\projects\sarcopenia-clinic
@@ -101,6 +116,10 @@ git clone https://github.com/philia81301-commits/sarcopenia-clinic.git C:\projec
 
 ## 🕐 最後更新
 
-2026-07-29　·　阿克（Claude Code）@ DESKTOP-LVSV9Q5（家）　·　v0.2.3　·　Git push：✅ 已推（`f17450c`）
+2026-07-30　·　阿克（Claude Code, Opus 5）@ DESKTOP-LVSV9Q5（家）　·　**v0.2.4**　·　Git push：待推
 
-前一筆：2026-07-29 @ X108521（醫院）· v0.2.1 · `95db796`
+前一筆：2026-07-29 @ DESKTOP-LVSV9Q5（家）· v0.2.3 · `f17450c`
+再前一筆：2026-07-29 @ X108521（醫院）· v0.2.1 · `95db796`
+
+> L3 Obsidian：本專案**未建立**筆記（未經 project-init、`agents.md` 未登記 vault 路徑），
+> 因此本次同樣沒有 L3 紀錄。要補的話先跑 project-init。

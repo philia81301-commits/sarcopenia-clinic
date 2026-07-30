@@ -71,8 +71,16 @@
 
 公開 repo ＋ GitHub Pages，root 的 `index.html`。改檔 → commit → push，Pages 約 1–2 分鐘重建。
 
-**改版務必同步兩個版本號**：`sw.js` 的 `VERSION` 與 `index.html` 的 `APP_VERSION`。
-沒改的話，既有裝置上 cache-first 的檔案（圖示、manifest）不會更新。
+**改版務必同步三個版本號**（2026-07-30 更正，原本只寫兩個）：
+
+| # | 位置 | 形式 |
+|---|---|---|
+| 1 | `sw.js` 的 `VERSION` | 常數 |
+| 2 | `index.html` 的 `APP_VERSION` | 常數，JS 填進頁尾 `#appVer` |
+| 3 | `education.html` 頁尾的 `v?.?.?` | **硬編字串，沒有 JS，最容易漏改** |
+
+第 3 項原本沒寫進這裡，結果 `education.html` 一路停在 v0.1.0，直到 2026-07-30 才發現並統一到 0.2.4。
+沒改的話，既有裝置上 cache-first 的檔案（圖示、manifest）不會更新；`education.html` 也在 `PRECACHE` 裡。
 網頁本身是 network-first，只要裝置連得上網就一定拿到最新版，這是刻意的取捨——
 臨床工具最怕平板卡在舊版沒人發現。
 

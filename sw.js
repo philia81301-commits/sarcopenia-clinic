@@ -6,10 +6,14 @@
  * 只要連得上網就一定拿到最新版，連不上才回退到快取。
  * 臨床工具最怕的是平板卡在舊版本卻沒人發現，寧可慢一點也不要用到過期的判定邏輯。
  *
- * 改版時記得同步更新 VERSION，以及 index.html 裡的 APP_VERSION。
+ * 改版時三個地方要一起改，它們是同一個版本號：
+ *   1. 本檔的 VERSION
+ *   2. index.html 的 APP_VERSION
+ *   3. education.html 頁尾的 v?.?.?（硬編在頁尾，沒有 JS 會漏改）
+ * （2026-07-30 起統一；在那之前 education.html 一直落在 0.1.0。）
  */
 
-const VERSION = "0.2.3";
+const VERSION = "0.2.4";
 const CACHE = `sarc-v${VERSION}`;
 const NET_TIMEOUT = 3000;   // 網路多久沒回應就改用快取（毫秒）
 
