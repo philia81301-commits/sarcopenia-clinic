@@ -12,6 +12,8 @@
 | `README.md` | 公開 repo 首頁：用途、現場注意事項、限制與授權 |
 | `index.html` | 主工具（單頁、原生 JS、無外部相依、可離線） |
 | `education.html` | 靜態衛教頁，QR code 指向這裡，**不含任何個人資料** |
+| `quiz.html` | 衛教測驗分享頁：海報圖＋Wordwall 測驗嵌入＋連回 education.html，**獨立頁面、不影響篩檢流程** |
+| `images/sarcopenia-quiz-poster.jpg` | 衛教海報（NotebookLM 生成，已人工修正 AI 生圖亂碼文字，見 handoff.md） |
 | `sw.js` | Service Worker。網頁 network-first、其餘 cache-first |
 | `manifest.webmanifest` | PWA 設定 |
 | `icon-*.png` | PWA 圖示（`tools/make-icons.py` 產生） |
@@ -66,6 +68,13 @@
 - [x] **接 Google 表單**（2026-07-29，已端到端驗證，含性別編碼交叉驗證）。
       回應試算表即統計分析的資料來源，連結見 `handoff.md`。
       **改表單時不要動題目順序或刪題重建**，`entry` 編號會變。
+- [x] **Wordwall 衛教測驗**（2026-08-05）：`肌少症衛教小測驗`，10 題選擇題，Indigo 主題。
+      連結與嵌入細節見 `handoff.md`「🔗 Wordwall 測驗」。
+- [x] **NotebookLM 衛教海報**（2026-08-05）：`images/sarcopenia-quiz-poster.jpg`。
+      **AI 生圖的內嵌文字有 9 處亂碼，已人工去背填色重繪修正**——這是 NotebookLM infographic
+      功能的已知限制，日後若重新生成同類海報，**務必逐字核對內嵌文字**，不要只看排版順不順眼。
+- [x] `quiz.html`：海報＋測驗嵌入的分享頁，`index.html` 結果頁加了一個非強制連結入口
+      （人潮多時可略過，只做篩檢不做測驗）。
 
 ## 部署
 

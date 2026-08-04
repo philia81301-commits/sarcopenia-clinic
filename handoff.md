@@ -2,13 +2,16 @@
 
 ## ⏯️ 目前做到哪
 
-**v0.2.4**。2026-07-30 把三個版本號統一（`education.html` 原本一路停在 v0.1.0）。
+**核心工具仍是 v0.2.4**（版本號本次沒動，原因見下）。2026-08-05 新增衛教測驗分享頁
+`quiz.html`（海報＋Wordwall 測驗嵌入），並在 `index.html` 結果頁加一個非強制連結入口。
+2026-07-30 把三個版本號統一（`education.html` 原本一路停在 v0.1.0）。
 在此之前：2026-07-29 在醫院那台（X108521）修掉一個會讓現場誤判「工具壞掉」的 bug，
 依門診實際需求擴充判定流程，補上真正的離線能力；回到家裡這台後修復代號的日期字首預設，
 並接上 Google 表單。
 
 - **線上版**：https://philia81301-commits.github.io/sarcopenia-clinic/
 - **衛教頁（QR 指向處）**：https://philia81301-commits.github.io/sarcopenia-clinic/education.html
+- **衛教測驗分享頁（新）**：https://philia81301-commits.github.io/sarcopenia-clinic/quiz.html
 - **repo**：https://github.com/philia81301-commits/sarcopenia-clinic （公開，main 的 root）
 - **需求規格卡**：`rdq/RDQ-spec-sarcopenia-screening-20260729.md`（`status: confirmed`）
 
@@ -27,7 +30,31 @@
 8. **v0.2.2**：加入工作站代碼後，未選工作站時代號欄變成全空，失去原本一載入就看得到
    日期字首的行為。現在一律先填 `20260729-`，選好工作站才補上流水號；只有字首時送出會被擋。
 
-### 2026-07-30 改了什麼
+### 2026-08-05 改了什麼
+
+**新增衛教測驗分享頁，不動核心篩檢工具的判定邏輯。**
+
+1. **Wordwall 測驗**：建立「肌少症衛教小測驗」（10 題選擇題），主題換成 Indigo（原
+   Classic 主題花俏、對長輩不易讀），已設為 **Public**（任何人拿連結免登入可玩）。
+   詳見下方「🔗 Wordwall 測驗」。
+2. **順手修掉 wordwall 技能的 bug**：Wordwall 網站改版後範本卡片選擇器失效，
+   已在 `~/.claude/skills/wordwall/wordwall.py` 補上新選擇器並驗證通過。
+   **這是第三方 repo（`mathruffian-dot/wordwall-cli`），修好後還沒推送**——
+   見下方「⚠️ 注意事項」。
+3. **NotebookLM 生成衛教海報**：`images/sarcopenia-quiz-poster.jpg`，主題「肌少症衛教」，
+   活潑插畫風格。**AI 生圖內嵌的文字有 9 處是亂碼**（看起來像中文字但拼不成正確詞，
+   例如「若鵜檢戁鬗」應為「若懷疑異常」），逐一比對衛教頁原文後用去背填色＋重繪文字修正。
+   **這是 NotebookLM infographic 功能的已知限制，不是這次特例**——日後用同工具再生成
+   類似素材，務必逐字核對，不能只看排版順眼就發出去。
+4. **`quiz.html`**：海報＋Wordwall 測驗 iframe 嵌入＋連回 `education.html` 的按鈕。
+   刻意做成獨立頁面，**不進 `sw.js` 的 PRECACHE、不影響離線功能**——反正 Wordwall
+   iframe 本來就需要網路，跟著要求離線沒有意義。
+5. **`index.html` 結果頁**加一個「→ 要不要一起做完衛教測驗？」連結按鈕，跟 QR code
+   共用顯示條件（`screen_negative` 時隱藏），**非強制**——人潮多時可以只做篩檢跳過測驗。
+6. **本機驗證**：`python -m http.server 8765` 起本機伺服器，實際跑過一次篩檢流程到
+   出現陽性結果，截圖確認連結按鈕位置與樣式正常、Wordwall iframe 正確載入 Indigo 主題。
+
+### 2026-07-30 改了什麼（版本號同步）
 
 **只有版本號，功能與內容一字未動。** 三處統一到 **0.2.4（2026-07-30）**：
 `sw.js` 的 `VERSION`、`index.html` 的 `APP_VERSION`、`education.html` 頁尾的硬編字串。
@@ -51,6 +78,9 @@
 送出即進回應試算表，那份試算表就是將來統計分析的資料來源。
 沒網路時紀錄先存本機佇列，回到有網路按「一鍵補送」。
 
+**衛教測驗頁已上線**（2026-08-05，見下方「🔗 Wordwall 測驗」），本機驗證過連結與嵌入
+正常，尚未在真實手機上實測（`file:///` 或本機伺服器測的都是桌機瀏覽器）。
+
 > 「匯出 CSV 備份」現在是**備援**，不是唯一出路。但長時間離線作業、或裝置要換／要清瀏覽器
 > 資料之前，仍請先按一次匯出——本機佇列裡沒送出的紀錄清掉就沒了。
 
@@ -63,6 +93,20 @@
    > 內嵌的同一份 inline SVG。指向的網址沒變過，改版本號不影響它。
 3. **替換 SARC-F 中文題目** —— 目前是暫用措辭，頁尾已誠實標註。
 4. 骨鬆專案入口頁加一條連到本工具的連結（要動另一個 repo）。
+5. **用手機實際玩一次 `quiz.html`**，確認海報圖與 Wordwall iframe 在手機瀏覽器排版正常
+   （目前只驗過桌機瀏覽器）。
+6. `wordwall.py` 的選擇器修正還沒推送到 `mathruffian-dot/wordwall-cli`，見「⚠️ 注意事項」。
+
+## 🔗 Wordwall 測驗（2026-08-05 建立）
+
+「肌少症衛教小測驗」，10 題選擇題，主題 Indigo，**已設為 Public**（免登入可玩）。
+
+- 活動頁：https://wordwall.net/resource/117017138/肌少症衛教小測驗
+- 內嵌（`quiz.html` 用的就是這組）：
+  `https://wordwall.net/embed/b01e95a1a20d4c91a9f0a1545d307ef8?themeId=62&templateId=5&fontStackId=0`
+
+改題目或換主題請登入 `philia81301@gmail.com` 到 Wordwall 編輯，`quiz.html` 的 iframe
+網址不會變（除非重新建立活動）。
 
 ## 🔗 Google 表單（已接上，2026-07-29）
 
@@ -80,6 +124,13 @@
 
 ## ⚠️ 注意事項
 
+- **`wordwall.py` 的選擇器修正還沒推送**：Wordwall 網站改版讓範本卡片選擇器失效，
+  已在本機 `~/.claude/skills/wordwall/wordwall.py` 修好並驗證通過，但這是**第三方 repo**
+  （`mathruffian-dot/wordwall-cli`，不是潘醫師的），還沒 commit + push，也還沒問過要不要
+  推送／開 PR。下次用 wordwall 技能前確認一下這個修正還在，或詢問是否要推送上游。
+- **NotebookLM infographic 的內嵌文字不可信任**：這次生的海報有 9 處文字是亂碼
+  （字型看起來正常，但拼不成正確詞），已逐字核對修正。日後用 NotebookLM 生同類素材，
+  **生完一定要放大檢查每一段文字**，不要只看排版順眼。
 - **改版務必同步三個版本號**：`sw.js` 的 `VERSION`、`index.html` 的 `APP_VERSION`、
   **`education.html` 頁尾的硬編 `v?.?.?`**（第三項最容易漏，2026-07-30 就是這樣不同步的）。
   否則既有裝置上的圖示、manifest、衛教頁不會更新。網頁本身是 network-first，連得上網就拿最新版。
@@ -116,10 +167,10 @@ git clone https://github.com/philia81301-commits/sarcopenia-clinic.git C:\projec
 
 ## 🕐 最後更新
 
-2026-07-30　·　阿克（Claude Code, Opus 5）@ DESKTOP-LVSV9Q5（家）　·　**v0.2.4**　·　Git push：✅ 已推（`1cc9882`）
+2026-08-05　·　阿克（Claude Code, Sonnet 5）@ DESKTOP-LVSV9Q5（家）　·　**v0.2.4**（核心工具版本未變，新增獨立頁面）　·　Git push：待回填
 
-前一筆：2026-07-29 @ DESKTOP-LVSV9Q5（家）· v0.2.3 · `f17450c`
-再前一筆：2026-07-29 @ X108521（醫院）· v0.2.1 · `95db796`
+前一筆：2026-07-30 @ DESKTOP-LVSV9Q5（家）· v0.2.4 · `1cc9882`
+再前一筆：2026-07-29 @ DESKTOP-LVSV9Q5（家）· v0.2.3 · `f17450c`
 
 > L3 Obsidian：本專案**未建立**筆記（未經 project-init、`agents.md` 未登記 vault 路徑），
 > 因此本次同樣沒有 L3 紀錄。要補的話先跑 project-init。
