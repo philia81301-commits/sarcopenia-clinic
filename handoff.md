@@ -256,10 +256,10 @@ git clone https://github.com/philia81301-commits/sarcopenia-clinic.git C:\projec
 
 ## 🕐 最後更新
 
-2026-08-05（傍晚）　·　阿克（Claude Code, Sonnet 5）@ DESKTOP-LVSV9Q5（家）　·　**v0.2.4**（核心工具版本未變，這輪只動 Wordwall 內容）　·　Git push：✅ 已推（`cd1e87e`）
+2026-08-05（晚）　·　阿克（Claude Code, Sonnet 5）@ DESKTOP-LVSV9Q5（家）　·　**v0.2.4**（核心工具版本未變，這輪加現場競賽版＋交接文件）　·　Git push：✅ 已推（`578a57e`）
 
-前一筆：2026-08-05（下午）@ DESKTOP-LVSV9Q5（家）· v0.2.4 · `fa79c42`
-再前一筆：2026-08-05（上午）@ DESKTOP-LVSV9Q5（家）· v0.2.4 · `9bf3730`
+前一筆：2026-08-05（傍晚，現場競賽版架構建立＋首次重置測試）@ DESKTOP-LVSV9Q5（家）· `b4d212b`（另有 `a53d06d`）
+再前一筆：2026-08-05（傍晚）@ DESKTOP-LVSV9Q5（家）· v0.2.4 · `cd1e87e`
 
 > L3 Obsidian：本專案**未建立**筆記（未經 project-init、`agents.md` 未登記 vault 路徑），
 > 因此本次同樣沒有 L3 紀錄。要補的話先跑 project-init。
