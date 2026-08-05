@@ -54,6 +54,27 @@
 6. **本機驗證**：`python -m http.server 8765` 起本機伺服器，實際跑過一次篩檢流程到
    出現陽性結果，截圖確認連結按鈕位置與樣式正常、Wordwall iframe 正確載入 Indigo 主題。
 
+### 2026-08-05（下午）改了什麼——Wordwall 測驗調整
+
+潘醫師實際玩過一輪後回報四個問題，全部處理：
+
+1. **選項字體大小不一**：Wordwall 是每題自動把最長的選項縮字，題與題之間字級才會跳動。
+   逐題比對衛教原文，把 11 個過長的答案選項縮短拉齊（例如「錯，吃夠蛋白質＋規律出力可以
+   練回來」→「錯，吃夠蛋白質能練回來」），縮小題與題之間的字級落差。
+2. **英文字改中文、START 改開始**：Wordwall 有 `/tc/`（繁體中文）網址前綴，
+   `https://wordwall.net/tc/embed/...` 會讓整個播放器介面（開始、一系列多選題。點擊正確
+   答案繼續。）變成中文，不用改內容，換內嵌網址就好。`quiz.html` 已改用這個網址。
+3. **黑底改檸檬黃**：Wordwall 主題從 Indigo 換成 Clouds，**題目畫面**變成亮藍色雲朵風。
+   但**進場前的黑底封面卡片是 Wordwall 播放器固定樣式，任何主題都是黑的，改不掉**——
+   這是平台限制，不是沒設定好。折衷做法：`quiz.html` 的測驗卡片外圍背景改成潘醫師指定
+   的檸檬黃 `#FFF450`，把黑色封面「包」在指定色裡。
+4. **海報標題被裁切**：`images/sarcopenia-quiz-poster.jpg` 的標題「存肌力、享健康：
+   您的肌少症生活指南」原本字級偏大，在手機預覽視窗容易被截掉一截。已在原始 PNG 上
+   去背重繪縮小字級（約縮到 70%），重新輸出 JPG 更新進 repo。
+
+**已用本機 http 伺服器＋無頭瀏覽器截圖驗證**：Wordwall 中文介面、Clouds 主題實際題目畫面、
+`quiz.html` 頁面排版（含檸檬黃卡片、縮小後的海報標題）都截圖確認過。
+
 ### 2026-07-30 改了什麼（版本號同步）
 
 **只有版本號，功能與內容一字未動。** 三處統一到 **0.2.4（2026-07-30）**：
@@ -93,20 +114,27 @@
    > 內嵌的同一份 inline SVG。指向的網址沒變過，改版本號不影響它。
 3. **替換 SARC-F 中文題目** —— 目前是暫用措辭，頁尾已誠實標註。
 4. 骨鬆專案入口頁加一條連到本工具的連結（要動另一個 repo）。
-5. **用手機實際玩一次 `quiz.html`**，確認海報圖與 Wordwall iframe 在手機瀏覽器排版正常
-   （目前只驗過桌機瀏覽器）。
+5. **用手機實際玩一次 `quiz.html`**，確認海報圖與 Wordwall iframe 在手機瀏覽器排版正常、
+   標題縮小後不再被截、檸檬黃卡片與黑底封面的視覺對比可以接受
+   （目前只驗過桌機瀏覽器＋無頭瀏覽器截圖）。
 6. `wordwall.py` 的選擇器修正還沒推送到 `mathruffian-dot/wordwall-cli`，見「⚠️ 注意事項」。
 
-## 🔗 Wordwall 測驗（2026-08-05 建立）
+## 🔗 Wordwall 測驗（2026-08-05 建立，同日下午調整）
 
-「肌少症衛教小測驗」，10 題選擇題，主題 Indigo，**已設為 Public**（免登入可玩）。
+「肌少症衛教小測驗」，10 題選擇題，主題 **Clouds**（原 Indigo，2026-08-05 下午換），
+**已設為 Public**（免登入可玩），介面走中文（`/tc/` 路徑）。
 
 - 活動頁：https://wordwall.net/resource/117017138/肌少症衛教小測驗
-- 內嵌（`quiz.html` 用的就是這組）：
-  `https://wordwall.net/embed/b01e95a1a20d4c91a9f0a1545d307ef8?themeId=62&templateId=5&fontStackId=0`
+- 內嵌（`quiz.html` 用的就是這組，**注意含 `/tc/` 且 `themeId=46`**）：
+  `https://wordwall.net/tc/embed/b01e95a1a20d4c91a9f0a1545d307ef8?themeId=46&templateId=5&fontStackId=0`
 
 改題目或換主題請登入 `philia81301@gmail.com` 到 Wordwall 編輯，`quiz.html` 的 iframe
-網址不會變（除非重新建立活動）。
+網址不會變（除非重新建立活動）。**若之後又手動換主題，記得 embed 網址的 `themeId` 要
+跟著改，兩邊會脫鉤**（Wordwall 編輯頁換主題不會自動更新既有的內嵌程式碼）。
+
+**已知平台限制**：測驗開始前的封面卡片（Logo＋「開始」按鈕那頁）固定是黑底，
+Wordwall 所有主題都一樣，無法透過主題或設定改掉；「Options」下的進階設定（含可能的
+自訂色彩）鎖在付費訂閱，免費帳號點了會被「Subscription required」擋住。
 
 ## 🔗 Google 表單（已接上，2026-07-29）
 
@@ -167,10 +195,10 @@ git clone https://github.com/philia81301-commits/sarcopenia-clinic.git C:\projec
 
 ## 🕐 最後更新
 
-2026-08-05　·　阿克（Claude Code, Sonnet 5）@ DESKTOP-LVSV9Q5（家）　·　**v0.2.4**（核心工具版本未變，新增獨立頁面）　·　Git push：✅ 已推（`9bf3730`）
+2026-08-05（下午）　·　阿克（Claude Code, Sonnet 5）@ DESKTOP-LVSV9Q5（家）　·　**v0.2.4**（核心工具版本未變）　·　Git push：待回填
 
-前一筆：2026-07-30 @ DESKTOP-LVSV9Q5（家）· v0.2.4 · `1cc9882`
-再前一筆：2026-07-29 @ DESKTOP-LVSV9Q5（家）· v0.2.3 · `f17450c`
+前一筆：2026-08-05（上午）@ DESKTOP-LVSV9Q5（家）· v0.2.4 · `9bf3730`
+再前一筆：2026-07-30 @ DESKTOP-LVSV9Q5（家）· v0.2.4 · `1cc9882`
 
 > L3 Obsidian：本專案**未建立**筆記（未經 project-init、`agents.md` 未登記 vault 路徑），
 > 因此本次同樣沒有 L3 紀錄。要補的話先跑 project-init。
