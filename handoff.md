@@ -149,6 +149,37 @@
 Wordwall 所有主題都一樣，無法透過主題或設定改掉；「Options」下的進階設定（含可能的
 自訂色彩）鎖在付費訂閱，免費帳號點了會被「Subscription required」擋住。
 
+## 🔗 Wordwall 測驗－現場競賽版（2026-08-05 建立，同日再改成可重置架構）
+
+同一份「肌少症衛教小測驗」（10 題不變），另外用 Wordwall 的「課業分配」開課業給現場
+多人競賽用，掃 QR code 進去打暱稱作答，玩完看排行榜。
+
+**QR code 不是直接指向 Wordwall，而是指向 `compete.html`（固定網址）**，
+`compete.html` 裡面才是真正的 Wordwall `/play/` 連結，用 meta refresh＋JS 立刻轉址。
+這樣設計是因為 Wordwall 沒有「清空排行榜但保留同一個連結」的功能，唯一的重置方式是
+建一份全新的課業（會拿到新的 `/play/` 連結）——讓 QR code 固定指向 `compete.html`，
+每次重置只要換 `compete.html` 裡面轉址的目標，印出來的 QR code 就永遠不用換。
+
+- QR code 圖檔：`images/quiz-competition-qr.png`，指向
+  `https://philia81301-commits.github.io/sarcopenia-clinic/compete.html`。
+- **一鍵重置**：雙擊 `tools/reset-competition.ps1`（或 `python tools/reset-competition.py`）。
+  會建一份新課業（乾淨排行榜、暱稱登入、不能重新作答、結束不顯示答案）、把
+  `compete.html` 裡的轉址目標換成新連結、`git commit + push`，最後印出這輪的
+  Wordwall 結果頁網址（活動結束後打開看排行榜、公布前五名）。
+  **push 後 GitHub Pages 大約要等 30-60 秒才生效**，不要卡在活動開始前最後幾秒才跑。
+  舊的課業不會被刪除，留在 Wordwall「我的結果」當上一輪的存檔。
+- 目前 Wordwall「我的結果」底下已經有幾份「肌少症衛教小測驗－現場競賽版 …」的
+  測試課業（含最早那份 `assignment_id: 55048369`，排行榜第一名有一筆測試資料
+  「nn」9/10分），都是這次開發跟測試 `reset-competition.py` 留下的，不是真的參賽紀錄，
+  之後想整理可以直接去 Wordwall 網站手動刪除，不影響 `compete.html` 現在指向的那份。
+
+**`wordwall.py` 有一個已知 timing bug（還沒修進上游）**：`assign` 指令送出設定後只
+固定等 1200ms 就去抓 `/play/` 連結，但「課業設置」對話框有時還在轉圈圈，導致抓不到
+連結、指令回報失敗（exit code 3），**但作業其實已經在 Wordwall 那邊建立成功**——遇到
+這個失敗訊息不能直接重跑 `assign`，會建出重複的作業，要先用 `results list` 確認。
+`tools/reset-competition.py` 用自己的輪詢＋`/myresults` 保險路徑繞開了這個問題，
+已丟一個背景任務建議去修 `wordwall.py` 本身（`task_63bbac40`），還沒處理。
+
 ## 🔗 Google 表單（已接上，2026-07-29）
 
 用 `tools/create-google-form.gs` 建的，`FORM_ID` 與 11 個 `entry.xxx` 已填進 `index.html` 最上方。
