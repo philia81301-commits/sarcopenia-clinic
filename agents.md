@@ -13,6 +13,9 @@
 | `index.html` | 主工具（單頁、原生 JS、無外部相依、可離線） |
 | `education.html` | 靜態衛教頁，QR code 指向這裡，**不含任何個人資料** |
 | `quiz.html` | 衛教測驗分享頁：海報圖＋Wordwall 測驗嵌入＋連回 education.html，**獨立頁面、不影響篩檢流程** |
+| `compete.html` | 現場競賽版轉址頁，QR code 固定指向這裡；內容轉址到當輪 Wordwall `/play/` 連結 |
+| `tools/reset-competition.py`／`.ps1` | 一鍵重置現場競賽排行榜：建新課業＋換 `compete.html` 轉址目標＋push，見 handoff.md |
+| `quiz-links.docx` | 給同事的連結彙整表（真超連結格式，方便複製轉傳），內容跟 handoff.md 保持一致，需要時手動更新 |
 | `images/sarcopenia-quiz-poster.jpg` | 衛教海報（NotebookLM 生成，已人工修正 AI 生圖亂碼文字，見 handoff.md） |
 | `sw.js` | Service Worker。網頁 network-first、其餘 cache-first |
 | `manifest.webmanifest` | PWA 設定 |
@@ -78,6 +81,12 @@
       標題字級同日下午也縮小過一次，避免手機預覽視窗裁到字。
 - [x] `quiz.html`：海報＋測驗嵌入的分享頁，`index.html` 結果頁加了一個非強制連結入口
       （人潮多時可略過，只做篩檢不做測驗）。
+- [x] **現場競賽版**（2026-08-05）：`compete.html` 轉址頁＋`tools/reset-competition.py`
+      一鍵重置排行榜工具，QR code（`images/quiz-competition-qr.png`）印出來後永久不用換。
+      已端到端測試過（建課業→更新轉址→push→curl 驗證 GitHub Pages 生效）。
+      **未驗證**：真人拿手機掃 QR code 實測。細節見 `handoff.md`「🔗 Wordwall 測驗－現場競賽版」。
+- [ ] 醫院電腦（如 X108521）若要在現場執行重置，需另外裝 Wordwall CLI 登入狀態
+      （`~/.wordwall/state.json` 不跟著 repo 走，每台電腦要各自登入一次）。
 
 ## 部署
 

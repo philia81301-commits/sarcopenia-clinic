@@ -2,8 +2,10 @@
 
 ## ⏯️ 目前做到哪
 
-**核心工具仍是 v0.2.4**（版本號本次沒動，原因見下）。2026-08-05 新增衛教測驗分享頁
-`quiz.html`（海報＋Wordwall 測驗嵌入），並在 `index.html` 結果頁加一個非強制連結入口。
+**核心工具仍是 v0.2.4**（版本號本次沒動，原因見下）。2026-08-05 這天陸續加了：
+衛教測驗分享頁 `quiz.html`（海報＋Wordwall 測驗嵌入）、**現場競賽版**（`compete.html`
+轉址頁＋`tools/reset-competition.py` 一鍵重置排行榜工具，細節見下方「🔗 Wordwall
+測驗－現場競賽版」）、給同事的連結彙整表 `quiz-links.docx`（真超連結格式，方便複製轉傳）。
 2026-07-30 把三個版本號統一（`education.html` 原本一路停在 v0.1.0）。
 在此之前：2026-07-29 在醫院那台（X108521）修掉一個會讓現場誤判「工具壞掉」的 bug，
 依門診實際需求擴充判定流程，補上真正的離線能力；回到家裡這台後修復代號的日期字首預設，
@@ -11,7 +13,10 @@
 
 - **線上版**：https://philia81301-commits.github.io/sarcopenia-clinic/
 - **衛教頁（QR 指向處）**：https://philia81301-commits.github.io/sarcopenia-clinic/education.html
-- **衛教測驗分享頁（新）**：https://philia81301-commits.github.io/sarcopenia-clinic/quiz.html
+- **衛教測驗分享頁（練習版）**：https://philia81301-commits.github.io/sarcopenia-clinic/quiz.html
+- **衛教測驗現場競賽版（QR code 掃碼用，固定網址）**：
+  https://philia81301-commits.github.io/sarcopenia-clinic/compete.html
+- **連結彙整表（給同事）**：`quiz-links.docx`（repo 根目錄，含超連結＋重置步驟）
 - **repo**：https://github.com/philia81301-commits/sarcopenia-clinic （公開，main 的 root）
 - **需求規格卡**：`rdq/RDQ-spec-sarcopenia-screening-20260729.md`（`status: confirmed`）
 
@@ -131,6 +136,14 @@
    標題縮小後不再被截、檸檬黃卡片與黑底封面的視覺對比可以接受
    （目前只驗過桌機瀏覽器＋無頭瀏覽器截圖）。
 6. `wordwall.py` 的選擇器修正還沒推送到 `mathruffian-dot/wordwall-cli`，見「⚠️ 注意事項」。
+7. **真人拿手機掃一次現場競賽版 QR code**（`images/quiz-competition-qr.png`），確認
+   跳轉到 `compete.html` 再轉址進 Wordwall 全程順暢——目前只驗過 curl／桌機瀏覽器。
+8. 醫院電腦（如 X108521）如果要現場執行 `reset-competition.ps1`，要先在那台電腦裝
+   Python＋Playwright 並重新走一次 Wordwall 登入（`chrome-login`→`grab-session`），
+   細節見 `agents.md` 路線圖。
+9. Wordwall「我的結果」清一下這次開發測試留下的幾份「肌少症衛教小測驗－現場競賽版 …」
+   測試課業（不影響現在運作，純粹整理用，見「🔗 Wordwall 測驗－現場競賽版」段落）。
+10. `wordwall.py` 的 `assign` timing bug 已丟背景任務建議（`task_63bbac40`），還沒處理。
 
 ## 🔗 Wordwall 測驗（2026-08-05 建立，同日下午調整）
 
@@ -220,6 +233,10 @@ Wordwall 所有主題都一樣，無法透過主題或設定改掉；「Options�
 - **RDQ 技能不在 chezmoi 納管範圍**，每台電腦要各自 clone：
   `git clone https://github.com/mathruffian-dot/rdq-skill.git $env:USERPROFILE\.claude\skills\rdq`
   醫院這台（X108521）今天已補裝。`chezmoi update` 不會帶進來。
+- **`.gitignore` 加了 `~$*`**：開 `quiz-links.docx` 時 Word 會在旁邊留一個
+  `~$quiz-links.docx` 鎖定暫存檔，git 會抓到當成未追蹤檔案，已加規則排除，不用手動忽略。
+- **Wordwall 登入狀態（`~/.wordwall/state.json`）不跟著 repo 走**，每台電腦要各自
+  `chrome-login`→`grab-session` 登入一次，這是刻意的帳號安全設計，沒有共用的辦法。
 
 ## 🔁 跨電腦接手
 

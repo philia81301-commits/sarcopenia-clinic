@@ -22,6 +22,10 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+    sys.stderr.reconfigure(encoding="utf-8")
+
 WORDWALL_DIR = Path.home() / ".claude" / "skills" / "wordwall"
 sys.path.insert(0, str(WORDWALL_DIR))
 
@@ -144,7 +148,7 @@ def git_publish(round_title: str) -> None:
     subprocess.run(["git", "add", "compete.html"], cwd=REPO, check=True)
     result = subprocess.run(
         ["git", "commit", "-m", f"重置現場競賽排行榜：{round_title}"],
-        cwd=REPO, capture_output=True, text=True,
+        cwd=REPO, capture_output=True, text=True, encoding="utf-8", errors="replace",
     )
     if result.returncode != 0 and "nothing to commit" not in result.stdout:
         print(result.stdout, result.stderr)
