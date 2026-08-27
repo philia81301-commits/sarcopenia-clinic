@@ -33,12 +33,76 @@ footer{margin-top:24px;padding-top:14px;border-top:1px solid var(--line);
   color:var(--muted);font-size:.8rem;line-height:1.8}
 footer a{color:var(--accent)}
 
+/* ── 闖關小遊戲（機制同 healthy-weight-public；僅螢幕，列印隱藏）
+   配色刻意用固定值（不吃 --bg/--ink），深色模式下維持亮色貼紙風、不會反黑 */
+.quiz{margin:0 0 18px}
+.quiz-box{background:linear-gradient(160deg,#FFFDF4,#FDF1DE);border:2px solid #F0D9A8;
+  border-radius:16px;padding:18px 18px 22px;box-shadow:0 6px 20px rgba(154,107,42,.10);
+  position:relative;overflow:hidden}
+.quiz-box::before{content:"✦";position:absolute;top:12px;right:16px;font-size:17px;
+  color:#E8B83C;opacity:.55;animation:qtwinkle 2.2s ease-in-out infinite}
+@keyframes qtwinkle{0%,100%{opacity:.2;transform:scale(.85)}50%{opacity:.7;transform:scale(1.1)}}
+.quiz-head{display:flex;gap:13px;align-items:center;flex-wrap:wrap}
+.quiz-mascot{font-size:40px;line-height:1;animation:qbob 2.6s ease-in-out infinite}
+@keyframes qbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.quiz-kicker{font-size:12px;font-weight:800;letter-spacing:.12em;color:#a45208}
+.quiz-title{margin:2px 0 3px;font-size:20px;font-weight:900;color:#1c2024}
+.quiz-sub{margin:0;color:#7a6a4f;font-size:13.5px;line-height:1.6}
+.quiz-stars{display:flex;gap:5px;margin-left:auto}
+.quiz-stars i{width:30px;height:30px;border-radius:50%;background:#fff;border:2px dashed #E3CFA2;
+  display:flex;align-items:center;justify-content:center;font-style:normal;font-size:14px;
+  color:#D8C49B;transition:.2s}
+.quiz-stars i.on{border-style:solid;border-color:#E8B83C;background:#FFF3CE;animation:qpop .45s}
+@keyframes qpop{0%{transform:scale(.4)}60%{transform:scale(1.3)}100%{transform:scale(1)}}
+.qcard{background:#fff;border:1.5px solid #EFE3C8;border-radius:13px;padding:14px 15px 16px;
+  margin-top:13px;animation:qin .4s}
+@keyframes qin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.qnum{display:inline-block;background:#e6f0f4;color:#1f6f8b;font-weight:800;
+  font-size:13px;border-radius:99px;padding:2px 11px}
+.qtext{font-size:17px;font-weight:800;margin:8px 0 10px;color:#1c2024;line-height:1.5}
+.qopts{display:grid;grid-template-columns:1fr;gap:8px}
+.qopts button{font-family:inherit;font-size:15.5px;text-align:left;background:#FDFBF3;
+  border:1.5px solid #E7DDC2;border-radius:99px;padding:9px 15px 9px 9px;cursor:pointer;
+  transition:.15s;display:flex;align-items:center;gap:9px;color:#1c2024;line-height:1.4}
+.qopts button i{width:26px;height:26px;border-radius:50%;background:#F4E7C8;color:#8A6215;
+  font-style:normal;font-weight:800;font-size:13px;display:flex;align-items:center;
+  justify-content:center;flex-shrink:0;transition:.15s}
+.qopts button:hover:not(:disabled){transform:translateY(-2px);
+  border-color:#1f6f8b;background:#fff;box-shadow:0 4px 12px rgba(31,111,139,.15)}
+.qopts button:hover:not(:disabled) i{background:#e6f0f4;color:#1f6f8b}
+.qopts button:disabled{cursor:default}
+.qopts button.no{opacity:.55;background:#F4F1E7;animation:qshake .4s}
+.qopts button.no i{background:#DDD8C8;color:#8B8674}
+.qopts button.no::after{content:"💦";margin-left:auto}
+.qopts button.yes{background:#e6f0f4;border-color:#1f6f8b;color:#155263;font-weight:800}
+.qopts button.yes i{background:#1f6f8b;color:#fff}
+.qopts button.yes::after{content:"⭕";margin-left:auto}
+@keyframes qshake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.qmiss{margin-top:8px;font-size:13.5px;color:#A8834B}
+.qwhy{margin-top:9px;background:#FEF3C7;color:#5A4520;border-radius:9px;
+  padding:8px 12px;font-size:14px;line-height:1.65}
+.quiz-done{margin-top:15px;background:linear-gradient(180deg,#FFFDF4,#FFF4D8);
+  border:2px solid #E8B83C;border-radius:13px;padding:20px 15px;text-align:center;animation:qin .5s}
+.quiz-done .party span{display:inline-block;font-size:25px;margin:0 3px;animation:qbob 1.2s ease-in-out infinite}
+.quiz-done .party span:nth-child(2){animation-delay:.15s}
+.quiz-done .party span:nth-child(3){animation-delay:.3s}
+.quiz-done .party span:nth-child(4){animation-delay:.45s}
+.quiz-done .party span:nth-child(5){animation-delay:.6s}
+.quiz-done h3{font-size:18px;font-weight:900;margin:8px 0 4px;color:#1c2024}
+.quiz-done p{margin:0 0 12px;color:#7a6a4f;font-size:13.5px}
+.qbtn{display:inline-block;font-family:inherit;font-size:14.5px;font-weight:800;border-radius:99px;
+  padding:8px 18px;cursor:pointer;text-decoration:none;margin:0 4px 6px;transition:.15s;
+  background:#1f6f8b;border:2px solid #1f6f8b;color:#fff}
+.qbtn:hover{transform:translateY(-2px)}
+.qbtn.again{background:#fff;border-color:#dde1e6;color:#5c6670}
+
 /* ── 列印 ──
    紙張用 A4 與 Letter 的交集（寬取 A4 210mm、高取 Letter 279.4mm）：
    紙匣放哪一種都不會被裁掉、也不需要縮放。不要改成 size:A4 或 size:Letter。
    深色模式的變數在這裡一律覆蓋回淺色，否則深色手機列印會整片黑底。 */
 @media print{
   @page{size:210mm 279.4mm;margin:10mm 15mm 12mm;}
+  .quiz{display:none !important} /* 遊戲純互動，不進紙本，列印總高不變 */
   :root{--bg:#fff;--card:#fff;--ink:#000;--muted:#3a4048;--line:#9aa2aa;--accent:#155263;}
   /* 行高 1.5 是下限，字級一律不動（讀者多為 50 歲以上）。
      省空間只動間距。實測內容總高 440mm：關掉瀏覽器頁首頁尾剛好雙面兩頁，
@@ -76,7 +140,32 @@ footer a{color:var(--accent)}
 <h1>肌少症：怎麼吃、怎麼練</h1>
 <p class="sub">給剛做完肌少症篩檢的您與家人</p>
 
-<div class="big">
+<!-- ── 闖關小遊戲（僅螢幕顯示，列印自動隱藏）── -->
+<section class="quiz" id="quiz">
+  <div class="quiz-box">
+    <div class="quiz-head">
+      <div class="quiz-mascot">💪</div>
+      <div>
+        <div class="quiz-kicker">先 來 闖 關</div>
+        <div class="quiz-title">存肌力五連闖</div>
+        <p class="quiz-sub">一次一題、四選一，答對才會出現下一題。答錯不扣分——答案都在下面的內容裡！</p>
+      </div>
+      <span class="quiz-stars"><i>☆</i><i>☆</i><i>☆</i><i>☆</i><i>☆</i></span>
+    </div>
+    <div class="quiz-qs"></div>
+    <div class="quiz-done" hidden>
+      <div class="party"><span>🎉</span><span>💪</span><span>⭐</span><span>💪</span><span>🎉</span></div>
+      <h3>五題全通關！獲得稱號「存肌達人」</h3>
+      <p>把答案講給家人聽一遍，記得更牢喔。</p>
+      <div>
+        <a class="qbtn" href="#read">往下看完整內容 ↓</a>
+        <button class="qbtn again" type="button" id="qAgain">再玩一次</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="big" id="read">
   <p><b>肌少症不是「年紀大了本來就這樣」。</b></p>
   <p>肌肉會隨年齡流失，但<b>吃夠蛋白質＋規律出力</b>可以把它練回來。任何年紀開始都來得及。</p>
 </div>
@@ -145,7 +234,7 @@ footer a{color:var(--accent)}
 </div>
 
 <footer>
-  製作：潘湘如醫師｜家醫科　·　v0.2.5（2026-08-09）<br>
+  製作：潘湘如醫師｜家醫科　·　v0.2.6（2026-08-27）<br>
   本頁為衛教參考，不能取代個別的醫療評估與診斷。<br>
   內容依 AWGS 2019 亞洲肌少症共識與一般高齡營養運動建議編寫；藥物與給付規定請以就診當時公告為準。<br>
   問題回報：<a href="https://github.com/philia81301-commits/sarcopenia-clinic/issues" target="_blank" rel="noopener">GitHub Issues</a><br>
@@ -154,5 +243,75 @@ footer a{color:var(--accent)}
 </footer>
 
 </div>
+
+<script>
+/* ── 闖關小遊戲（機制移植自 healthy-weight-public）── */
+(function(){
+  var Q = [
+    { q:'肌肉隨年齡變少，該怎麼看待？',
+      o:['年紀大了本來就這樣','吃夠蛋白質加規律出力，能練回來','只能靠吃藥','多躺著休息保存體力'], a:1,
+      w:'肌少症不是「本來就這樣」——任何年紀開始都來得及，吃夠蛋白質＋規律出力就能把肌肉練回來。' },
+    { q:'一天的蛋白質怎麼吃最好？',
+      o:['三餐平均分配，每餐都有','集中在晚餐一次吃','早餐吃就好','想到才吃'], a:0,
+      w:'集中在一餐吃，肌肉利用不了；每餐吃到 2～3 份（一顆蛋、一杯奶、半盒豆腐、一掌心肉都算一份）。' },
+    { q:'哪種運動才練得到肌肉？',
+      o:['每天散步','曬太陽','甩甩手','扶椅深蹲這類出力運動'], a:3,
+      w:'肌肉要「對抗阻力」才會長；散步對心肺很好但練不到肌肉。目標每週 2～3 次、每次約 20 分鐘。' },
+    { q:'運動時出現哪個情況要停下來？',
+      o:['隔天肌肉有點痠','流汗','喘到說不出話','覺得肚子餓'], a:2,
+      w:'練完隔天有點痠是正常、代表有練到；喘到說不出話、胸悶、頭暈就要停下來休息。' },
+    { q:'哪種情況要去看醫師？',
+      o:['體重都沒變','半年內沒刻意減重卻瘦了 3 公斤以上','爬樓梯不會喘','胃口正常'], a:1,
+      w:'不明原因變瘦、過去一年跌倒過、調整三個月沒改善——都該帶著篩檢結果去門診。' }
+  ];
+  var box = document.getElementById('quiz');
+  if(!box) return;
+  var qs = box.querySelector('.quiz-qs'),
+      stars = box.querySelectorAll('.quiz-stars i'),
+      done = box.querySelector('.quiz-done');
+  function reset(){
+    qs.innerHTML=''; done.hidden=true;
+    for(var i=0;i<stars.length;i++){ stars[i].textContent='☆'; stars[i].className=''; }
+    show(0);
+  }
+  function finish(){
+    done.hidden=false;
+    try{ localStorage.setItem('sar-quiz-edu','1'); }catch(e){}
+    done.scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+  function show(i){
+    var q = Q[i];
+    var card = document.createElement('div');
+    card.className='qcard';
+    var h = '<span class="qnum">第 '+(i+1)+' 題</span><div class="qtext"></div><div class="qopts">';
+    for(var j=0;j<q.o.length;j++) h += '<button type="button" data-j="'+j+'"><i>'+'ABCD'[j]+'</i><span></span></button>';
+    h += '</div><div class="qmiss" hidden>差一點，換一個試試！</div><div class="qwhy" hidden></div>';
+    card.innerHTML = h;
+    card.querySelector('.qtext').textContent = q.q;
+    var btns = card.querySelectorAll('.qopts button');
+    for(var k=0;k<btns.length;k++) btns[k].querySelector('span').textContent = q.o[k];
+    qs.appendChild(card);
+    if(i>0) card.scrollIntoView({behavior:'smooth',block:'nearest'});
+    Array.prototype.forEach.call(btns, function(b){
+      b.addEventListener('click', function(){
+        if(+b.getAttribute('data-j') === q.a){
+          b.className='yes';
+          for(var x=0;x<btns.length;x++) btns[x].disabled=true;
+          card.querySelector('.qmiss').hidden=true;
+          var w = card.querySelector('.qwhy');
+          w.textContent='💡 '+q.w; w.hidden=false;
+          stars[i].textContent='⭐'; stars[i].className='on';
+          setTimeout(function(){ if(i+1<Q.length) show(i+1); else finish(); }, 700);
+        } else {
+          b.className='no'; b.disabled=true;
+          card.querySelector('.qmiss').hidden=false;
+        }
+      });
+    });
+  }
+  document.getElementById('qAgain').addEventListener('click', reset);
+  show(0);
+})();
+</script>
 </body>
 </html>
