@@ -345,7 +345,9 @@ git clone https://github.com/philia81301-commits/sarcopenia-clinic.git C:\projec
 
 ## 🕐 最後更新
 
-2026-08-09　·　阿克（Claude Code, Opus 5）@ DESKTOP-LVSV9Q5（家）　·　**v0.2.5**（衛教頁補上列印樣式，未動判定邏輯）　·　Git push：✅ 已推（`124a8b2` 工具改動、`0d3c054` 文件）
+2026-08-27　·　Claude Code（Fable 5）@ X108521（醫院）　·　**v0.2.6**（衛教頁加內建闖關小遊戲，未動判定邏輯）　·　Git push：✅ 已推（`5324db2` 遊戲、`04d732c` 審定），線上版已驗證
+
+前一筆：2026-08-09　·　阿克（Claude Code, Opus 5）@ DESKTOP-LVSV9Q5（家）　·　**v0.2.5**（衛教頁補上列印樣式，未動判定邏輯）　·　Git push：✅ 已推（`124a8b2` 工具改動、`0d3c054` 文件）
 
 > 本次一併補交 2026-08-06 那輪留在工作區、標記「待推」的 `agents.md`／`handoff.md`
 > 更新（Google 表單垃圾桶事件的排查紀錄）——它們與本次的修改在同一個檔案裡，分不開。
