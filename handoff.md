@@ -16,7 +16,7 @@
 - **列印隱藏**：`@media print` 把 `.quiz` 整段 display:none，衛教頁雙面兩頁的列印高度不變。
 - **深色模式**：遊戲配色刻意用固定亮色值（不吃 --bg/--ink 變數），深色手機下維持亮色貼紙風。
 - 版本號三處同步升 0.2.6（sw.js VERSION／index.html APP_VERSION／education.html 頁尾）。
-- localStorage key：`sar-quiz-edu`。題目已對照頁面內容出題，**待潘醫師審定**。
+- localStorage key：`sar-quiz-edu`。五題已於 2026-08-27 經潘醫師審定通過。
 
 在此之前 2026-08-09 那輪只動 `education.html` 的列印樣式（見下方
 「### 2026-08-09 改了什麼」）。
