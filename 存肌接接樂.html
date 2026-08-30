@@ -366,16 +366,35 @@
     c.closePath();
   }
   const DRAWN = {
-    // 豆腐：白嫩方塊兩刀切痕
+    // 豆腐：斜角立體方塊（頂面亮、側面暗，平面方塊看不出是豆腐）
     tofu(c, s){
-      const w = s*0.9, h = s*0.6;
-      c.fillStyle = '#fbfaf2';
-      c.strokeStyle = '#cfc9b4';
-      c.lineWidth = 2;
-      rr(c, -w/2, -h/2, w, h, 6); c.fill(); c.stroke();
-      c.strokeStyle = '#e4dfcc';
-      c.beginPath(); c.moveTo(-w/6, -h/2+3); c.lineTo(-w/6, h/2-3); c.stroke();
-      c.beginPath(); c.moveTo(w/5, -h/2+3); c.lineTo(w/5, h/2-3); c.stroke();
+      const w = s*0.66, h = s*0.46, d = s*0.22;
+      c.save();
+      c.translate(-d/2, d/2);
+      c.strokeStyle = '#c9c2aa';
+      c.lineWidth = 1.5;
+      // 頂面（最亮）
+      c.fillStyle = '#ffffff';
+      c.beginPath();
+      c.moveTo(-w/2, -h/2);
+      c.lineTo(-w/2 + d, -h/2 - d);
+      c.lineTo(w/2 + d, -h/2 - d);
+      c.lineTo(w/2, -h/2);
+      c.closePath(); c.fill(); c.stroke();
+      // 右側面（最暗）
+      c.fillStyle = '#e3ddc8';
+      c.beginPath();
+      c.moveTo(w/2, -h/2);
+      c.lineTo(w/2 + d, -h/2 - d);
+      c.lineTo(w/2 + d, h/2 - d);
+      c.lineTo(w/2, h/2);
+      c.closePath(); c.fill(); c.stroke();
+      // 正面
+      c.fillStyle = '#f6f3e6';
+      c.beginPath();
+      c.rect(-w/2, -h/2, w, h);
+      c.fill(); c.stroke();
+      c.restore();
     },
     // 毛豆：彎豆莢三顆豆
     edamame(c, s){
