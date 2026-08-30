@@ -366,34 +366,36 @@
     c.closePath();
   }
   const DRAWN = {
-    // 豆腐：斜角立體方塊（頂面亮、側面暗，平面方塊看不出是豆腐）
+    // 豆腐：斜角立體方塊——整體輪廓只描一次邊，面與面之間用細淡線，才不會裂成兩塊
     tofu(c, s){
       const w = s*0.66, h = s*0.46, d = s*0.22;
       c.save();
       c.translate(-d/2, d/2);
+      // 三個面（不描邊，只填色）
+      c.fillStyle = '#f6f3e6';                       // 正面
+      c.beginPath(); c.rect(-w/2, -h/2, w, h); c.fill();
+      c.fillStyle = '#ffffff';                       // 頂面（最亮）
+      c.beginPath();
+      c.moveTo(-w/2, -h/2); c.lineTo(-w/2 + d, -h/2 - d);
+      c.lineTo(w/2 + d, -h/2 - d); c.lineTo(w/2, -h/2);
+      c.closePath(); c.fill();
+      c.fillStyle = '#e3ddc8';                       // 右側面（最暗）
+      c.beginPath();
+      c.moveTo(w/2, -h/2); c.lineTo(w/2 + d, -h/2 - d);
+      c.lineTo(w/2 + d, h/2 - d); c.lineTo(w/2, h/2);
+      c.closePath(); c.fill();
+      // 面與面的稜線（細、淡）
+      c.strokeStyle = 'rgba(190,182,150,.6)';
+      c.lineWidth = 1;
+      c.beginPath(); c.moveTo(-w/2, -h/2); c.lineTo(w/2, -h/2); c.stroke();
+      c.beginPath(); c.moveTo(w/2, -h/2); c.lineTo(w/2, h/2); c.stroke();
+      // 整體輪廓（一次描完）
       c.strokeStyle = '#c9c2aa';
-      c.lineWidth = 1.5;
-      // 頂面（最亮）
-      c.fillStyle = '#ffffff';
+      c.lineWidth = 1.6;
       c.beginPath();
-      c.moveTo(-w/2, -h/2);
-      c.lineTo(-w/2 + d, -h/2 - d);
-      c.lineTo(w/2 + d, -h/2 - d);
-      c.lineTo(w/2, -h/2);
-      c.closePath(); c.fill(); c.stroke();
-      // 右側面（最暗）
-      c.fillStyle = '#e3ddc8';
-      c.beginPath();
-      c.moveTo(w/2, -h/2);
-      c.lineTo(w/2 + d, -h/2 - d);
-      c.lineTo(w/2 + d, h/2 - d);
-      c.lineTo(w/2, h/2);
-      c.closePath(); c.fill(); c.stroke();
-      // 正面
-      c.fillStyle = '#f6f3e6';
-      c.beginPath();
-      c.rect(-w/2, -h/2, w, h);
-      c.fill(); c.stroke();
+      c.moveTo(-w/2, h/2); c.lineTo(-w/2, -h/2); c.lineTo(-w/2 + d, -h/2 - d);
+      c.lineTo(w/2 + d, -h/2 - d); c.lineTo(w/2 + d, h/2 - d); c.lineTo(w/2, h/2);
+      c.closePath(); c.stroke();
       c.restore();
     },
     // 毛豆：彎豆莢三顆豆
