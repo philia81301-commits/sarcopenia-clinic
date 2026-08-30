@@ -280,7 +280,7 @@
     <h1>存肌接接樂</h1>
     <p>移動手臂，接住存肌力的好食物和好運動，集滿進度就過關。沙發和電視來搗亂——別被黏住！</p>
     <div class="rules">
-      <span>🥚🥛🐟🍗 蛋白質 +10</span>
+      <span>🥚🥛🍣🍗 蛋白質 +10</span>
       <span class="bonus">💪 出力運動 +50</span>
       <span class="bad">🛋️📺 扣一命</span>
     </div>
@@ -333,7 +333,8 @@
   const overTitle = document.getElementById('overTitle');
   const finalScore = document.getElementById('finalScore');
 
-  const GOOD = ['🥚','🥛','🐟','🍗','🥩','🏋️'];
+  // 好料 11 種：emoji ＋ 手繪（豆腐、毛豆、啞鈴、深蹲沒有可靠的 emoji，畫的）
+  const GOOD = ['🥚','🥛','🐟','🍗','🥩','🍣','🏋️','draw:tofu','draw:edamame','draw:dumbbell','draw:squat'];
   const BAD  = ['🛋️','📺'];
   const POWER = '💪';
   const BAD_LINES = {
@@ -353,6 +354,69 @@
     '半年內沒有刻意減重卻瘦了 3 公斤以上，或過去一年跌倒過，請就醫評估。'
   ];
   const LEVEL_NEED = 10;          // 每關要接的好東西數
+
+  // 手繪掉落物（置中於原點，s 為大小）
+  function rr(c, x, y, w, h, r){
+    c.beginPath();
+    c.moveTo(x + r, y);
+    c.arcTo(x + w, y, x + w, y + h, r);
+    c.arcTo(x + w, y + h, x, y + h, r);
+    c.arcTo(x, y + h, x, y, r);
+    c.arcTo(x, y, x + w, y, r);
+    c.closePath();
+  }
+  const DRAWN = {
+    // 豆腐：白嫩方塊兩刀切痕
+    tofu(c, s){
+      const w = s*0.9, h = s*0.6;
+      c.fillStyle = '#fbfaf2';
+      c.strokeStyle = '#cfc9b4';
+      c.lineWidth = 2;
+      rr(c, -w/2, -h/2, w, h, 6); c.fill(); c.stroke();
+      c.strokeStyle = '#e4dfcc';
+      c.beginPath(); c.moveTo(-w/6, -h/2+3); c.lineTo(-w/6, h/2-3); c.stroke();
+      c.beginPath(); c.moveTo(w/5, -h/2+3); c.lineTo(w/5, h/2-3); c.stroke();
+    },
+    // 毛豆：彎豆莢三顆豆
+    edamame(c, s){
+      c.save();
+      c.rotate(-0.4);
+      c.fillStyle = '#79ad5f';
+      c.strokeStyle = '#4f7d3a';
+      c.lineWidth = 2;
+      rr(c, -s*0.45, -s*0.16, s*0.9, s*0.32, s*0.16); c.fill(); c.stroke();
+      c.fillStyle = '#8fc271';
+      for (const dx of [-s*0.24, 0, s*0.24]){
+        c.beginPath(); c.arc(dx, 0, s*0.13, 0, Math.PI*2); c.fill();
+      }
+      c.restore();
+    },
+    // 啞鈴：槓＋兩端槓片
+    dumbbell(c, s){
+      c.fillStyle = '#8b95a1';
+      rr(c, -s*0.42, -s*0.05, s*0.84, s*0.1, s*0.05); c.fill();
+      c.fillStyle = '#5a6570';
+      c.strokeStyle = '#3d454d';
+      c.lineWidth = 1.5;
+      for (const sd of [-1, 1]){
+        rr(c, sd*s*0.36 - s*0.08, -s*0.22, s*0.16, s*0.44, s*0.06); c.fill(); c.stroke();
+        rr(c, sd*s*0.24 - s*0.06, -s*0.15, s*0.12, s*0.3, s*0.05); c.fill(); c.stroke();
+      }
+    },
+    // 扶椅深蹲小人
+    squat(c, s){
+      const u = s/42;
+      c.strokeStyle = '#c96f2e';
+      c.fillStyle = '#c96f2e';
+      c.lineWidth = Math.max(3, s*0.09);
+      c.lineCap = 'round';
+      c.beginPath(); c.arc(0, -14*u, 5*u, 0, Math.PI*2); c.fill();          // 頭
+      c.beginPath(); c.moveTo(0, -9*u);  c.lineTo(4*u, 3*u);  c.stroke();   // 軀幹前傾
+      c.beginPath(); c.moveTo(4*u, 3*u); c.lineTo(-7*u, 5*u); c.stroke();   // 大腿水平
+      c.beginPath(); c.moveTo(-7*u, 5*u); c.lineTo(-7*u, 16*u); c.stroke(); // 小腿
+      c.beginPath(); c.moveTo(1*u, -7*u); c.lineTo(-13*u, -6*u); c.stroke();// 手臂前伸
+    }
+  };
 
   let W = 0, H = 0, dpr = 1;
   let state = 'idle';             // idle | playing | fact | over
@@ -416,8 +480,10 @@
     else if (r < 0.06 + Math.min(0.16 + level*0.02, 0.3)) { kind = 'bad'; emoji = BAD[Math.floor(Math.random()*BAD.length)]; }
     else { kind = 'good'; emoji = GOOD[Math.floor(Math.random()*GOOD.length)]; }
     const size = 42;
+    let sprite = null;
+    if (emoji && emoji.indexOf('draw:') === 0){ sprite = emoji.slice(5); emoji = null; }
     items.push({
-      kind, emoji, size,
+      kind, emoji, sprite, size,
       x: size + Math.random() * (W - size*2),
       y: -size,
       vy: (70 + Math.random()*50) * speedForLevel(),
@@ -609,8 +675,12 @@
       ctx.save();
       ctx.translate(it.x, it.y);
       ctx.rotate(Math.sin(it.a) * 0.22);
-      ctx.font = it.size + 'px "Noto Sans TC", sans-serif';
-      ctx.fillText(it.emoji, 0, 0);
+      if (it.sprite){
+        DRAWN[it.sprite](ctx, it.size);
+      } else {
+        ctx.font = it.size + 'px "Noto Sans TC", sans-serif';
+        ctx.fillText(it.emoji, 0, 0);
+      }
       ctx.restore();
     }
 
