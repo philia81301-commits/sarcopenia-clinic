@@ -29,6 +29,9 @@
     align-items:center;
     min-height:100vh;
     overflow-x:hidden;
+    /* 拖曳操控時不要讓瀏覽器反白選取文字（會蓋住標題與分數） */
+    user-select:none;
+    -webkit-user-select:none;
   }
   header{
     width:100%;
