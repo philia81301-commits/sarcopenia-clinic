@@ -13,7 +13,7 @@
  * （2026-07-30 起統一；在那之前 education.html 一直落在 0.1.0。）
  */
 
-const VERSION = "0.2.6";
+const VERSION = "0.2.7";
 const CACHE = `sarc-v${VERSION}`;
 const NET_TIMEOUT = 3000;   // 網路多久沒回應就改用快取（毫秒）
 

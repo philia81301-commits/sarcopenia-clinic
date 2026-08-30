@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>存肌接接樂｜肌少症預防衛教遊戲</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+<style>
+  :root{
+    --cream:#fdf9ef;
+    --cream-deep:#f3e8d2;
+    --ink:#33281c;
+    --ink-soft:#7d6b4e;
+    --amber:#b3741d;
+    --amber-deep:#8a5a12;
+    --power:#a45208;
+    --bad:#b0442e;
+    --card:#fffdf6;
+    --sans:"Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{height:100%;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:var(--sans);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+  header{
+    width:100%;
+    max-width:720px;
+    padding:18px 16px 10px;
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:12px;
+  }
+  .brand{
+    font-weight:900;
+    font-size:clamp(1.5rem,4.8vw,2.1rem);
+    letter-spacing:.08em;
+    color:var(--amber-deep);
+    text-wrap:balance;
+  }
+  .brand small{
+    display:block;
+    font-weight:500;
+    font-size:.78rem;
+    letter-spacing:.3em;
+    color:var(--ink-soft);
+    margin-top:2px;
+  }
+  .hi{
+    text-align:right;
+    font-size:.82rem;
+    color:var(--ink-soft);
+    letter-spacing:.08em;
+  }
+  .hi b{
+    display:block;
+    font-size:1.35rem;
+    color:var(--ink);
+    font-variant-numeric:tabular-nums;
+  }
+  .hud{
+    width:100%;
+    max-width:720px;
+    padding:0 16px 8px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    font-variant-numeric:tabular-nums;
+  }
+  .hud .score{
+    font-weight:900;
+    font-size:1.6rem;
+    min-width:5ch;
+  }
+  .lives{font-size:1.3rem; letter-spacing:.12em; user-select:none;}
+  .bank{
+    flex:1;
+    height:16px;
+    border-radius:8px;
+    background:var(--cream-deep);
+    border:1px solid #e0d0a8;
+    overflow:hidden;
+  }
+  .bank i{
+    display:block;
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg, #d9a84e, var(--amber));
+    border-radius:8px;
+    transition:width .18s ease;
+  }
+  .bank-label{
+    font-size:.8rem;
+    color:var(--ink-soft);
+    letter-spacing:.18em;
+    white-space:nowrap;
+  }
+  .stage-wrap{
+    width:100%;
+    max-width:720px;
+    padding:0 16px 16px;
+    position:relative;
+    touch-action:none;
+  }
+  canvas{
+    display:block;
+    width:100%;
+    border-radius:14px;
+    background:linear-gradient(180deg, #fffdf6 0%, #f7edd8 72%, #eedfc0 100%);
+    border:1px solid #e0cfa4;
+    box-shadow:0 10px 28px rgba(138,90,18,.14);
+    touch-action:none;
+    cursor:none;
+  }
+  .overlay{
+    position:absolute;
+    inset:0 16px 16px;
+    border-radius:14px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+    text-align:center;
+    background:rgba(253,249,239,.94);
+    backdrop-filter:blur(2px);
+    padding:24px;
+  }
+  .overlay.hidden{display:none;}
+  .overlay h1{
+    font-weight:900;
+    font-size:clamp(1.7rem,6vw,2.5rem);
+    color:var(--amber-deep);
+    letter-spacing:.06em;
+    text-wrap:balance;
+  }
+  .overlay p{
+    max-width:32ch;
+    line-height:1.9;
+    color:var(--ink);
+    font-size:1.02rem;
+  }
+  .overlay .hint{color:var(--ink-soft); font-size:.92rem;}
+  .rules{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    justify-content:center;
+    font-size:.95rem;
+  }
+  .rules span{
+    background:var(--card);
+    border:1.5px solid #e0cfa4;
+    border-radius:999px;
+    padding:9px 16px;
+    box-shadow:0 2px 6px rgba(138,90,18,.08);
+    font-weight:500;
+  }
+  .rules .bonus{border-color:#d9b98a; color:var(--power); font-weight:700;}
+  .rules .bad{border-color:#dcb0a4; color:var(--bad); font-weight:700;}
+  button{
+    font-family:var(--sans);
+    font-weight:900;
+    font-size:1.2rem;
+    letter-spacing:.2em;
+    color:#fff;
+    background:var(--amber);
+    border:none;
+    border-radius:999px;
+    padding:15px 48px;
+    cursor:pointer;
+    box-shadow:0 6px 16px rgba(179,116,29,.35);
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  button:hover{transform:translateY(-2px); box-shadow:0 9px 20px rgba(179,116,29,.42);}
+  button:focus-visible{outline:3px solid var(--amber-deep); outline-offset:3px;}
+  .fact-card{
+    background:var(--card);
+    border:2px solid var(--amber);
+    border-radius:16px;
+    padding:22px 26px;
+    max-width:46ch;
+    box-shadow:0 8px 24px rgba(138,90,18,.16);
+  }
+  .fact-card .tag{
+    display:inline-block;
+    font-size:.8rem;
+    font-weight:700;
+    letter-spacing:.25em;
+    color:#fff;
+    background:var(--amber);
+    border-radius:999px;
+    padding:4px 14px;
+    margin-bottom:12px;
+  }
+  .fact-card p{
+    font-size:1.12rem;
+    line-height:1.9;
+    font-weight:500;
+    max-width:none;
+    text-align:left;
+  }
+  .takeaway{
+    text-align:left;
+    max-width:44ch;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .takeaway p{font-size:.98rem; line-height:1.8; max-width:none;}
+  .takeaway b{color:var(--amber-deep);}
+  .final{
+    font-size:1.15rem;
+    font-weight:700;
+    color:var(--amber-deep);
+    font-variant-numeric:tabular-nums;
+  }
+  .toast{
+    position:absolute;
+    top:18px;
+    left:50%;
+    transform:translateX(-50%) translateY(-8px);
+    background:var(--amber-deep);
+    color:#fdf8ee;
+    font-size:.95rem;
+    font-weight:500;
+    letter-spacing:.06em;
+    padding:10px 20px;
+    border-radius:999px;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .2s ease, transform .2s ease;
+    white-space:nowrap;
+  }
+  .toast.show{opacity:.96; transform:translateX(-50%) translateY(0);}
+  footer{
+    padding:0 20px 24px;
+    font-size:.74rem;
+    color:var(--ink-soft);
+    line-height:1.8;
+    text-align:center;
+    max-width:640px;
+  }
+  footer a{color:var(--amber); font-weight:700;}
+  @media (prefers-reduced-motion: reduce){
+    button, .toast, .bank i{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">存肌接接樂<small>肌少症預防衛教遊戲</small></div>
+  <div class="hi">歷史最高<b id="hiScore">0</b></div>
+</header>
+
+<div class="hud">
+  <div class="score" id="score">0</div>
+  <div class="lives" id="lives">❤️❤️❤️</div>
+  <div class="bank"><i id="bankBar"></i></div>
+  <div class="bank-label">存肌進度 · 第 <span id="level">1</span> 關</div>
+</div>
+
+<div class="stage-wrap">
+  <canvas id="game"></canvas>
+  <div class="toast" id="toast"></div>
+
+  <div class="overlay" id="startOverlay">
+    <h1>存肌接接樂</h1>
+    <p>移動手臂，接住存肌力的好食物和好運動，集滿進度就過關。沙發和電視來搗亂——別被黏住！</p>
+    <div class="rules">
+      <span>🥚🥛🐟🍗 蛋白質 +10</span>
+      <span class="bonus">💪 出力運動 +50</span>
+      <span class="bad">🛋️📺 扣一命</span>
+    </div>
+    <p class="hint">← → 方向鍵、滑鼠或手指拖曳都可以操控。每過一關，送你一則存肌小知識。</p>
+    <button id="startBtn">開始存肌</button>
+  </div>
+
+  <div class="overlay hidden" id="factOverlay">
+    <h1>過關！</h1>
+    <div class="fact-card">
+      <span class="tag">存 肌 小 知 識</span>
+      <p id="factText"></p>
+    </div>
+    <button id="factBtn">繼續闖關</button>
+  </div>
+
+  <div class="overlay hidden" id="overOverlay">
+    <h1 id="overTitle">今天先休息</h1>
+    <div class="takeaway">
+      <p style="font-weight:900; color:var(--amber-deep)">帶走這三句話：</p>
+      <p>① <b>吃夠蛋白質</b>，重點是三餐平均分配，每餐都要有。</p>
+      <p>② 要「<b>出力</b>」才練得到肌肉——散步對心肺很好，但練不到肌肉。</p>
+      <p>③ 半年內<b>沒刻意減重卻瘦了 3 公斤以上</b>，請就醫評估。</p>
+    </div>
+    <div class="final" id="finalScore"></div>
+    <button id="againBtn">再玩一次</button>
+  </div>
+</div>
+
+<footer>
+  <p style="margin-bottom:6px"><a href="education.html">← 回衛教頁（含存肌力五連闖）</a>　·　<a href="./">肌少症篩檢工具</a></p>
+  本遊戲內容取自本站衛教頁，僅供衛教參考，不能取代醫師的診斷與建議。
+  肌少症的確定診斷需要在醫療院所測量肌肉量（DXA 或 BIA）。
+</footer>
+
+<script>
+(function(){
+  const canvas = document.getElementById('game');
+  const ctx = canvas.getContext('2d');
+  const scoreEl = document.getElementById('score');
+  const livesEl = document.getElementById('lives');
+  const bankBar = document.getElementById('bankBar');
+  const levelEl = document.getElementById('level');
+  const hiEl = document.getElementById('hiScore');
+  const toastEl = document.getElementById('toast');
+  const startOverlay = document.getElementById('startOverlay');
+  const factOverlay = document.getElementById('factOverlay');
+  const factText = document.getElementById('factText');
+  const overOverlay = document.getElementById('overOverlay');
+  const overTitle = document.getElementById('overTitle');
+  const finalScore = document.getElementById('finalScore');
+
+  const GOOD = ['🥚','🥛','🐟','🍗','🥩','🏋️'];
+  const BAD  = ['🛋️','📺'];
+  const POWER = '💪';
+  const BAD_LINES = {
+    '🛋️':'一直坐著，肌肉悄悄溜走！',
+    '📺':'看電視也要起來動一動！'
+  };
+  // 存肌小知識：內容取自本站 education.html（潘醫師審定過的衛教內容）
+  const FACTS = [
+    '肌少症不是「年紀大了本來就這樣」——吃夠蛋白質＋規律出力可以把肌肉練回來，任何年紀開始都來得及。',
+    '蛋白質目標大約是每公斤體重 1.2～1.5 公克。60 公斤的長輩，一天約 72～90 公克。',
+    '蛋白質重點是三餐平均分配，每餐都要有。集中在晚餐吃，肌肉利用不了。',
+    '一份蛋白質大約是：一顆蛋、一杯 240 c.c. 牛奶、半盒嫩豆腐、或一掌心的肉或魚。每餐吃到 2～3 份。',
+    '散步對心肺很好，但練不到肌肉。肌肉需要「對抗阻力」才會長，目標每週 2～3 次、每次約 20 分鐘。',
+    '扶椅深蹲、坐姿抬腿、站起坐下、踮腳尖都是好的出力運動。練完隔天有點痠是正常的，代表有練到。',
+    '運動時喘到說不出話、胸悶、頭暈就停下來休息。有心臟病或關節嚴重疼痛，請先問過醫師再開始。',
+    '牙口不好就換型態：豆腐、蒸蛋、魚肉、絞肉、奶類、無糖豆漿都算蛋白質。吃得下最重要。',
+    '半年內沒有刻意減重卻瘦了 3 公斤以上，或過去一年跌倒過，請就醫評估。'
+  ];
+  const LEVEL_NEED = 10;          // 每關要接的好東西數
+
+  let W = 0, H = 0, dpr = 1;
+  let state = 'idle';             // idle | playing | fact | over
+  let score, lives, level, caught, combo, factIdx;
+  let items, particles, tray;
+  let lastTime = 0, spawnTimer = 0, toastTimer = null;
+  let keys = {left:false, right:false};
+  let hi = 0;
+  try { hi = parseInt(localStorage.getItem('sar-catch-hi')) || 0; } catch(e){}
+  hiEl.textContent = hi;
+
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function resize(){
+    const w = canvas.clientWidth;
+    const h = Math.min(Math.max(w * 0.9, 380), window.innerHeight * 0.62);
+    dpr = window.devicePixelRatio || 1;
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    canvas.style.height = h + 'px';
+    W = w; H = h;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    if (tray) tray.y = H - 44;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function newGame(){
+    score = 0; lives = 3; level = 1; caught = 0; combo = 0; factIdx = 0;
+    items = []; particles = [];
+    tray = {x: W/2, y: H - 44, w: Math.max(96, W*0.18)};
+    spawnTimer = 0;
+    updateHud();
+    state = 'playing';
+    lastTime = performance.now();
+    requestAnimationFrame(loop);
+  }
+
+  function updateHud(){
+    scoreEl.textContent = score;
+    livesEl.textContent = '❤️'.repeat(lives) + '🖤'.repeat(3 - lives);
+    bankBar.style.width = (caught / LEVEL_NEED * 100) + '%';
+    levelEl.textContent = level;
+  }
+
+  function toast(msg, ms){
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=>toastEl.classList.remove('show'), ms || 1300);
+  }
+
+  function speedForLevel(){
+    return 0.85 + (level - 1) * 0.15;   // 起步放慢，每關加速 15%
+  }
+
+  function spawn(){
+    const r = Math.random();
+    let kind, emoji;
+    if (r < 0.06) { kind = 'power'; emoji = POWER; }
+    else if (r < 0.06 + Math.min(0.16 + level*0.02, 0.3)) { kind = 'bad'; emoji = BAD[Math.floor(Math.random()*BAD.length)]; }
+    else { kind = 'good'; emoji = GOOD[Math.floor(Math.random()*GOOD.length)]; }
+    const size = 42;
+    items.push({
+      kind, emoji, size,
+      x: size + Math.random() * (W - size*2),
+      y: -size,
+      vy: (70 + Math.random()*50) * speedForLevel(),
+      drift: (Math.random()-0.5) * 28,
+      rot: (Math.random()-0.5) * 1.4,
+      a: Math.random()*Math.PI*2
+    });
+  }
+
+  function burst(x, y, color, n){
+    if (reducedMotion) return;
+    for (let i=0;i<n;i++){
+      const ang = Math.random()*Math.PI*2, sp = 60 + Math.random()*120;
+      particles.push({x, y, vx:Math.cos(ang)*sp, vy:Math.sin(ang)*sp - 60, life:0.6, t:0.6, color});
+    }
+  }
+
+  function catchItem(it){
+    if (it.kind === 'good'){
+      combo++;
+      const bonus = combo >= 8 ? 3 : combo >= 4 ? 2 : 1;
+      score += 10 * bonus;
+      caught++;
+      burst(it.x, tray.y - 10, '#b3741d', 8);
+      if (bonus > 1) toast('連接 ×' + bonus + '！', 800);
+      if (caught >= LEVEL_NEED){ levelUp(); }
+    } else if (it.kind === 'power'){
+      combo++;
+      score += 50;
+      caught = Math.min(caught + 2, LEVEL_NEED);  // 出力運動最給力，一次存兩格
+      burst(it.x, tray.y - 10, '#a45208', 18);
+      toast('💪 出力運動！肌力大進帳 +50', 1200);
+      if (caught >= LEVEL_NEED){ levelUp(); }
+    } else {
+      combo = 0;
+      lives--;
+      burst(it.x, tray.y - 10, '#b0442e', 14);
+      toast(BAD_LINES[it.emoji] || '久坐不動，肌肉會流失！', 1400);
+      if (lives <= 0){ gameOver(); }
+    }
+    updateHud();
+  }
+
+  function levelUp(){
+    level++;
+    caught = 0;
+    score += 30;
+    updateHud();
+    state = 'fact';
+    canvas.style.cursor = 'default';
+    factText.textContent = FACTS[factIdx % FACTS.length];
+    factIdx++;
+    factOverlay.classList.remove('hidden');
+  }
+
+  function gameOver(){
+    state = 'over';
+    canvas.style.cursor = 'default';
+    let isNew = false;
+    if (score > hi){
+      hi = score; isNew = true;
+      try { localStorage.setItem('sar-catch-hi', hi); } catch(e){}
+      hiEl.textContent = hi;
+    }
+    overTitle.textContent = isNew ? '新紀錄！存肌達人' : '今天先休息';
+    finalScore.textContent = '本次得分 ' + score + '　·　闖到第 ' + level + ' 關　·　歷史最高 ' + hi;
+    overOverlay.classList.remove('hidden');
+  }
+
+  function drawTray(){
+    const {x, y} = tray;
+    ctx.save();
+    // 能量光暈
+    const g = ctx.createRadialGradient(x, y, 8, x, y, tray.w/2 + 16);
+    g.addColorStop(0, 'rgba(179,116,29,.22)');
+    g.addColorStop(1, 'rgba(179,116,29,0)');
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(x, y, tray.w/2 + 16, 0, Math.PI*2);
+    ctx.fill();
+    // 手繪出力手臂——不用 💪 emoji 當主角，長輩看得清楚、舊手機也不怕缺字
+    ctx.lineCap = 'round';
+    // 上臂（水平）
+    ctx.strokeStyle = '#e9b98a';
+    ctx.lineWidth = 20;
+    ctx.beginPath();
+    ctx.moveTo(x - 28, y + 4);
+    ctx.lineTo(x + 8, y + 2);
+    ctx.stroke();
+    // 前臂（折起）
+    ctx.lineWidth = 16;
+    ctx.beginPath();
+    ctx.moveTo(x + 8, y + 2);
+    ctx.lineTo(x + 26, y - 22);
+    ctx.stroke();
+    // 二頭肌鼓起
+    ctx.fillStyle = '#e9b98a';
+    ctx.beginPath();
+    ctx.ellipse(x - 8, y - 6, 14, 11, -0.15, 0, Math.PI*2);
+    ctx.fill();
+    // 拳頭
+    ctx.beginPath();
+    ctx.arc(x + 28, y - 26, 11, 0, Math.PI*2);
+    ctx.fill();
+    // 輪廓陰影線
+    ctx.strokeStyle = 'rgba(160,105,55,.45)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.ellipse(x - 8, y - 6, 14, 11, -0.15, 0, Math.PI*2);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(x + 28, y - 26, 11, 0, Math.PI*2);
+    ctx.stroke();
+    // 出力線
+    ctx.strokeStyle = '#b3741d';
+    ctx.lineWidth = 2.5;
+    for (const [dx1,dy1,dx2,dy2] of [[-2,-26,-6,-19],[6,-30,4,-22],[14,-32,10,-25]]){
+      ctx.beginPath();
+      ctx.moveTo(x + dx1 - 20, y + dy1 + 4);
+      ctx.lineTo(x + dx2 - 20, y + dy2 + 4);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function loop(now){
+    if (state !== 'playing') return;
+    const dt = Math.min((now - lastTime) / 1000, 0.05);
+    lastTime = now;
+
+    spawnTimer -= dt;
+    if (spawnTimer <= 0){
+      spawn();
+      spawnTimer = Math.max(0.95 / speedForLevel(), 0.32) * (0.75 + Math.random()*0.5);
+    }
+
+    const kv = 650;
+    if (keys.left)  tray.x -= kv * dt;
+    if (keys.right) tray.x += kv * dt;
+    tray.x = Math.max(tray.w/2, Math.min(W - tray.w/2, tray.x));
+
+    for (let i = items.length - 1; i >= 0; i--){
+      const it = items[i];
+      it.y += it.vy * dt;
+      it.x += it.drift * dt;
+      it.a += it.rot * dt;
+      if (it.x < it.size/2) { it.x = it.size/2; it.drift *= -1; }
+      if (it.x > W - it.size/2) { it.x = W - it.size/2; it.drift *= -1; }
+      if (it.y >= tray.y - 22 && it.y <= tray.y + 16 &&
+          Math.abs(it.x - tray.x) <= tray.w/2 + it.size*0.3){
+        catchItem(it);
+        items.splice(i,1);
+        if (state !== 'playing') return;   // 過關或結束時立刻停住畫面
+        continue;
+      }
+      if (it.y > H + it.size){
+        if (it.kind === 'good' || it.kind === 'power') combo = 0;
+        items.splice(i,1);
+      }
+    }
+
+    for (let i = particles.length - 1; i >= 0; i--){
+      const p = particles[i];
+      p.t -= dt;
+      if (p.t <= 0){ particles.splice(i,1); continue; }
+      p.x += p.vx * dt;
+      p.y += p.vy * dt;
+      p.vy += 300 * dt;
+    }
+
+    ctx.clearRect(0,0,W,H);
+
+    // 背景：淡淡的能量點點
+    ctx.save();
+    ctx.globalAlpha = 0.06;
+    ctx.fillStyle = '#b3741d';
+    for (let i = 0; i < 9; i++){
+      const bx = (i * 197 + 60) % W;
+      const by = (i * 131 + 40) % H;
+      ctx.beginPath();
+      ctx.arc(bx, by, 22 + (i % 4) * 10, 0, Math.PI*2);
+      ctx.fill();
+    }
+    ctx.restore();
+
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    for (const it of items){
+      ctx.save();
+      ctx.translate(it.x, it.y);
+      ctx.rotate(Math.sin(it.a) * 0.22);
+      ctx.font = it.size + 'px "Noto Sans TC", sans-serif';
+      ctx.fillText(it.emoji, 0, 0);
+      ctx.restore();
+    }
+
+    for (const p of particles){
+      ctx.globalAlpha = p.t / p.life;
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 3, 0, Math.PI*2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+
+    drawTray();
+    requestAnimationFrame(loop);
+  }
+
+  // 操控：鍵盤
+  window.addEventListener('keydown', e=>{
+    if (e.key === 'ArrowLeft')  { keys.left = true;  e.preventDefault(); }
+    if (e.key === 'ArrowRight') { keys.right = true; e.preventDefault(); }
+  });
+  window.addEventListener('keyup', e=>{
+    if (e.key === 'ArrowLeft')  keys.left = false;
+    if (e.key === 'ArrowRight') keys.right = false;
+  });
+  // 視窗失焦時放掉所有按鍵，避免「以為你還按著」把手臂推死在邊緣
+  function releaseKeys(){ keys.left = false; keys.right = false; }
+  window.addEventListener('blur', releaseKeys);
+  document.addEventListener('visibilitychange', releaseKeys);
+
+  // 操控：滑鼠／觸控（全視窗追蹤，並依實際顯示寬度換算座標）
+  function pointTo(clientX){
+    const rect = canvas.getBoundingClientRect();
+    const x = (clientX - rect.left) * (W / rect.width);
+    tray.x = Math.max(tray.w/2, Math.min(W - tray.w/2, x));
+  }
+  window.addEventListener('pointermove', e=>{ if (state==='playing') pointTo(e.clientX); });
+  window.addEventListener('pointerdown', e=>{
+    if (state !== 'playing') return;
+    releaseKeys();
+    pointTo(e.clientX);
+    // 抓住這根手指：滑出畫布外也持續追蹤，不會被瀏覽器當成捲動而中斷
+    try { canvas.setPointerCapture(e.pointerId); } catch(err){}
+  });
+  canvas.addEventListener('pointermove', e=>{ if (state==='playing') pointTo(e.clientX); });
+  canvas.addEventListener('touchmove', e=>{
+    if (state==='playing') e.preventDefault();
+  }, {passive:false});
+  canvas.addEventListener('touchstart', e=>{
+    if (state==='playing') e.preventDefault();
+  }, {passive:false});
+
+  function resume(){
+    canvas.style.cursor = 'none';
+    state = 'playing';
+    lastTime = performance.now();
+    requestAnimationFrame(loop);
+  }
+  document.getElementById('startBtn').addEventListener('click', ()=>{
+    startOverlay.classList.add('hidden');
+    canvas.style.cursor = 'none';
+    newGame();
+  });
+  document.getElementById('factBtn').addEventListener('click', ()=>{
+    factOverlay.classList.add('hidden');
+    items = [];              // 清場重新開始掉落，給讀完知識的人一點喘息
+    resume();
+  });
+  document.getElementById('againBtn').addEventListener('click', ()=>{
+    overOverlay.classList.add('hidden');
+    canvas.style.cursor = 'none';
+    newGame();
+  });
+})();
+</script>
+
+</body>
+</html>
