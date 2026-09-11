@@ -24,6 +24,7 @@
 | `tools/make-qr.py` | 重新產生並嵌入衛教頁 QR（只有網址變更時才需要跑） |
 | `tools/make-icons.py` | 重新產生 PWA 圖示 |
 | `tools/create-google-form.gs` | Apps Script：一鍵建立表單與回應試算表，並印出 `FORM_ID`／`ENTRY` |
+| `talks/ptch-2026/` | **屏東基督教醫院醫師演講簡報**（2026-09，亞培邀約）：Reveal.js 本地化 52 頁、`live.html` 觀眾作答頁、`live-config.js`、`firestore-rules-snippet.txt`、`build_fonts.py`；細節見 handoff.md「🎤 屏基演講」 |
 | `rdq/` | RDQ 需求規格卡 |
 
 ## 臨床與資料守則（不可違反）
@@ -90,6 +91,9 @@
       一鍵重置排行榜工具，QR code（`images/quiz-competition-qr.png`）印出來後永久不用換。
       已端到端測試過（建課業→更新轉址→push→curl 驗證 GitHub Pages 生效）。
       **未驗證**：真人拿手機掃 QR code 實測。細節見 `handoff.md`「🔗 Wordwall 測驗－現場競賽版」。
+- [x] **屏基醫師演講簡報**（2026-09-12，`talks/ptch-2026/`）——52 頁、40 分鐘、白底墨綠學術風（沿用肥胖醫學會簡報字級鐵則），
+      內嵌 `index.html`／`education.html`／`存肌接接樂.html` 三個現場示範、healthy-weight-public 運動圖卡、
+      AWGS 2025 更新、HMB 五頁（亞培邀約，證據含中性與負面結果）。**尚未 push、Firestore 規則尚未加白名單**，見 handoff.md。
 - [ ] 醫院電腦（如 X108521）若要在現場執行重置，需另外裝 Wordwall CLI 登入狀態
       （`~/.wordwall/state.json` 不跟著 repo 走，每台電腦要各自登入一次）。
 - [x] **排查並修復現場試跑「App 顯示送出成功、試算表沒資料」事件**（2026-08-06）：

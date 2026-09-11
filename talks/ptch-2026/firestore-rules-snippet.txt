@@ -1,0 +1,18 @@
+// 貼到 Firebase Console → 專案 obesity-ai-firebase → Firestore Database → 規則
+// 放在既有的 obesity_ai_talk_* 兩段之後、"match /{document=**}" 之前，然後按「發布」。
+// 演講結束後把 allow create / allow write 改回 if false。
+
+    match /ptch_sarcopenia_2026_wordcloud/{doc} {
+      allow read: if true;
+      allow create: if request.resource.data.keys().hasOnly(['word', 'created_at'])
+                    && request.resource.data.word is string
+                    && request.resource.data.word.size() > 0
+                    && request.resource.data.word.size() <= 12;
+      allow update, delete: if false;
+    }
+
+    match /ptch_sarcopenia_2026_poll/{device} {
+      allow read: if true;
+      allow write: if request.resource.data.choice in ['a', 'b', 'c', 'd'];
+      allow delete: if false;
+    }

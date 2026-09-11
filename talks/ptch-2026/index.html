@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>肌少症：從指引到門診｜潘湘如 醫師</title>
+
+<!-- 離線化：Reveal.js、字型、SDK 全部本地（vendor/、fonts/），會場沒網路也能播。
+     只有投票與文字雲兩頁需要網路，斷線會自動降級成「口頭舉手」提示。 -->
+<link rel="stylesheet" href="vendor/reset.css" />
+<link rel="stylesheet" href="vendor/reveal.css" />
+<style>
+/* 字型子集由 build_fonts.py 產生（含簡報用字＋Big5 常用字）。改內文後若出現豆腐字，重跑該腳本。 */
+@font-face{ font-family:'Noto Sans TC'; src:url('fonts/NotoSansTC-subset.woff2') format('woff2-variations'); font-weight:100 900; font-style:normal; font-display:block; }
+@font-face{ font-family:'Noto Serif TC'; src:url('fonts/NotoSerifTC-subset.woff2') format('woff2-variations'); font-weight:200 900; font-style:normal; font-display:block; }
+</style>
+
+<style>
+/* ============================================================
+   設計系統：學術沉穩風（白底墨綠），沿用肥胖醫學會簡報的字級鐵則：
+   base 46px；正文 ≥20px；註記類固定 16px；純出處列 .cite 13px；每頁佔高 ≤0.90。
+   ============================================================ */
+:root{
+  --bg:#FFFFFF; --bg-alt:#F6F5F0; --text:#22303C; --text-2:#5B6B63;
+  --warn:#B5651D; --rule:rgba(27,67,50,0.18);
+  --font-head:'Noto Serif TC','Microsoft JhengHei',serif;
+  --font-body:'Noto Sans TC','Microsoft JhengHei',sans-serif;
+  --sec:#1B4332; --sec-2:#52796F; --pop:#BE6C33;
+}
+/* 板塊識別色：前言與Ⅰ墨綠×赭金；Ⅱ診斷 深青藍×暖橘；Ⅲ工具 赭棕×深青綠；Ⅳ處置 橄欖×暖金；Ⅴ衛教與結語 墨綠 */
+section[data-sec="0"], section[data-sec="1"], section[data-sec="5"]{ --sec:#1B4332; --sec-2:#52796F; --pop:#BE6C33; }
+section[data-sec="2"]{ --sec:#1D5A6C; --sec-2:#4E8195; --pop:#CE8438; }
+section[data-sec="3"]{ --sec:#8C4A2F; --sec-2:#B5651D; --pop:#2D6A4F; }
+section[data-sec="4"]{ --sec:#5C6B3C; --sec-2:#8A9A5B; --pop:#A9761B; }
+section{
+  --sec-tint: color-mix(in srgb, var(--sec) 7%, #fff);
+  --sec-soft: color-mix(in srgb, var(--sec) 22%, #fff);
+  --sec-line: color-mix(in srgb, var(--sec) 35%, #fff);
+}
+
+.reveal{ font-family:var(--font-body); color:var(--text); font-weight:400; font-size:46px; line-height:1.4; }
+.reveal-viewport{ background:var(--bg); }
+.reveal .slides{ text-align:left; }
+.reveal .slides section{ padding:0; }
+.reveal h1,.reveal h2,.reveal h3{ font-family:var(--font-head); color:var(--sec); font-weight:700; letter-spacing:.01em; text-transform:none; margin:0; }
+.reveal h1{ font-size:1.72em; line-height:1.25; }
+.reveal h2{ font-size:1.06em; line-height:1.3; }
+.reveal h3{ font-size:.66em; color:var(--sec-2); }
+
+.slide-head{ margin-bottom:.5em; }
+.slide-head h2{ padding-bottom:.26em; }
+.slide-head::after{ content:''; display:block; width:100%; height:2px;
+  background:linear-gradient(to right, var(--pop) 0%, var(--pop) 5%, var(--sec) 5%, var(--sec) 16%, var(--rule) 16%, var(--rule) 100%); }
+.slide-head .sub{ font-size:.48em; color:var(--text-2); margin-top:.45em; line-height:1.55; }
+.sec-mark{ display:block; margin-bottom:.4em; font-family:var(--font-body); font-size:16px; letter-spacing:.2em; font-weight:500; color:var(--sec-2); }
+.sec-mark::before{ content:''; display:inline-block; vertical-align:middle; width:20px; height:2px; background:var(--pop); margin-right:.7em; margin-top:-2px; }
+
+.reveal .footer-brand{ position:fixed; bottom:14px; left:26px; z-index:30; font-size:13px; letter-spacing:.06em; color:var(--text-2); opacity:.55; font-family:var(--font-body); pointer-events:none; }
+.reveal .slide-number{ background:none; color:var(--text-2); font-size:14px; opacity:.6; right:26px; bottom:12px; }
+.reveal .slide-number a{ color:inherit; text-decoration:none; }
+.reveal .progress{ color:var(--sec); height:3px; }
+.reveal .controls{ color:var(--sec-2); }
+
+.reveal p{ font-size:.58em; line-height:1.7; color:var(--text); margin:.35em 0; }
+.reveal ul{ list-style:none; padding:0; margin:.15em 0; font-size:.56em; line-height:1.65; }
+.reveal ul li{ padding:.22em 0 .22em 1.1em; position:relative; }
+.reveal ul li::before{ content:''; position:absolute; left:0; top:.82em; width:7px; height:7px; background:var(--pop); border-radius:1px; }
+.reveal ol{ font-size:.56em; line-height:1.65; margin:.15em 0 .15em 1.2em; }
+.reveal strong, .reveal b{ color:var(--sec); font-weight:700; }
+.em-num{ font-family:var(--font-body); font-weight:900; color:var(--pop); }
+.reveal .fragment{ opacity:.18; }
+.reveal .fragment.visible{ opacity:1; }
+
+/* 板塊開篇頁 */
+.opener .roman{ font-family:var(--font-head); font-size:2.6em; font-weight:900; color:var(--sec); opacity:.16; line-height:1; margin-bottom:-.28em; }
+.opener h1{ margin-top:.1em; }
+.opener .rule{ width:88px; height:3px; background:var(--sec); margin:.5em 0 .55em; }
+.opener .lead{ font-size:.56em; color:var(--text-2); line-height:1.75; max-width:82%; }
+
+/* 封面／封底 */
+.title-slide .kicker{ display:inline-block; font-size:.4em; letter-spacing:.14em; color:var(--sec-2); border:1px solid var(--rule); padding:.42em 1.1em; border-radius:2px; margin-bottom:1em; background:rgba(255,255,255,.6); }
+.title-slide h1{ font-size:2.1em; line-height:1.28; color:#1B4332; font-weight:900;
+  text-shadow:-2px -2px 0 #BE6C33, -1px -1px 0 #BE6C33, 1px 1px 0 #16382A, 2px 2px 0 #143224, 3px 3px 0 #112B1F, 4px 4px 0 #0E2419, 6px 9px 18px rgba(11,29,20,.28); }
+.title-slide .rule{ width:110px; height:3px; background:var(--sec); margin:.6em 0 .7em; }
+.title-slide .who{ font-size:.6em; color:var(--text); line-height:1.8; }
+.title-slide .meta{ font-size:.44em; color:var(--text-2); margin-top:1.2em; line-height:1.8; }
+.title-slide{ max-width:58%; }
+.slide-background.cover-bg .slide-background-content::after{ content:''; position:absolute; inset:0;
+  background:linear-gradient(to right, #F6F1E4 0%, #F6F1E4 34%, rgba(246,241,228,.82) 46%, rgba(246,241,228,0) 60%); }
+.reveal:has(.slides > section.cover-bg.present) .slide-number{ display:none !important; }
+.end-slide{ text-align:center; }
+.end-slide h1{ font-size:1.8em; }
+.end-slide .rule{ width:110px; height:3px; background:var(--sec); margin:.6em auto .7em; }
+
+/* 大數字卡 */
+.stat-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:.55em; }
+.stat-card{ border:1px solid var(--sec-soft); border-top:3px solid var(--sec); border-radius:3px; padding:22px 14px 18px; text-align:center; background:var(--sec-tint); }
+.stat-card .num{ font-family:var(--font-body); font-weight:900; font-size:1.3em; color:var(--sec); line-height:1; }
+.stat-card .num .unit{ font-size:.42em; font-weight:700; margin-left:.12em; }
+.stat-card .label{ font-size:.42em; color:var(--text-2); margin-top:.8em; line-height:1.55; }
+
+/* 圖標卡（SVG 線性圖標，顏色跟 --sec） */
+.adv-grid{ display:grid; gap:20px; margin-top:.6em; grid-template-columns:repeat(4,1fr); }
+.adv-card{ border:1px solid var(--sec-soft); border-top:4px solid var(--sec-2); border-radius:3px; padding:24px 16px; text-align:center; background:var(--sec-tint); }
+.ic{ width:60px; height:60px; display:block; margin:0 auto 12px; stroke:var(--sec); fill:none; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
+.adv-card .adv-title{ font-size:.56em; font-weight:700; color:var(--sec); margin-bottom:.4em; }
+.adv-card .adv-desc{ font-size:.42em; color:var(--text-2); line-height:1.65; }
+
+/* 兩欄 */
+.two-col{ display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:.5em; }
+.two-col.w64{ grid-template-columns:1.5fr 1fr; }
+.two-col.w46{ grid-template-columns:1fr 1.5fr; }
+.col-box{ border:1px solid var(--sec-soft); border-radius:3px; padding:15px 20px; background:var(--sec-tint); }
+.col-box.mark-a{ border-top:3px solid var(--sec); }
+.col-box.mark-b{ border-top:3px solid var(--sec-2); }
+.col-box.mark-w{ border-top:3px solid var(--warn); }
+.col-box.mark-p{ border-top:3px solid var(--pop); }
+.col-box .cb-title{ font-size:.54em; font-weight:700; color:var(--sec); margin-bottom:.3em; line-height:1.35; }
+.col-box.mark-w .cb-title{ color:var(--warn); }
+.col-box ul{ font-size:.48em; }
+.col-box p{ font-size:.48em; margin:.25em 0; }
+
+/* 時間軸 */
+.timeline{ position:relative; padding-left:34px; margin-top:.4em; }
+.timeline::before{ content:''; position:absolute; left:9px; top:6px; bottom:6px; width:2px; background:var(--rule); }
+.timeline-item{ position:relative; margin-bottom:12px; }
+.timeline-item::before{ content:''; position:absolute; left:-30px; top:.42em; width:11px; height:11px; border-radius:50%; background:#fff; border:2.5px solid var(--sec); }
+.timeline-item.now::before{ background:var(--pop); border-color:var(--pop); }
+.ti-date{ font-size:.46em; font-weight:700; color:var(--sec); letter-spacing:.04em; }
+.ti-text{ font-size:.46em; color:var(--text); line-height:1.6; margin-top:.1em; }
+
+/* 出處／引言／結論塊 */
+.cite{ font-size:13px; color:var(--text-2); line-height:1.55; margin-top:14px; padding-top:9px; border-top:1px solid var(--rule); }
+.quote-box{ border-left:3px solid var(--pop); background:var(--sec-tint); padding:12px 20px; margin:.5em 0; font-size:.54em; line-height:1.7; color:var(--text); }
+.key-box{ background:var(--sec); color:#fff; border-left:6px solid var(--pop); border-radius:3px; padding:18px 26px; margin-top:.55em; font-size:.54em; line-height:1.7; }
+.key-box strong, .key-box b{ color:color-mix(in srgb, var(--pop) 18%, #fff); font-weight:700; }
+.chip{ display:inline-block; font-size:19px; font-weight:700; letter-spacing:.04em; padding:.15em .6em; border-radius:2px; margin-left:.4em; vertical-align:middle; background:var(--pop); color:#fff; }
+.chip.soft{ background:var(--sec-tint); color:var(--sec); border:1px solid var(--sec-soft); }
+
+/* 表格：正文格 ≥20px */
+.reveal table.tbl{ width:100%; border-collapse:collapse; margin-top:.4em; font-size:.44em; line-height:1.5; }
+.reveal table.tbl th, .reveal table.tbl td{ border:1px solid var(--sec-soft); padding:9px 14px; vertical-align:top; text-align:left; }
+.reveal table.tbl th{ background:var(--sec-tint); color:var(--sec); font-weight:700; }
+.reveal table.tbl td.hl{ color:var(--pop); font-weight:700; }
+.reveal table.tbl tr.dim td{ color:var(--text-2); }
+.reveal table.tbl.lg{ font-size:.5em; }
+.reveal table.tbl.compact th, .reveal table.tbl.compact td{ padding:6px 12px; }
+
+/* 流程圖 */
+.flow{ display:flex; align-items:stretch; margin-top:.5em; }
+.flow-step{ flex:1; background:var(--sec-tint); border:1px solid var(--sec-soft); border-top:3px solid var(--sec); border-radius:3px; padding:14px 16px; }
+.flow-step.end{ border-top-color:var(--pop); background:color-mix(in srgb, var(--pop) 8%, #fff); }
+.flow-step .fs-title{ font-size:.5em; font-weight:700; color:var(--sec); line-height:1.35; }
+.flow-step.end .fs-title{ color:var(--pop); }
+.flow-step .fs-desc{ font-size:.42em; color:var(--text); margin-top:.45em; line-height:1.6; }
+.flow-arrow{ flex:0 0 34px; display:flex; align-items:center; justify-content:center; color:var(--sec-line); font-size:.7em; font-weight:700; }
+
+/* 內嵌工具／遊戲 */
+.demo-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:16px; }
+.demo-head .slide-head{ flex:1; margin-bottom:.3em; }
+.demo-btn{ display:inline-block; font-size:19px; font-weight:700; padding:8px 18px; border-radius:3px; border:1px solid var(--sec); color:var(--sec); text-decoration:none; white-space:nowrap; margin-bottom:.4em; }
+.demo-frame{ width:100%; height:520px; border:1px solid var(--sec-soft); border-radius:3px; background:#fff; display:block; }
+.demo-note{ font-size:16px; color:var(--text-2); margin-top:8px; line-height:1.55; }
+.demo-split{ display:grid; grid-template-columns:1fr 250px; gap:22px; align-items:start; margin-top:.2em; }
+.qr-side{ display:flex; flex-direction:column; align-items:center; gap:8px; }
+.qr-side img{ width:200px; height:200px; display:block; background:#fff; border:1px solid var(--rule); padding:4px; }
+.qr-side .qr-cap{ font-size:19px; color:var(--text); line-height:1.5; text-align:center; font-weight:700; }
+.qr-side .qr-sub{ font-size:16px; color:var(--text-2); line-height:1.5; text-align:center; }
+.qr-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-top:.7em; }
+.qr-grid .qr-side img{ width:190px; height:190px; }
+
+/* 運動圖卡 */
+.ex-grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:.4em; }
+.ex-grid img{ width:auto; max-width:100%; max-height:330px; height:auto; display:block; margin:0 auto; border:1px solid var(--sec-soft); border-radius:3px; }
+.ex-grid figcaption{ font-size:19px; color:var(--text); line-height:1.5; margin-top:6px; }
+.ex-grid figure{ margin:0; }
+.ex-one{ display:grid; grid-template-columns:1.25fr 1fr; gap:24px; align-items:center; margin-top:.3em; }
+.ex-one img{ width:auto; max-width:100%; max-height:440px; height:auto; display:block; margin:0 auto; border:1px solid var(--sec-soft); border-radius:3px; }
+
+/* 現場互動 */
+.interact-ph{ border:1px dashed var(--sec-2); border-radius:3px; background:var(--bg-alt); padding:18px 22px; margin-top:.5em; }
+.live-2col{ display:grid; grid-template-columns:200px 1fr; gap:24px; align-items:center; }
+.live-side{ display:flex; flex-direction:column; align-items:center; gap:8px; }
+.live-side .qr{ width:190px; height:190px; display:block; background:#fff; padding:4px; border:1px solid var(--rule); }
+.live-side .qr-cap{ font-size:16px; color:var(--text-2); line-height:1.4; text-align:center; }
+.live-main{ position:relative; background:#fff; border:1px solid var(--rule); border-radius:3px; height:330px; overflow:hidden; }
+.live-main canvas{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+.live-empty{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:19px; color:#9AA7A0; line-height:1.7; text-align:center; pointer-events:none; padding:0 30px; }
+.live-foot{ display:flex; gap:1.6em; font-size:16px; color:var(--text-2); margin-top:.45em; }
+.live-foot b{ color:var(--sec); }
+.live-foot .live-msg{ color:var(--warn); font-weight:500; }
+.poll-opts{ display:grid; grid-template-columns:1fr; gap:12px; margin-top:.2em; }
+.poll-opt{ position:relative; overflow:hidden; border:1px solid var(--rule); border-radius:3px; padding:14px 18px; font-size:.5em; background:#fff; color:var(--text); display:flex; align-items:center; gap:.6em; }
+.poll-opt .po-fill{ position:absolute; left:0; top:0; bottom:0; width:0; background:rgba(27,67,50,0.13); transition:width .6s ease; z-index:0; }
+.poll-opt > span:not(.po-fill){ position:relative; z-index:1; }
+.poll-opt .po-k{ flex:0 0 1.5em; height:1.5em; border-radius:50%; border:1px solid var(--sec-2); color:var(--sec-2); font-size:.82em; font-weight:700; display:flex; align-items:center; justify-content:center; }
+.poll-opt .po-l{ flex:1; }
+.poll-opt .po-pct{ font-weight:700; color:var(--sec); font-variant-numeric:tabular-nums; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="ic-dumbbell" viewBox="0 0 24 24"><path d="M3 10v4M6 8v8M18 8v8M21 10v4"/><rect x="6" y="11" width="12" height="2" rx=".5"/></symbol>
+    <symbol id="ic-plate" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5.5"/><path d="M9.5 11.5c.5-1.2 1.5-2 2.5-2s2 .8 2.5 2"/></symbol>
+    <symbol id="ic-sun" viewBox="0 0 24 24"><circle cx="10" cy="10" r="4"/><path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.3 4.3l1.4 1.4M14.3 14.3l1.4 1.4M4.3 15.7l1.4-1.4"/><rect x="13" y="13" width="9" height="4.5" rx="2.25" transform="rotate(-45 17.5 15.25)"/></symbol>
+    <symbol id="ic-clipboard" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V2.5h6V4"/><path d="M8.5 12l2.2 2.2 4.8-4.8"/><path d="M8.5 17h7"/></symbol>
+    <symbol id="ic-grip" viewBox="0 0 24 24"><rect x="7" y="9" width="4" height="12" rx="1.5"/><rect x="13" y="9" width="4" height="12" rx="1.5"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></symbol>
+    <symbol id="ic-chair" viewBox="0 0 24 24"><path d="M6 3v10h12V3"/><path d="M4 13h16v3H4z"/><path d="M6 16v5M18 16v5"/></symbol>
+    <symbol id="ic-tape" viewBox="0 0 24 24"><ellipse cx="9" cy="12" rx="6" ry="7"/><ellipse cx="9" cy="12" rx="2" ry="2.5"/><path d="M15 6h6v12h-6"/><path d="M18 8v2M18 12v2M18 16v1.5"/></symbol>
+    <symbol id="ic-switch" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="8" rx="4"/><circle cx="15" cy="12" r="2.6"/></symbol>
+    <symbol id="ic-leaf" viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-13-1 9-6 14-14 13z"/><path d="M5 19c3-4 6-7 10-9"/></symbol>
+    <symbol id="ic-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></symbol>
+    <symbol id="ic-bed" viewBox="0 0 24 24"><path d="M3 18V8"/><path d="M3 12h18v6"/><path d="M3 15h18"/><circle cx="7" cy="9.5" r="1.8"/><path d="M10 12V9.5h9a2 2 0 0 1 2 2V12"/></symbol>
+  </defs>
+</svg>
+
+<div class="reveal">
+<div class="slides">
+
+<!-- ===================== 前言 ===================== -->
+
+<!-- 1 封面 -->
+<section class="cover-bg" data-sec="0" data-background-image="images/cover_light_20260912_071620.png" data-background-size="cover" data-background-position="right center">
+  <div class="title-slide">
+    <div class="kicker">屏東基督教醫院 · 醫師學術演講 · 40 分鐘</div>
+    <h1>肌少症：<br>從指引到門診</h1>
+    <div class="rule"></div>
+    <div class="who">篩檢、判定、處置，<br>以及讓衛教真的落地</div>
+    <div class="meta">潘湘如 醫師｜家醫科 · 減重門診<br>2026 年 9 月</div>
+  </div>
+  <aside class="notes">1 分鐘。自我介紹；今天三個承諾：講完知道怎麼篩、怎麼判、明天回門診就能用的東西。</aside>
+</section>
+
+<!-- 2 利益揭露 -->
+<section data-sec="0">
+  <div class="slide-head"><span class="sec-mark">利益揭露</span><h2>本場演講的支持與內容原則</h2></div>
+  <div class="col-box mark-a">
+    <div class="cb-title">支持單位</div>
+    <p>本演講由亞培（Abbott）邀請並支付講師費。內容由講者依公開發表文獻自行編寫，贊助方未審核或修改科學內容。講者與所討論產品無持股、專利或顧問等其他財務關係。</p>
+  </div>
+  <div class="col-box mark-p" style="margin-top:14px;">
+    <div class="cb-title">內容原則</div>
+    <ul>
+      <li>診斷與處置依 AWGS 2019、AWGS 2025、ESPEN／EASO 等共識與同儕審查文獻，每頁附出處</li>
+      <li>HMB 相關試驗中，Deutz 2013、NOURISH 2016、Cramer 2016 由 Abbott Nutrition 贊助並有其員工為共同作者，解讀時請納入考量；中性與負面結果一併呈現</li>
+      <li>產品資訊只作為含 HMB 口服營養補充品的例子，實際使用以產品標示與個別評估為準</li>
+    </ul>
+  </div>
+  <aside class="notes">30 秒。照唸即可。若另有顧問或研究經費，請據實補上。</aside>
+</section>
+
+<!-- 3 開場投票 -->
+<section data-sec="0">
+  <div class="slide-head"><span class="sec-mark">開場 · 即時投票</span><h2>您的門診現在怎麼處理肌少症？</h2></div>
+  <div class="interact-ph live-2col">
+    <div class="live-side">
+      <img class="qr" src="images/qr-live.png" alt="現場作答頁 QR">
+      <div class="qr-cap">手機掃碼作答<br>課尾文字雲也用同一頁</div>
+    </div>
+    <div>
+      <div class="poll-opts" id="poll-opts"></div>
+      <div class="live-foot"><span>已投票 <b id="poll-total">0</b> 人</span><span class="live-msg" id="poll-msg"></span></div>
+    </div>
+  </div>
+  <aside class="notes">2 分鐘。結果落在哪一格都接得上：A、B 多，今天就是要給流程；C 多，重點放在判定與轉介；D 多，請他們等一下分享做法。斷網時畫面會自動提示改口頭舉手。</aside>
+</section>
+
+<!-- 4 今天的路線 -->
+<section data-sec="0">
+  <div class="slide-head"><span class="sec-mark">今天的路線</span><h2>四十分鐘，三件事，加一組明天就能用的工具</h2></div>
+  <div class="flow">
+    <div class="flow-step"><div class="fs-title">篩</div><div class="fs-desc">三分鐘找出個案：SARC-F、小腿圍、握力。AWGS 2019 到 2025 的篩檢工具怎麼選。</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="fs-title">判</div><div class="fs-desc">切點跟著性別與年齡走；possible sarcopenia 就能開始介入；AWGS 2025 改了什麼。</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="fs-title">處</div><div class="fs-desc">刺激肌肉生長的關鍵；阻力運動、蛋白質、HMB 與藥物證據；減重門診的 GLP-1 保肌。</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step end"><div class="fs-title">工具</div><div class="fs-desc">篩檢紀錄工具、一頁衛教、運動圖卡、兩款遊戲，現場示範，掃 QR 直接帶走。</div></div>
+  </div>
+  <div class="key-box">投影片裡的切點都附年份與出處。門診流程以 AWGS 2019 為基礎，AWGS 2025 的改動會標明「要不要跟著改」。</div>
+  <aside class="notes">1 分鐘。</aside>
+</section>
+
+<!-- 5 為什麼是今天 -->
+<section data-sec="0">
+  <div class="slide-head"><span class="sec-mark">為什麼是今天</span><h2>一個減重門診醫師的觀察</h2></div>
+  <div class="two-col">
+    <div class="col-box mark-w">
+      <div class="cb-title">減重減掉的不只是脂肪</div>
+      <p>GLP-1 類藥物減重，減掉的體重中約有 <span class="em-num">四分之一到四成</span>是瘦體重。</p>
+      <p>50 歲以上、原本活動量少的病人，減 10 公斤可能同時減掉 3 公斤肌肉。肥胖型肌少症是門診的日常。</p>
+    </div>
+    <div class="col-box mark-a">
+      <div class="cb-title">台灣已是超高齡社會</div>
+      <p>2025 年 65 歲以上人口超過 20%。肌少症是跌倒、骨折、失能、住院與死亡的上游。</p>
+      <p>它常被當成「年紀大了本來就這樣」，因此很少被主動篩檢。</p>
+    </div>
+  </div>
+  <div class="key-box">肌少症<b>可以篩</b>（三分鐘）、<b>可以逆轉</b>（阻力運動加蛋白質）、<b>門診就做得到</b>。</div>
+  <aside class="notes">1.5 分鐘。用減重門診的例子開場：病人瘦了很開心，握力卻下降了。</aside>
+</section>
+
+<!-- 6 後果一條鏈 -->
+<section data-sec="0">
+  <div class="slide-head"><span class="sec-mark">為什麼要在意</span><h2>後果是一條鏈，肌少症在最上游</h2></div>
+  <div class="flow">
+    <div class="flow-step"><div class="fs-title">肌力下降</div><div class="fs-desc">握力變弱、起身要撐、<span style="white-space:nowrap;">走路變慢</span></div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="fs-title">跌倒</div><div class="fs-desc">GLIS 2025 結果報告：與跌倒、骨折的關聯屬高證據等級</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="fs-title">髖部骨折</div><div class="fs-desc">合併骨質疏鬆時風險再往上疊</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step end"><div class="fs-title">失能、長照、死亡</div><div class="fs-desc">宜蘭世代 11 年追蹤：肌少症與死亡顯著相關</div></div>
+  </div>
+  <div class="quote-box">每一個箭頭都是可以介入的位置，愈往上游成本愈低。門診能做的，就是在第一格把人找出來。</div>
+  <p class="cite">GLIS Outcomes Working Group, Aging Clin Exp Res 2025；I-Lan Longitudinal Aging Study 11-year follow-up, J Nutr Health Aging 2023.</p>
+  <aside class="notes">1 分鐘。</aside>
+</section>
+
+<!-- ===================== Ⅰ 定義與流行病學 ===================== -->
+
+<!-- 7 開篇 -->
+<section class="section-open" data-sec="1" data-background-color="#F6F5F0">
+  <div class="opener">
+    <div class="roman">Ⅰ</div>
+    <h1>定義怎麼變，數字怎麼讀</h1>
+    <div class="rule"></div>
+    <p class="lead">從肌肉量走向肌力，再到 2025 年把體能表現移出診斷要件。台灣的盛行率要先看定義。</p>
+  </div>
+  <aside class="notes">20 秒。</aside>
+</section>
+
+<!-- 8 定義演進 -->
+<section data-sec="1">
+  <div class="slide-head"><span class="sec-mark">Ⅰ · 定義</span><h2>三十多年的演進：從「肌肉量」走向「肌力」</h2></div>
+  <div class="two-col w64">
+    <div class="timeline">
+      <div class="timeline-item"><div class="ti-date">1989</div><div class="ti-text">Rosenberg 提出 sarcopenia（sarx 肌肉、penia 減少）。</div></div>
+      <div class="timeline-item"><div class="ti-date">2010</div><div class="ti-text">EWGSOP 第一版：以肌肉量為核心，加肌力或體能。</div></div>
+      <div class="timeline-item"><div class="ti-date">2014</div><div class="ti-text">AWGS 亞洲共識：亞洲人自己的切點。</div></div>
+      <div class="timeline-item"><div class="ti-date">2016</div><div class="ti-text">ICD-10-CM 給了代碼 M62.84，肌少症成為正式診斷。</div></div>
+      <div class="timeline-item"><div class="ti-date">2019</div><div class="ti-text">EWGSOP2 與 AWGS 2019：<strong>肌力成為主角</strong>；亞洲版新增 possible sarcopenia，讓基層不必量肌肉量就能介入。</div></div>
+      <div class="timeline-item"><div class="ti-date">2022</div><div class="ti-text">ESPEN／EASO 定義肥胖型肌少症。</div></div>
+    </div>
+    <div class="col-box mark-p">
+      <div class="cb-title">為什麼轉向肌力</div>
+      <p>肌力比肌肉量更能預測跌倒、失能與死亡。</p>
+      <p>握力計一分鐘量得到；DXA 要排檢。</p>
+      <p><strong>臨床意涵：</strong>門診沒有 DXA，也可以先判定 possible sarcopenia、先介入，不必等確診。</p>
+    </div>
+  </div>
+  <aside class="notes">1.5 分鐘。重點一句：從量走向力。</aside>
+</section>
+
+<!-- 9 2024–2025 轉向 -->
+<section data-sec="1">
+  <div class="slide-head"><span class="sec-mark">Ⅰ · 定義</span><h2>2024 到 2025：GLIS 與 AWGS 2025 的轉向</h2></div>
+  <div class="two-col">
+    <div class="col-box mark-a">
+      <div class="cb-title">GLIS 全球共識概念定義（2024）</div>
+      <ul>
+        <li>107 位專家、29 國，Age and Ageing</li>
+        <li>肌少症 ＝ 肌肉量 ＋ 肌力 ＋ 肌肉特異性肌力</li>
+        <li><strong>體能表現是結果，不是診斷要件</strong>（97.9% 同意）</li>
+      </ul>
+    </div>
+    <div class="col-box mark-p">
+      <div class="cb-title">AWGS 2025（Nature Aging，2025 年 12 月）</div>
+      <ul>
+        <li>台灣主導（陳亮恭教授），與 GLIS 對齊</li>
+        <li>診斷簡化為<strong>低肌肉量 ＋ 低肌力</strong></li>
+        <li>取消「嚴重肌少症」分級</li>
+        <li>新增 <strong>50 到 64 歲</strong>專屬切點</li>
+      </ul>
+    </div>
+  </div>
+  <div class="key-box">歐洲目前仍以 EWGSOP2（2019）為現行版本。亞洲與台灣的最新依據是 AWGS 2025，切點細節在第 Ⅱ 部分對照。</div>
+  <p class="cite">Kirk B, et al. Age Ageing 2024;53:afae052. Chen LK, et al. Nat Aging 2025, doi:10.1038/s43587-025-01004-y.</p>
+  <aside class="notes">1.5 分鐘。</aside>
+</section>
+
+<!-- 10 台灣數字 -->
+<section data-sec="1">
+  <div class="slide-head"><span class="sec-mark">Ⅰ · 流行病學</span><h2>台灣的數字：先看定義，再看百分比</h2></div>
+  <div class="stat-row">
+    <div class="stat-card"><div class="num">8.5<span class="unit">%</span></div><div class="label">宜蘭社區 65 歲以上肌少症<br>AWGS 2019 定義，I-Lan 世代 n=731</div></div>
+    <div class="stat-card"><div class="num">28.7<span class="unit">%</span></div><div class="label">亞洲合併資料 60 歲以上<br>可能肌少症（肌少症 16.5%）</div></div>
+    <div class="stat-card"><div class="num">50.9<span class="unit">%</span></div><div class="label">北台灣日照中心 65 歲以上<br>AWGS 2019 確診</div></div>
+  </div>
+  <div class="quote-box">社區確診約一成、高風險機構可達半數。同一個定義，場域不同，盛行率差五倍。這就是篩檢要分場域、工具要分社區版與門診版的理由。</div>
+  <p class="cite">I-Lan Longitudinal Aging Study, J Nutr Health Aging 2023；AWGS 2025 解讀, Aging Medicine 2026；北台灣日照中心研究 2021.</p>
+  <aside class="notes">1 分鐘。</aside>
+</section>
+
+<!-- 11 媒體數字 -->
+<section data-sec="1">
+  <div class="slide-head"><span class="sec-mark">Ⅰ · 流行病學</span><h2>媒體常引用的數字，引用前先問「用什麼定義」</h2></div>
+  <table class="tbl lg">
+    <tr><th>常見說法</th><th>來源</th><th>怎麼解讀</th></tr>
+    <tr><td>65 歲以上 34.1%</td><td>國民營養調查 106 到 109 年，媒體轉引</td><td class="hl">定義未公開，疑為小腿圍等廣義風險判定，應稱「篩檢陽性」</td></tr>
+    <tr><td>男 23.6%、女 18.6%</td><td>國健署 2018，二手引用</td><td class="hl">原始調查與定義查不到，不宜作主要數字</td></tr>
+    <tr><td>約 7%、<span style="white-space:nowrap;">推估 30 萬人</span></td><td>Kuo 等 2019，社區 65 歲以上，AWGS 2014</td><td>可引用，但為 2014 定義</td></tr>
+    <tr><td>8.5%</td><td>I-Lan 世代，AWGS 2019</td><td>目前最適合作社區確診盛行率的本土數字</td></tr>
+  </table>
+  <div class="key-box">投影片上的每個百分比都要標「確診」或「篩檢陽性」，以及用哪一版定義。</div>
+  <aside class="notes">1 分鐘。</aside>
+</section>
+
+<!-- ===================== Ⅱ 診斷 ===================== -->
+
+<!-- 12 開篇 -->
+<section class="section-open" data-sec="2" data-background-color="#F6F5F0">
+  <div class="opener">
+    <div class="roman">Ⅱ</div>
+    <h1>怎麼診斷</h1>
+    <div class="rule"></div>
+    <p class="lead">AWGS 2019 兩條路徑、每一步的切點與量法、分級，以及 AWGS 2025 的改動與台灣的政策接口。</p>
+  </div>
+  <aside class="notes">20 秒。</aside>
+</section>
+
+<!-- 13 社區路徑 -->
+<section data-sec="2">
+  <div class="slide-head"><span class="sec-mark">Ⅱ · AWGS 2019 · 現行工具的基礎</span><h2>路徑一：社區與基層門診，先介入再確診</h2></div>
+  <div class="flow">
+    <div class="flow-step"><div class="fs-title">找個案</div><div class="fs-desc">小腿圍 男 &lt;34、女 &lt;33 cm<br>SARC-F ≥ 4 分<br>SARC-CalF ≥ 11 分</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="fs-title">肌力 或 體能</div><div class="fs-desc">握力 男 &lt;28、女 &lt;18 kg<br>五次起坐 ≥ 12 秒</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step end"><div class="fs-title">Possible sarcopenia</div><div class="fs-desc">任一項低下即成立<br>立即生活介入（運動加營養）<br>轉介醫院確診</div></div>
+  </div>
+  <div class="quote-box">這條線就是我們門診工具實作的內容：不需要 DXA，一台平板、一支握力計、一條皮尺、一張椅子就能完成。</div>
+  <p class="cite">Chen LK, et al. AWGS 2019 Consensus Update. J Am Med Dir Assoc 2020;21:300-307.</p>
+  <aside class="notes">1.5 分鐘。全場最重要的兩頁之一。</aside>
+</section>
+
+<!-- 14 醫院路徑 -->
+<section data-sec="2">
+  <div class="slide-head"><span class="sec-mark">Ⅱ · AWGS 2019</span><h2>路徑二：醫院與研究，加上肌肉量才能確診</h2></div>
+  <div class="flow">
+    <div class="flow-step"><div class="fs-title">找個案</div><div class="fs-desc">同路徑一，加臨床線索：功能下降、非刻意體重減輕、憂鬱、認知障礙、反覆跌倒、營養不良、慢性病</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="fs-title">肌力 ＋ 體能</div><div class="fs-desc">握力<br>6 公尺步速 &lt;1.0 m/s<br>SPPB ≤ 9、五次起坐 ≥ 12 秒</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="fs-title">肌肉量 ASMI</div><div class="fs-desc">DXA 男 &lt;7.0、女 &lt;5.4 kg/m²<br>BIA 男 &lt;7.0、女 &lt;5.7 kg/m²</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step end"><div class="fs-title">肌少症／嚴重</div><div class="fs-desc">量低 ＋ 力低或能低 ＝ 肌少症<br>三者皆低 ＝ 嚴重肌少症</div></div>
+  </div>
+  <div class="quote-box">轉介到醫院後走這條線。骨鬆病人排 DXA 時一併做身體組成，是最省事的接口。</div>
+  <aside class="notes">1 分鐘。</aside>
+</section>
+
+<!-- 15 篩檢工具 -->
+<section data-sec="2">
+  <div class="slide-head"><span class="sec-mark">Ⅱ · 第一步 找個案</span><h2>篩檢工具：便宜、快，但要知道它漏什麼</h2></div>
+  <table class="tbl">
+    <tr><th style="width:17%">工具</th><th>怎麼做</th><th style="width:19%">陽性切點</th><th style="width:30%">特性與提醒</th></tr>
+    <tr><td><strong>SARC-F</strong></td><td>5 題：搬 4.5 公斤、走過房間、起身、爬 10 階、跌倒次數，各 0 到 2 分</td><td class="hl">≥ 4 分</td><td>特異度高、<strong>敏感度低</strong>，早期個案會漏</td></tr>
+    <tr><td><strong>SARC-CalF</strong></td><td>SARC-F 加小腿圍低於切點加 10 分</td><td class="hl">≥ 11 分</td><td>敏感度明顯提升，AWGS 2019 建議社區優先用</td></tr>
+    <tr><td><strong>小腿圍</strong></td><td>坐姿、膝踝 90 度、不隔褲襪、最粗處量兩次取大值</td><td class="hl">男 &lt;34、女 &lt;33 cm</td><td>肌肉量的代理指標；水腫、肥胖會高估</td></tr>
+    <tr><td><strong>指環測試</strong></td><td>雙手拇指與食指圈住小腿最粗處</td><td class="hl">圈得住且有空隙</td><td>零工具；AWGS 2025 正式列入</td></tr>
+  </table>
+  <aside class="notes">1.5 分鐘。</aside>
+</section>
+
+<!-- 16 篩檢盲點 -->
+<section data-sec="2">
+  <div class="slide-head"><span class="sec-mark">Ⅱ · 第一步 找個案</span><h2>篩檢的盲點：初篩陰性不等於沒有肌少症</h2></div>
+  <div class="two-col">
+    <div class="col-box mark-w">
+      <div class="cb-title">SARC-F 為什麼會漏</div>
+      <ul>
+        <li>問的是「有沒有困難」，早期肌力下降的人多半回答沒有</li>
+        <li>特異度高、敏感度低：陽性可信，陰性不能排除</li>
+        <li>加小腿圍（SARC-CalF）能補回一部分，但仍不是實測</li>
+      </ul>
+    </div>
+    <div class="col-box mark-a">
+      <div class="cb-title">有臨床線索，直接量握力</div>
+      <ul>
+        <li>半年內非刻意減重 3 公斤以上</li>
+        <li>過去一年跌倒，或走路開始需要扶</li>
+        <li>減重治療中、糖尿病、慢性腎病、癌症</li>
+        <li>握力一分鐘，比再問一次問卷更可靠</li>
+      </ul>
+    </div>
+  </div>
+  <div class="key-box">工具上「初篩陰性也能加測」這個選項，就是為了這群人。加測後才發現低下的個案，結果會標「以實測為準」。</div>
+  <aside class="notes">1 分鐘。</aside>
+</section>
+
+<!-- 17 肌力與體能切點 -->
+<section data-sec="2">
+  <div class="slide-head"><span class="sec-mark">Ⅱ · 第二步 肌力與體能</span><h2>切點跟著性別走：亞洲版與歐洲版不同</h2></div>
+  <table class="tbl lg">
+    <tr><th>項目</th><th>AWGS 2019（亞洲，65 歲以上）</th><th>EWGSOP2（歐洲）</th></tr>
+    <tr><td><strong>握力</strong></td><td class="hl">男 &lt;28 kg、女 &lt;18 kg</td><td>男 &lt;27 kg、女 &lt;16 kg</td></tr>
+    <tr><td><strong>五次起坐</strong></td><td class="hl">≥ 12 秒</td><td>&gt; 15 秒</td></tr>
+    <tr><td><strong>步速</strong>（6 公尺／4 公尺）</td><td class="hl">&lt; 1.0 m/s</td><td>≤ 0.8 m/s</td></tr>
+    <tr><td><strong>SPPB</strong></td><td class="hl">≤ 9 分</td><td>≤ 8 分</td></tr>
+    <tr class="dim"><td>TUG、400 公尺步行</td><td>未採用</td><td>≥ 20 秒；≥ 6 分鐘或走不完</td></tr>
+  </table>
+  <div class="quote-box">門診只要記住 28、18 與 12 秒。閱讀歐洲文獻時要先確認用的是哪一套切點。</div>
+  <p class="cite">AWGS 2019, J Am Med Dir Assoc 2020；Cruz-Jentoft AJ, et al. EWGSOP2. Age Ageing 2019;48:16-31.</p>
+  <aside class="notes">1 分鐘。</aside>
+</section>
+
+<!-- 18 量測標準化 -->
+<section data-sec="2">
+  <div class="slide-head"><span class="sec-mark">Ⅱ · 第二步 肌力與體能</span><h2>量法一致，數字才能互相比較</h2></div>
+  <div class="adv-grid" style="grid-template-columns:repeat(3,1fr);">
+    <div class="adv-card">
+      <svg class="ic"><use href="#ic-grip"/></svg>
+      <div class="adv-title">握力</div>
+      <div class="adv-desc">手肘伸直（Smedley 式）或屈 90 度（Jamar 式）擇一固定；雙手各至少 2 次取最大值；記錄握力計型式。</div>
+    </div>
+    <div class="adv-card">
+      <svg class="ic"><use href="#ic-chair"/></svg>
+      <div class="adv-title">五次起坐</div>
+      <div class="adv-desc">雙手抱胸、不扶、連續站起坐下 5 次計時。門診沒有步行走道時，是最實用的體能指標。</div>
+    </div>
+    <div class="adv-card">
+      <svg class="ic"><use href="#ic-tape"/></svg>
+      <div class="adv-title">小腿圍</div>
+      <div class="adv-desc">坐姿、膝踝 90 度、不隔褲襪、最粗處水平環繞、量兩次取大值、記到小數一位。</div>
+    </div>
+  </div>
+  <div class="quote-box">工具畫面上把量測步驟印在欄位旁邊，不同志工量出來的數字才能放在同一張表裡。</div>
+  <aside class="notes">1 分鐘。</aside>
+</section>
+
+<!-- 19 肌肉量 -->
+<section data-sec="2">
+  <div class="slide-head"><span class="sec-mark">Ⅱ · 第三步 肌肉量</span><h2>確診要量肌肉量：DXA 與 BIA</h2></div>
+  <table class="tbl lg">
+    <tr><th>方法</th><th>ASMI 切點（kg/m²，65 歲以上）</th><th>提醒</th></tr>
+    <tr><td><strong>DXA</strong></td><td class="hl">男 &lt;7.0、女 &lt;5.4</td><td>參考標準；輻射極低；需排檢</td></tr>
+    <tr><td><strong>BIA</strong></td><td class="hl">男 &lt;7.0、女 &lt;5.7</td><td>門診可做；<strong>水腫、脫水、剛運動後會失準</strong>；建議多頻機種</td></tr>
+  </table>
+  <div class="two-col">
+    <div class="col-box mark-w">
+      <div class="cb-title">小腿圍不是肌肉量</div>
+      <p>它只是代理指標。工具與衛教文字一律寫「疑似」，並提示轉介 DXA 或 BIA。</p>
+    </div>
+    <div class="col-box mark-a">
+      <div class="cb-title">健保現況</div>
+      <p>DXA 只給付骨鬆 6 項適應症，肌少症與身體組成不給付，自費約 600 到 2,000 元。</p>
+    </div>
+  </div>
+  <aside class="notes">1 分鐘。</aside>
+</section>
+
+<!-- 20 新工具 -->
+<section data-sec="2">
+  <div class="slide-head"><span class="sec-mark">Ⅱ · 第三步 肌肉量</span><h2>正在來的新工具，各在哪個階段</h2></div>
+  <table class="tbl lg">
+    <tr><th>工具</th><th>量什麼</th><th>目前定位</th></tr>
+    <tr><td><strong>肌肉超音波</strong></td><td>股四頭肌厚度、回音強度</td><td>床邊可做；切點尚未統一，AWGS 2025 未列為正式診斷工具</td></tr>
+    <tr><td><strong>D3-creatine 稀釋法</strong></td><td>全身肌肉量</td><td>與功能相關性佳；研究用</td></tr>
+    <tr><td><strong>CT 第三腰椎骨骼肌指數</strong></td><td>橫斷面肌肉面積</td><td>癌症、外科病人可順便量（opportunistic）</td></tr>
+    <tr><td><strong>肌肉特異性肌力</strong></td><td>握力除以手臂肌肉量</td><td>宜蘭世代 2025：比握力更能預測功能退化；GLIS 納入概念定義</td></tr>
+  </table>
+  <p class="cite">Chien et al. J Cachexia Sarcopenia Muscle 2025（ILAS）；GLIS operationalization, J Cachexia Sarcopenia Muscle 2026.</p>
+  <aside class="notes">45 秒。</aside>
+</section>
+
+<!-- 21 分級與錯誤 -->
+<section data-sec="2">
+  <div class="slide-head"><span class="sec-mark">Ⅱ · 判定 · AWGS 2019</span><h2>分級矩陣：少測一項，就不是完整判定</h2></div>
+  <table class="tbl lg">
+    <tr><th>判定</th><th>肌肉量低</th><th>肌力低</th><th>體能低</th><th>對應處置</th></tr>
+    <tr><td><strong>Possible sarcopenia</strong></td><td>未測</td><td colspan="2" style="text-align:center;">任一低下</td><td>立即生活介入；轉介確診</td></tr>
+    <tr><td><strong>Sarcopenia</strong></td><td>✓</td><td colspan="2" style="text-align:center;">任一低下</td><td>介入、找原因、3 個月追蹤</td></tr>
+    <tr><td><strong>Severe sarcopenia</strong></td><td>✓</td><td>✓</td><td>✓</td><td>跨團隊：復健、營養、跌倒防治</td></tr>
+  </table>
+  <div class="two-col">
+    <div class="col-box mark-w"><div class="cb-title">常見錯誤一</div><p>五次起坐沒做就寫「肌力與體能均未達切點」。沒測不等於正常，要標「部分評估」。</p></div>
+    <div class="col-box mark-w"><div class="cb-title">常見錯誤二</div><p>切點沒跟著性別。男性握力 26 kg 是低下，女性 26 kg 是正常。切點要印在數字旁邊。</p></div>
+  </div>
+  <aside class="notes">1 分鐘。這兩個錯誤是工具實作時真的發生過的。</aside>
+</section>
+
+<!-- 22 AWGS 2025 三個改動 -->
+<section data-sec="2">
+  <div class="slide-head"><span class="sec-mark">Ⅱ · AWGS 2025</span><h2>AWGS 2025 改了什麼：三個改動</h2></div>
+  <table class="tbl lg">
+    <tr><th>面向</th><th>AWGS 2019</th><th>AWGS 2025</th></tr>
+    <tr><td>診斷要件</td><td>肌肉量低 ＋（肌力低 或 體能低）</td><td class="hl">肌肉量低 ＋ 肌力低</td></tr>
+    <tr><td>體能表現</td><td>診斷要件之一</td><td class="hl">改為結果指標，用於追蹤與預後</td></tr>
+    <tr><td>分級</td><td>可能、肌少症、嚴重</td><td class="hl">肌少症風險、可能肌少症、肌少症</td></tr>
+    <tr><td>年齡</td><td>65 歲以上</td><td class="hl">新增 50 到 64 歲切點</td></tr>
+    <tr><td>篩檢工具</td><td>小腿圍、SARC-F、SARC-CalF</td><td>同左，加指環測試</td></tr>
+  </table>
+  <div class="quote-box">「肌少症風險」：肌力尚正常，但有慢性病、營養不良或非預期體重減輕，每年評估一次。</div>
+  <p class="cite">Chen LK, et al. Nat Aging 2025；Won CW, Jung H. Ann Geriatr Med Res 2025.</p>
+  <aside class="notes">1.5 分鐘。</aside>
+</section>
+
+<!-- 23 AWGS 2025 新切點 -->
+<section data-sec="2">
+  <div class="slide-head"><span class="sec-mark">Ⅱ · AWGS 2025</span><h2>新切點表，與門診要不要跟著改</h2></div>
+  <div class="two-col w64">
+    <table class="tbl lg" style="margin-top:0;">
+      <tr><th>切點</th><th>50 到 64 歲 男／女</th><th>65 歲以上 男／女</th></tr>
+      <tr><td>握力</td><td class="hl">&lt;34／&lt;20 kg</td><td>&lt;28／&lt;18 kg</td></tr>
+      <tr><td>ASMI，DXA</td><td class="hl">&lt;7.2／&lt;5.5</td><td>&lt;7.0／&lt;5.4</td></tr>
+      <tr><td>ASMI，BIA</td><td class="hl">&lt;7.6／&lt;5.7</td><td>&lt;7.0／&lt;5.7</td></tr>
+      <tr><td>五次起坐（結果指標）</td><td>≥ 10 秒</td><td>≥ 12 秒</td></tr>
+      <tr><td>步速（結果指標）</td><td>&lt; 1.2 m/s</td><td>&lt; 1.0 m/s</td></tr>
+    </table>
+    <div class="col-box mark-p">
+      <div class="cb-title">門診要不要跟著改</div>
+      <ul>
+        <li>65 歲以上握力切點<strong>沒變</strong>，現有流程照用</li>
+        <li>五次起坐仍要量，用途改為追蹤</li>
+        <li><strong>50 到 64 歲</strong>的減重、糖尿病病人納入篩檢，用新切點</li>
+        <li>結果文字不再寫「嚴重肌少症」</li>
+      </ul>
+    </div>
+  </div>
+  <p class="cite">50 到 64 歲切點來自日本、馬來西亞、台灣 8 個世代約 35,000 人合併分析，J Cachexia Sarcopenia Muscle 2025, doi:10.1002/jcsm.13731.</p>
+  <!-- 備查：50–64 歲切點取自解讀文獻（Aging Medicine 2026）與廠商整理（Charder／InBody），原文為付費牆；演講前對 Nature Aging 原文 Table 再核一次。 -->
+  <aside class="notes">1.5 分鐘。50 到 64 歲這群是減重門診的主力，要開始篩。</aside>
+</section>
+
+<!-- 24 ICOPE -->
+<section data-sec="2">
+  <div class="slide-head"><span class="sec-mark">Ⅱ · 台灣的政策接口</span><h2>能借力的：長者量六力與社區資源</h2></div>
+  <div class="two-col">
+    <div class="col-box mark-a">
+      <div class="cb-title">國健署「長者量六力」（WHO ICOPE）</div>
+      <ul>
+        <li>65 歲以上，原住民 55 歲以上；六力：認知、行動、營養、視力、聽力、憂鬱</li>
+        <li>行動力：<strong>五次起坐 ≤ 14 秒</strong>（WHO 標準；AWGS 用 12 秒）</li>
+        <li>營養：3 個月內體重減 3 公斤或食慾差</li>
+        <li>異常者轉家醫科或老年醫學門診；LINE 官方帳號 @hpaicope</li>
+      </ul>
+    </div>
+    <div class="col-box mark-b">
+      <div class="cb-title">社區運動與長照</div>
+      <ul>
+        <li>全台近 4,000 處據點提供六力評估</li>
+        <li>銀髮健身俱樂部 2021 到 2025 布建 288 處</li>
+        <li>長照 3.0（2026 到 2035）延續六力評估、社區營養風險篩檢、長者運動</li>
+        <li>核定本寫「衰弱」28 次、「肌少症」0 次</li>
+      </ul>
+    </div>
+  </div>
+  <div class="key-box">ICOPE 異常的個案接到門診，用握力與 SARC-CalF 判定，再轉介社區據點做阻力運動。給付與計畫內容以就診當時公告為準。</div>
+  <aside class="notes">1 分鐘。</aside>
+</section>
+
+<!-- ===================== Ⅲ 門診工具 ===================== -->
+
+<!-- 25 開篇 -->
+<section class="section-open" data-sec="3" data-background-color="#F6F5F0">
+  <div class="opener">
+    <div class="roman">Ⅲ</div>
+    <h1>門診怎麼做：把流程做成工具</h1>
+    <div class="rule"></div>
+    <p class="lead">單頁網頁、可離線、平板與手機都能用。現場走一遍，看流程怎麼變成畫面。</p>
+  </div>
+  <aside class="notes">20 秒。</aside>
+</section>
+
+<!-- 26 工具示範 -->
+<section data-sec="3">
+  <div class="demo-head">
+    <div class="slide-head"><span class="sec-mark">Ⅲ · 現場示範</span><h2>肌少症篩檢紀錄工具</h2></div>
+    <a class="demo-btn" href="../../index.html" target="_blank" rel="noopener">在新視窗開啟</a>
+  </div>
+  <iframe class="demo-frame" style="height:400px;" data-src="../../index.html" title="肌少症篩檢紀錄工具"></iframe>
+  <p class="demo-note">SARC-CalF 初篩後接 AWGS 2019 判定；切點顯示在數字旁；陽性自動出衛教 QR；資料去識別化送 Google 試算表。點畫面外空白處可恢復翻頁。</p>
+  <aside class="notes">3 分鐘。示範：選工作站，填 SARC-F 與小腿圍，初篩陽性，握力與五次起坐，出判定與 QR。用「男性、握力 26」讓大家看到切點在旁邊。建議先在新視窗開好備用。</aside>
+</section>
+
+<!-- 27 五個取捨 -->
+<section data-sec="3">
+  <div class="slide-head"><span class="sec-mark">Ⅲ · 工具背後</span><h2>做工具時的五個取捨，每一條都對應一個真實事故</h2></div>
+  <div class="two-col">
+    <div>
+      <div class="col-box mark-a"><div class="cb-title">1 初篩陰性也能加測</div><p>SARC-F 敏感度有限；加測才發現的個案標「以實測為準」。</p></div>
+      <div class="col-box mark-a" style="margin-top:12px;"><div class="cb-title">2 少測一項就標「部分評估」</div><p>五次起坐留空，不得寫「均未達切點」。</p></div>
+      <div class="col-box mark-a" style="margin-top:12px;"><div class="cb-title">3 切點跟著性別印在數字旁</div><p>現場能核對，事後能回查。</p></div>
+    </div>
+    <div>
+      <div class="col-box mark-w"><div class="cb-title">4 不收姓名、電話、出生月日</div><p>只送代號、出生年、性別、測量值；姓名留紙本對照表。</p></div>
+      <div class="col-box mark-w" style="margin-top:12px;"><div class="cb-title">5 當日 n 小於 10 不顯示百分比</div><p>小樣本比例不穩定，只列分子分母。</p></div>
+      <div class="col-box mark-p" style="margin-top:12px;"><div class="cb-title">下一版待改</div><p>AWGS 2025 之後：結果文字移除「嚴重肌少症」、加入 50 到 64 歲切點。</p></div>
+    </div>
+  </div>
+  <aside class="notes">1 分鐘。</aside>
+</section>
+
+<!-- ===================== Ⅳ 處置 ===================== -->
+
+<!-- 28 開篇 -->
+<section class="section-open" data-sec="4" data-background-color="#F6F5F0">
+  <div class="opener">
+    <div class="roman">Ⅳ</div>
+    <h1>怎麼處置</h1>
+    <div class="rule"></div>
+    <p class="lead">先看肌肉為什麼會長、為什麼會掉；再看運動、蛋白質、HMB 與藥物的證據；最後是減重門診的 GLP-1 保肌處方。</p>
+  </div>
+  <aside class="notes">20 秒。</aside>
+</section>
+
+<!-- 29 四支柱 -->
+<section data-sec="4">
+  <div class="slide-head"><span class="sec-mark">Ⅳ · 總覽</span><h2>介入四支柱：前兩根有證據，後兩根看情境</h2></div>
+  <div class="adv-grid">
+    <div class="adv-card"><svg class="ic"><use href="#ic-dumbbell"/></svg><div class="adv-title">阻力運動</div><div class="adv-desc">每週 2 到 3 次、漸進負荷。證據最強、效果最大。</div></div>
+    <div class="adv-card"><svg class="ic"><use href="#ic-plate"/></svg><div class="adv-title">蛋白質</div><div class="adv-desc">1.2 到 1.5 g/kg/day，三餐平均、每餐 25 到 30 g。</div></div>
+    <div class="adv-card"><svg class="ic"><use href="#ic-sun"/></svg><div class="adv-title">HMB、維生素 D 與口服營養品</div><div class="adv-desc">住院、臥床、攝食不足者；搭配運動與足量蛋白質才有意義。</div></div>
+    <div class="adv-card"><svg class="ic"><use href="#ic-clipboard"/></svg><div class="adv-title">追蹤與轉介</div><div class="adv-desc">3 個月回測握力與起坐；復健、營養師、跌倒防治。</div></div>
+  </div>
+  <div class="key-box">運動是主菜，蛋白質是配菜，補充品是調味。沒有主菜，其他都沒有作用。</div>
+  <aside class="notes">1 分鐘。</aside>
+</section>
+
+<!-- 30 肌肉生長的開關 -->
+<section data-sec="4">
+  <div class="slide-head"><span class="sec-mark">Ⅳ · 肌肉為什麼會長</span><h2>刺激肌肉生長的四個關鍵</h2></div>
+  <div class="adv-grid">
+    <div class="adv-card"><svg class="ic"><use href="#ic-dumbbell"/></svg><div class="adv-title">機械刺激</div><div class="adv-desc">阻力收縮啟動 mTORC1；運動後對胺基酸的敏感度持續 24 小時以上。</div></div>
+    <div class="adv-card"><svg class="ic"><use href="#ic-switch"/></svg><div class="adv-title">白胺酸閾值</div><div class="adv-desc">老年人每餐約 2.5 到 3 g 白胺酸（25 到 30 g 優質蛋白）才開得了合成開關。</div></div>
+    <div class="adv-card"><svg class="ic"><use href="#ic-clock"/></svg><div class="adv-title">總量與分配</div><div class="adv-desc">一天 1.2 到 1.5 g/kg，三餐平均；集中在晚餐，24 小時合成量少 25%。</div></div>
+    <div class="adv-card"><svg class="ic"><use href="#ic-bed"/></svg><div class="adv-title">減少不動與發炎</div><div class="adv-desc">臥床、急性疾病、慢性發炎會打開分解路徑，抵銷合成。</div></div>
+  </div>
+  <div class="key-box"><b>合成阻抗</b>：老年人每餐飽和劑量約 0.40 g/kg（年輕人 0.24），但<b>運動後多數研究看不到年齡差異</b>。</div>
+  <p class="cite">Moore DR, et al. J Gerontol A 2015；Burd NA, et al. J Nutr 2011；Mamerow MM, et al. J Nutr 2014；Kristiansen JB, et al. Front Physiol 2026.</p>
+  <aside class="notes">1.5 分鐘。這頁是 HMB 的鋪陳：開關、閾值、分解。合成阻抗可以被運動抵銷，是給醫師的核心訊息。</aside>
+</section>
+
+<!-- 31 不動的代價 -->
+<section data-sec="4">
+  <div class="slide-head"><span class="sec-mark">Ⅳ · 肌肉為什麼會掉</span><h2>不動的代價：健康老年人臥床十天</h2></div>
+  <div class="stat-row">
+    <div class="stat-card"><div class="num">−1.5<span class="unit">kg</span></div><div class="label">全身瘦體重（腿部 −0.95 kg）<br>肌肉蛋白合成率 −30%</div></div>
+    <div class="stat-card"><div class="num">−13<span class="unit">%</span></div><div class="label">膝伸肌力<br>爬梯爆發力 −14%、最大攝氧量 −12%</div></div>
+    <div class="stat-card"><div class="num">10<span class="unit">天</span></div><div class="label">老年人 10 天流失的腿部瘦體重<br>超過年輕人臥床 28 天</div></div>
+  </div>
+  <div class="quote-box">急性住院、術後、感染，是門診病人肌肉量「斷崖式」下降的時間點。這段期間早期活動加口服營養補充，是 ESPEN 老年臨床營養指引的 A 級建議；HMB 的證據也最集中在這裡。</div>
+  <p class="cite">Kortebein P, et al. JAMA 2007；Kortebein P, et al. J Gerontol A 2008（n=11 到 12，60 到 85 歲）；English KL, Paddon-Jones D. Curr Opin Clin Nutr Metab Care 2010；Volkert D, et al. ESPEN, Clin Nutr 2022.</p>
+  <aside class="notes">1 分鐘。</aside>
+</section>
+
+<!-- 32 HMB 是什麼 -->
+<section data-sec="4">
+  <div class="slide-head"><span class="sec-mark">Ⅳ · HMB</span><h2>HMB 是什麼，為什麼從飲食很難補到</h2></div>
+  <div class="two-col">
+    <div class="col-box mark-a">
+      <div class="cb-title">β-hydroxy-β-methylbutyrate</div>
+      <ul>
+        <li>白胺酸的代謝產物；只有約 <strong>5%</strong> 的白胺酸走這條路徑</li>
+        <li>研究劑量 <strong>3 g HMB</strong> 需約 60 g 白胺酸，估算相當於 600 g 優質蛋白質</li>
+        <li>天然食物含量極微，沒有可靠定量資料；試驗一律用補充劑或含 HMB 的營養品</li>
+      </ul>
+    </div>
+    <div class="col-box mark-p">
+      <div class="cb-title">機轉與劑量</div>
+      <ul>
+        <li>人體單劑研究：肌肉蛋白<strong>合成 +70%、分解 −57%</strong></li>
+        <li>活化 mTORC1；抑制 ubiquitin-proteasome 分解路徑</li>
+        <li><strong>3 g/日</strong>（1.5 g 早晚各一）；連續使用 1 年的<span style="white-space:nowrap;">安全性資料良好</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="quote-box">定位：<strong>降低合成的啟動門檻，同時踩住分解</strong>；它不取代蛋白質，也不取代運動。</div>
+  <p class="cite">Van Koevering 1992；Wilson 2008；Wilkinson DJ, et al. J Physiol 2013；ISSN position stand 2024.</p>
+  <aside class="notes">1.5 分鐘。600 g 優質蛋白是估算值，講的時候說「估算」。</aside>
+</section>
+
+<!-- 33 HMB 證據 -->
+<section data-sec="4">
+  <div class="slide-head"><span class="sec-mark">Ⅳ · HMB</span><h2>HMB 的臨床證據：哪些族群、多大效果</h2></div>
+  <table class="tbl compact">
+    <tr><th style="width:34%">研究與族群</th><th>結果（95% 信賴區間）</th></tr>
+    <tr><td><strong>Deutz 2013</strong>，Clin Nutr<br>健康老年人臥床 10 天，n=24</td><td>瘦體重：安慰劑 −2.05 kg、HMB −0.17 kg（p=0.02）；<span style="white-space:nowrap;">功能無差異</span></td></tr>
+    <tr><td><strong>NOURISH 2016</strong>，Clin Nutr<br>65 歲以上住院營養不良，n=652</td><td>主要複合終點（死亡或再住院）無差異；90 天死亡率 4.8% 對 9.7%（RR 0.49，NNT 20）</td></tr>
+    <tr><td><strong>統合分析 2025</strong>，Front Nutr<br>21 篇 RCT，50 歲以上，n=1,935</td><td>瘦體重 +0.28 kg、握力 +0.54 kg、步速 +0.06 m/s；3 g/日且超過 <span style="white-space:nowrap;">12 週較明顯</span></td></tr>
+    <tr><td><strong>統合分析 2026</strong>，Age Ageing<br>13 篇 RCT，阻力運動加 HMB 對阻力運動</td><td class="hl">肌肉量 SMD 0.05、肌力 SMD 0.04，<span style="white-space:nowrap;">無額外效益</span></td></tr>
+  </table>
+  <div class="quote-box"><strong>獲益較明確</strong>：住院、臥床、營養不良、髖部骨折術後、無法運動者。<strong>要誠實講的</strong>：效應量小到中等，對日常功能與跌倒證據不足（Phillips 2022 傘狀回顧）。</div>
+  <aside class="notes">1.5 分鐘。NOURISH 的死亡率是次要終點，主要終點沒差，要講清楚。</aside>
+</section>
+
+<!-- 34 含 HMB 的口服營養品怎麼用 -->
+<section data-sec="4">
+  <div class="slide-head"><span class="sec-mark">Ⅳ · HMB</span><h2>含 HMB 的口服營養補充品：對誰用、怎麼用</h2></div>
+  <div class="two-col">
+    <div class="col-box mark-a">
+      <div class="cb-title">適合的病人</div>
+      <ul>
+        <li>住院、術後、臥床或活動量驟減的老年人</li>
+        <li>營養不良或體重正在下降（半年 3 公斤以上）</li>
+        <li>可能肌少症或肌少症，飲食蛋白質達不到 1.2 g/kg 者</li>
+        <li>能規律做阻力運動、營養充足者，不需常規加用</li>
+      </ul>
+    </div>
+    <div class="col-box mark-p">
+      <div class="cb-title">怎麼用</div>
+      <ul>
+        <li>研究劑量 HMB <strong>3 g/日</strong>，連續至少 <strong>12 週</strong>，3 個月回測握力與起坐</li>
+        <li>與每餐 25 到 30 g 蛋白質、阻力運動並行；當作餐間補充，不取代正餐</li>
+        <li>處方前評估腎功能、血糖與整體熱量需求</li>
+      </ul>
+    </div>
+  </div>
+  <div class="key-box">例：安素 HMB 升級配方（Abbott，237 mL）每份熱量 262 kcal、蛋白質 10.5 g、CaHMB 約 0.75 g、維生素 D 4.6 µg。<b>一天兩份約 1.5 g CaHMB，為 NOURISH 與臥床試驗劑量的一半</b>；要達研究劑量須考量份數與熱量，並以罐身標示為準。</div>
+  <!-- 備查：產品數字取自 PChome 24h 商品頁（2026-09-12 擷取），亞培台灣官網標示為圖片無法擷取文字；演講前請以實體罐身核對。 -->
+  <aside class="notes">1 分鐘。產品只講「例子」與適應族群，不講療效字眼；劑量差異要講，這是聽眾會問的。</aside>
+</section>
+
+<!-- 35 運動處方 -->
+<section data-sec="4">
+  <div class="slide-head"><span class="sec-mark">Ⅳ · 支柱一</span><h2>運動處方怎麼開：FITT</h2></div>
+  <table class="tbl">
+    <tr><th style="width:18%">FITT</th><th>阻力訓練為主</th></tr>
+    <tr><td><strong>頻率</strong></td><td class="hl">每週 2 到 3 次，隔天做</td></tr>
+    <tr><td><strong>強度</strong></td><td>由輕漸進；自覺費力 5 到 7 分（滿分 10）；每組最後 2 下有點吃力</td></tr>
+    <tr><td><strong>時間與量</strong></td><td>大肌群 6 到 8 個動作，8 到 12 下、2 到 3 組，約 20 到 30 分鐘</td></tr>
+    <tr><td><strong>型態</strong></td><td>自體重、彈力帶、啞鈴、機器都可；加平衡訓練與有氧（每週 150 分鐘）</td></tr>
+  </table>
+  <div class="two-col">
+    <div class="col-box mark-w"><div class="cb-title">停止訊號</div><p>喘到說不出話、胸悶、頭暈就停。心臟病、術後、關節嚴重疼痛者先評估。</p></div>
+    <div class="col-box mark-p"><div class="cb-title">病人最需要聽到的一句</div><p>散步對心肺很好，但練不到肌肉。肌肉要對抗阻力才會長。</p></div>
+  </div>
+  <p class="cite">ICFSR 2018；AWGS 2025；Front Nutr 2025 network meta-analysis.</p>
+  <aside class="notes">1.5 分鐘。</aside>
+</section>
+
+<!-- 36 運動圖卡：肌力 -->
+<section data-sec="4">
+  <div class="slide-head"><span class="sec-mark">Ⅳ · 支柱一 · 運動圖卡</span><h2>門診三分鐘教得會：肌力動作</h2></div>
+  <div class="ex-grid">
+    <figure><img src="images/exercise/squat.jpg" alt="深蹲正面與側面示範"><figcaption><strong>深蹲</strong>　像坐椅子、屁股往後、膝蓋不超過腳尖；扶椅背做也可以</figcaption></figure>
+    <figure><img src="images/exercise/splitsquat.jpg" alt="分腿蹲與靠牆深蹲"><figcaption><strong>分腿蹲、靠牆深蹲</strong>　膝蓋都是 90 度；靠牆版本對膝蓋負擔較小</figcaption></figure>
+  </div>
+  <p class="demo-note">圖卡取自本院運動衛教（醫師審定 2026-09-10），同一位主角示範，病人在衛教網站可以自己對照。10 下一組、2 到 3 組；隔天肌肉痠是正常，痛在關節才要停。</p>
+  <aside class="notes">1 分鐘。</aside>
+</section>
+
+<!-- 37 運動圖卡：核心與原地有氧 -->
+<section data-sec="4">
+  <div class="slide-head"><span class="sec-mark">Ⅳ · 支柱一 · 運動圖卡</span><h2>核心菜單與原地有氧</h2></div>
+  <div class="ex-one">
+    <figure style="margin:0;"><img src="images/exercise/core4moves.jpg" alt="每天 10 分鐘核心菜單：橋式、死蟲式、鳥狗式、棒式"></figure>
+    <div>
+      <div class="col-box mark-a">
+        <div class="cb-title">每天 10 分鐘核心菜單</div>
+        <p>橋式、死蟲式、鳥狗式、棒式：四個動作各 30 秒、休息 30 秒、輪 2 圈。腰貼地、不憋氣。</p>
+      </div>
+      <div class="col-box mark-b" style="margin-top:12px;">
+        <div class="cb-title">湊每週 150 分鐘的原地運動</div>
+        <p>原地抬膝（膝蓋 90 度）、原地開合跳、甩壺鈴（進階，需器材）。會喘但還能講話，就是中等強度。</p>
+      </div>
+    </div>
+  </div>
+  <p class="cite">本院運動衛教圖卡，healthy-weight-public/move.html（醫師審定 2026-09-10）；WHO 身體活動指引.</p>
+  <aside class="notes">45 秒。</aside>
+</section>
+
+<!-- 38 蛋白質 醫師版 -->
+<section data-sec="4">
+  <div class="slide-head"><span class="sec-mark">Ⅳ · 支柱二</span><h2>蛋白質怎麼吃：總量夠、每餐分、白胺酸要到</h2></div>
+  <div class="two-col w64">
+    <table class="tbl lg" style="margin-top:0;">
+      <tr><th>對象</th><th>每日蛋白質</th></tr>
+      <tr><td>健康長者</td><td>1.0 到 1.2 g/kg</td></tr>
+      <tr><td class="hl">肌少症、急慢性病、住院</td><td class="hl">1.2 到 1.5 g/kg</td></tr>
+      <tr><td>AWGS 2025</td><td>65 歲以上 1.2 到 1.6；65 歲以下 ≥ 1.6 g/kg</td></tr>
+      <tr><td>嚴重疾病、傷口、<span style="white-space:nowrap;">營養不良</span></td><td>最高 2.0 g/kg</td></tr>
+      <tr><td>慢性腎病未透析</td><td>個別化，與腎臟科、營養師討論</td></tr>
+    </table>
+    <div class="col-box mark-p">
+      <div class="cb-title">每餐分配</div>
+      <p>每餐 <strong>25 到 30 g</strong>（約 0.4 g/kg），白胺酸 <strong>2.5 到 3 g</strong>，才能觸發肌肉合成。</p>
+      <p>集中在晚餐吃，肌肉利用不了。運動後 1 到 2 小時內補一份效果更好。</p>
+    </div>
+  </div>
+  <p class="cite">PROT-AGE Study Group, J Am Med Dir Assoc 2013；ESPEN geriatrics guideline, Clin Nutr 2022；AWGS 2025；日本老年醫學會營養管理指引 2025.</p>
+  <aside class="notes">1 分鐘。</aside>
+</section>
+
+<!-- 39 蛋白質 病人版 -->
+<section data-sec="4">
+  <div class="slide-head"><span class="sec-mark">Ⅳ · 支柱二</span><h2>病人聽得懂的版本：一份是多少</h2></div>
+  <div class="two-col w46">
+    <div class="col-box mark-a">
+      <div class="cb-title">衛教頁原文</div>
+      <p>60 公斤的長輩一天約 <strong>72 到 90 公克</strong>。</p>
+      <p>重點是<strong>三餐平均分配</strong>，每餐吃到 <strong>2 到 3 份</strong>。</p>
+      <p>牙口不好就換型態：豆腐、蒸蛋、魚肉、絞肉、奶類、無糖豆漿。</p>
+      <p>體重正在下降的長輩，先不要限制熱量。</p>
+    </div>
+    <table class="tbl lg" style="margin-top:0;">
+      <tr><th>一份約 7 公克</th><th>例子</th></tr>
+      <tr><td>雞蛋</td><td>1 顆</td></tr>
+      <tr><td>牛奶</td><td>1 杯 240 c.c.（約 8 g）</td></tr>
+      <tr><td>嫩豆腐</td><td>半盒</td></tr>
+      <tr><td>魚或肉</td><td>一個女性掌心大小、厚度像小指，約 21 g（算 3 份）</td></tr>
+    </table>
+  </div>
+  <div class="key-box">醫師版與病人版並排，門診講的時候切換兩種語言；病人回家掃 QR 看到的是同一套。</div>
+  <aside class="notes">1 分鐘。</aside>
+</section>
+
+<!-- 40 其他補充品 -->
+<section data-sec="4">
+  <div class="slide-head"><span class="sec-mark">Ⅳ · 支柱三</span><h2>其他補充品：證據到哪裡</h2></div>
+  <table class="tbl">
+    <tr><th style="width:22%">項目</th><th>證據</th><th style="width:34%">門診建議</th></tr>
+    <tr><td><strong>維生素 D</strong></td><td>單獨補充無效（2022 統合分析）；PROVIDE（乳清加白胺酸加 800 IU D，13 週）：起坐 −1.0 秒、四肢肌肉量 +0.17 kg，握力與 SPPB 無差異</td><td class="hl">不足者補到足夠，800 到 1,000 IU/日</td></tr>
+    <tr><td><strong>口服營養補充品</strong></td><td>住院營養不良者為 ESPEN A 級建議；搭配運動才看得到肌力改善</td><td>攝食不足、體重下降者</td></tr>
+    <tr><td><strong>肌酸</strong></td><td>與阻力運動併用：下肢肌力 SMD 0.29、瘦體重 SMD 0.27</td><td>做阻力訓練者可考慮 3 到 5 g/日</td></tr>
+    <tr><td><strong>Omega-3、益生菌</strong></td><td>對肌肉蛋白合成無效；證據小而不一致</td><td>AWGS 2025 列為低證據等級</td></tr>
+  </table>
+  <p class="cite">Vitamin D monotherapy meta-analysis 2022（PMID 35261183）；Bauer JM, et al. PROVIDE, J Am Med Dir Assoc 2015；Liu et al. Eur Rev Aging Phys Act 2025；Therdyothin A, et al. Nutr Rev 2025；AWGS 2025.</p>
+  <aside class="notes">45 秒。</aside>
+</section>
+
+<!-- 41 藥物 -->
+<section data-sec="4">
+  <div class="slide-head"><span class="sec-mark">Ⅳ · 支柱三</span><h2>藥物：尚無核准適應症，試驗多是「減重藥加保肌藥」</h2></div>
+  <table class="tbl">
+    <tr><th style="width:24%">試驗</th><th style="width:30%">組合</th><th>主要結果</th></tr>
+    <tr><td><strong>BELIEVE</strong><br>Nat Med 2026，Phase 2b</td><td>bimagrumab ＋ semaglutide</td><td>72 週減重 22.1%，92% 為脂肪；瘦體重 −2.9%（semaglutide 單用 −7.4%）</td></tr>
+    <tr><td><strong>EMBRAZE</strong><br>Nat Med 2026，Phase 2</td><td>apitegromab ＋ tirzepatide</td><td>24 週多保留約 2 kg 瘦體重；脂肪占減重 85%（對照 70%）</td></tr>
+    <tr><td><strong>COURAGE</strong><br>2025，Phase 2</td><td>trevogrumab ± garetosmab ＋ semaglutide</td><td>瘦體重流失約減半；三聯組耐受性差</td></tr>
+    <tr><td><strong>QUALITY</strong><br>2025，Phase 2b，<span style="white-space:nowrap;">60 歲以上</span></td><td>enobosarm ＋ semaglutide</td><td>瘦體重流失 1.2%（對照 4.1%）</td></tr>
+  </table>
+  <div class="quote-box">機轉多為 myostatin／activin 路徑。目前能開的處方仍是運動、蛋白質與營養補充。</div>
+  <aside class="notes">1 分鐘。</aside>
+</section>
+
+<!-- 42 肥胖型肌少症 -->
+<section data-sec="4">
+  <div class="slide-head"><span class="sec-mark">Ⅳ · 減重門診的特別議題</span><h2>肥胖型肌少症：ESPEN／EASO 2022 怎麼定義</h2></div>
+  <div class="flow">
+    <div class="flow-step"><div class="fs-title">篩檢</div><div class="fs-desc">BMI ≥ 30 或腰圍偏高（亞洲用族群切點）<br>加 SARC-F、臨床症狀、70 歲以上、慢性病</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="fs-title">診斷一：肌肉功能</div><div class="fs-desc">握力（亞洲用 AWGS 切點）<br>或五次、30 秒起坐</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="fs-title">診斷二：身體組成</div><div class="fs-desc">DXA 四肢瘦體重／體重偏低<br>體脂率 女 ≥ 40%、男 ≥ 30%</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step end"><div class="fs-title">分期</div><div class="fs-desc">第一期無併發症<br>第二期有代謝、失能或心肺併發症</div></div>
+  </div>
+  <div class="quote-box">肥胖病人的 BMI 與小腿圍都會「正常」，肌少症只能靠握力與身體組成抓出來。減重門診的第一次評估就該量握力。</div>
+  <p class="cite">Donini LM, et al. ESPEN and EASO consensus statement. Clin Nutr 2022;41:990-1000.</p>
+  <aside class="notes">1 分鐘。</aside>
+</section>
+
+<!-- 43 GLP-1 掉多少 -->
+<section data-sec="4">
+  <div class="slide-head"><span class="sec-mark">Ⅳ · 減重門診的特別議題</span><h2>GLP-1 減重會掉多少肌肉</h2></div>
+  <div class="stat-row">
+    <div class="stat-card"><div class="num">−9.7<span class="unit">%</span></div><div class="label">STEP 1 DXA 次研究<br>semaglutide 瘦體重變化（脂肪 −19.3%）</div></div>
+    <div class="stat-card"><div class="num">26<span class="unit">%</span></div><div class="label">SURMOUNT-1<br>tirzepatide 減掉的體重中瘦體組織占比</div></div>
+    <div class="stat-card"><div class="num">−1.7<span class="unit">kg</span></div><div class="label">2026 統合分析，7 篇 RCT<br>GLP-1 組瘦體重絕對值變化</div></div>
+  </div>
+  <div class="two-col">
+    <div class="col-box mark-w"><div class="cb-title">只有 43% 的使用者蛋白質達 1.2 g/kg</div><p>平均攝取約 77 g/日。減重期食慾下降，蛋白質是最先掉的。</p></div>
+    <div class="col-box mark-a"><div class="cb-title">瘦體重下降不等於肌少症</div><p>要併功能判定：握力、起坐。停藥後體重回升而肌肉不回來，是肥胖型肌少症的潛在機轉。</p></div>
+  </div>
+  <p class="cite">STEP 1 DXA substudy；SURMOUNT-1；Int J Obes 2026 meta-analysis, doi:10.1038/s41366-026-02118-y；J Nutr Health Aging 2025.</p>
+  <aside class="notes">1.5 分鐘。</aside>
+</section>
+
+<!-- 44 保肌處方 -->
+<section data-sec="4">
+  <div class="slide-head"><span class="sec-mark">Ⅳ · 減重門診的特別議題</span><h2>減重門診的保肌處方</h2></div>
+  <div class="two-col">
+    <div class="col-box mark-a">
+      <div class="cb-title">開藥前</div>
+      <ul>
+        <li>量<strong>握力、五次起坐、BIA 或 DXA</strong>基準值</li>
+        <li>50 到 64 歲用 AWGS 2025 新切點</li>
+        <li>65 歲以上、糖尿病、低活動量者優先</li>
+      </ul>
+    </div>
+    <div class="col-box mark-p">
+      <div class="cb-title">治療中</div>
+      <ul>
+        <li>蛋白質 <strong>1.2 到 2.0 g/kg</strong>（實際體重），每餐 25 到 30 g</li>
+        <li><strong>阻力運動每週 2 到 3 次</strong>是處方的一部分</li>
+        <li>減速：每週不超過體重 0.5 到 1%</li>
+        <li>吃不到目標者，可用高蛋白口服營養品補足；HMB 在 GLP-1 使用者尚無 RCT</li>
+      </ul>
+    </div>
+  </div>
+  <div class="key-box"><b>追蹤</b>：滴定完成後及每 3 到 6 個月回測身體組成與功能；握力下降或瘦體重掉太快就調整劑量、加強運動。<b>停藥前先確認肌力</b>。</div>
+  <p class="cite">Metabolites 2026；Pharmaceuticals 2026；ESPEN/EASO 2022.</p>
+  <aside class="notes">1.5 分鐘。對醫師最實用的一頁。</aside>
+</section>
+
+<!-- ===================== Ⅴ 衛教落地 ===================== -->
+
+<!-- 45 開篇 -->
+<section class="section-open" data-sec="5" data-background-color="#F6F5F0">
+  <div class="opener">
+    <div class="roman">Ⅴ</div>
+    <h1>衛教要能落地</h1>
+    <div class="rule"></div>
+    <p class="lead">一頁衛教、五題闖關、一款動作遊戲。內容審定一次，所有載體共用。</p>
+  </div>
+  <aside class="notes">20 秒。</aside>
+</section>
+
+<!-- 46 衛教頁 -->
+<section data-sec="5">
+  <div class="demo-head">
+    <div class="slide-head"><span class="sec-mark">Ⅴ · 現場示範</span><h2>一頁衛教，加「存肌力五連闖」</h2></div>
+    <a class="demo-btn" href="../../education.html" target="_blank" rel="noopener">在新視窗開啟</a>
+  </div>
+  <div class="demo-split">
+    <iframe class="demo-frame" style="height:500px;" data-src="../../education.html" title="肌少症衛教頁"></iframe>
+    <div class="qr-side">
+      <img src="images/qr-education.png" alt="衛教頁 QR">
+      <div class="qr-cap">篩檢陽性時工具自動出這個 QR</div>
+      <div class="qr-sub">不含任何個人資料<br>列印為雙面兩頁<br>頁面順序「遊戲先」：五題四選一，答對才出下一題，答錯不扣分</div>
+    </div>
+  </div>
+  <aside class="notes">1.5 分鐘。示範五連闖一題，帶出「先玩再讀」。</aside>
+</section>
+
+<!-- 47 存肌接接樂 -->
+<section data-sec="5">
+  <div class="demo-head">
+    <div class="slide-head"><span class="sec-mark">Ⅴ · 現場玩一局</span><h2>存肌接接樂</h2></div>
+    <a class="demo-btn" href="../../%E5%AD%98%E8%82%8C%E6%8E%A5%E6%8E%A5%E6%A8%82.html" target="_blank" rel="noopener">在新視窗開啟</a>
+  </div>
+  <div class="demo-split">
+    <iframe class="demo-frame" style="height:500px;" data-src="../../%E5%AD%98%E8%82%8C%E6%8E%A5%E6%8E%A5%E6%A8%82.html" title="存肌接接樂"></iframe>
+    <div class="qr-side">
+      <img src="images/qr-game.png" alt="存肌接接樂 QR">
+      <div class="qr-cap">現在就掃，用手機玩</div>
+      <div class="qr-sub">移動手臂接蛋白質與出力運動，閃開沙發與電視；每過一關送一則存肌小知識。<br>投影畫面：先點遊戲一下再用方向鍵；點畫面外恢復翻頁</div>
+    </div>
+  </div>
+  <aside class="notes">2 分鐘。讓大家掃碼玩，投影上自己玩一關，過關時停在知識卡念出來。</aside>
+</section>
+
+<!-- 48 為什麼做成遊戲 -->
+<section data-sec="5">
+  <div class="slide-head"><span class="sec-mark">Ⅴ · 設計理由</span><h2>為什麼衛教要做成遊戲</h2></div>
+  <div class="two-col">
+    <div>
+      <div class="col-box mark-a"><div class="cb-title">先玩再讀</div><p>長者拿到衛教單多半不看；遊戲把「三句話」變成要過關才看得到的獎勵。</p></div>
+      <div class="col-box mark-a" style="margin-top:12px;"><div class="cb-title">內容不另寫</div><p>九則知識卡與五題題目逐字取自審定的衛教頁；遊戲與紙本不會說兩套。</p></div>
+    </div>
+    <div>
+      <div class="col-box mark-b"><div class="cb-title">給長輩用的細節</div><p>主角用手繪不用 emoji（舊手機缺字會空白）；觸控拖曳；配色固定亮色；字級不縮。</p></div>
+      <div class="col-box mark-b" style="margin-top:12px;"><div class="cb-title">帶走三句話</div><p>蛋白質三餐平均分配；要出力，散步不夠；半年瘦 3 公斤要就醫。</p></div>
+    </div>
+  </div>
+  <div class="key-box">另有 Wordwall 10 題測驗，可分享、可現場競賽排行榜。工具、衛教、遊戲都以 CC BY-NC-ND 4.0 公開，可直接拿去用。</div>
+  <aside class="notes">1 分鐘。</aside>
+</section>
+
+<!-- ===================== 結語 ===================== -->
+
+<!-- 49 文字雲 -->
+<section data-sec="5">
+  <div class="slide-head"><span class="sec-mark">課尾 · 即時文字雲</span><h2>回去之後，您會先改門診的哪一件事？</h2></div>
+  <div class="interact-ph live-2col">
+    <div class="live-side">
+      <img class="qr" src="images/qr-live.png" alt="現場作答頁 QR">
+      <div class="qr-cap">掃碼輸入一個關鍵詞<br>與開場投票同一頁</div>
+    </div>
+    <div>
+      <div class="live-main">
+        <canvas id="wc-canvas"></canvas>
+        <div class="live-empty" id="wc-empty"><span id="wc-msg">等待第一個答案，文字雲就會出現</span></div>
+      </div>
+      <div class="live-foot"><span>總提交 <b id="wc-total">0</b></span><span>不同答案 <b id="wc-unique">0</b></span></div>
+    </div>
+  </div>
+  <aside class="notes">1.5 分鐘。沒網路就改成口頭點名兩三位。</aside>
+</section>
+
+<!-- 50 三件事 -->
+<section data-sec="5">
+  <div class="slide-head"><span class="sec-mark">結論</span><h2>帶回去的三件事</h2></div>
+  <div class="adv-grid" style="grid-template-columns:repeat(3,1fr);">
+    <div class="adv-card" style="text-align:left;"><div class="adv-title"><span class="em-num">1</span>　篩：三分鐘</div><div class="adv-desc" style="color:var(--text);">SARC-F 加小腿圍（SARC-CalF ≥ 11）。半年瘦 3 公斤、跌倒、走路變慢、減重治療中，直接量握力。</div></div>
+    <div class="adv-card" style="text-align:left;"><div class="adv-title"><span class="em-num">2</span>　判：切點跟著性別與年齡</div><div class="adv-desc" style="color:var(--text);">65 歲以上握力男 &lt;28、女 &lt;18 kg；50 到 64 歲男 &lt;34、女 &lt;20 kg。Possible sarcopenia 就開始介入，確診再排 DXA 或 BIA。</div></div>
+    <div class="adv-card" style="text-align:left;"><div class="adv-title"><span class="em-num">3</span>　處：主菜是運動</div><div class="adv-desc" style="color:var(--text);">阻力運動每週 2 到 3 次；蛋白質 1.2 到 1.5 g/kg 三餐平均；住院、臥床、吃不夠者加 HMB 口服營養品；3 個月回測。</div></div>
+  </div>
+  <div class="key-box">篩檢工具、衛教頁、運動圖卡、遊戲都是公開網址，掃下一頁的 QR 明天就能用。</div>
+  <aside class="notes">1 分鐘。</aside>
+</section>
+
+<!-- 51 封底 -->
+<section data-sec="5" data-background-color="#F6F5F0">
+  <div class="end-slide">
+    <h1>謝謝，一起把病人的肌肉留住</h1>
+    <div class="rule"></div>
+    <div class="qr-grid">
+      <div class="qr-side"><img src="images/qr-tool.png" alt="篩檢工具"><div class="qr-cap">篩檢紀錄工具</div></div>
+      <div class="qr-side"><img src="images/qr-education.png" alt="衛教頁"><div class="qr-cap">衛教頁與五連闖</div></div>
+      <div class="qr-side"><img src="images/qr-game.png" alt="存肌接接樂"><div class="qr-cap">存肌接接樂</div></div>
+      <div class="qr-side"><img src="images/qr-quiz.png" alt="衛教測驗"><div class="qr-cap">10 題衛教測驗</div></div>
+    </div>
+    <p style="font-size:19px;color:var(--text-2);margin-top:1em;">潘湘如 醫師｜家醫科 · github.com/philia81301-commits/sarcopenia-clinic · © 2026 CC BY-NC-ND 4.0 · 簡報與程式實作由 Claude 協助</p>
+  </div>
+  <aside class="notes">Q&amp;A 3 到 5 分鐘。</aside>
+</section>
+
+<!-- 52 參考文獻 -->
+<section data-sec="5">
+  <div class="slide-head"><span class="sec-mark">參考文獻</span><h2>指引與主要文獻</h2></div>
+  <ol id="ref-list" style="font-size:14px;line-height:1.45;columns:2;column-gap:32px;margin-left:1.1em;">
+    <li>Chen LK, et al. A focus shift from sarcopenia to muscle health in the AWGS 2025 Consensus Update. Nat Aging 2025. doi:10.1038/s43587-025-01004-y</li>
+    <li>Chen LK, et al. Asian Working Group for Sarcopenia: 2019 Consensus Update. J Am Med Dir Assoc 2020;21:300-307.</li>
+    <li>Chen LK, et al. Mapping normative muscle health metrics across 8 Asian cohorts. J Cachexia Sarcopenia Muscle 2025. doi:10.1002/jcsm.13731</li>
+    <li>Kirk B, et al. The Conceptual Definition of Sarcopenia: GLIS. Age Ageing 2024;53:afae052.</li>
+    <li>Cruz-Jentoft AJ, et al. Sarcopenia: revised European consensus (EWGSOP2). Age Ageing 2019;48:16-31.</li>
+    <li>Donini LM, et al. ESPEN and EASO consensus on sarcopenic obesity. Clin Nutr 2022;41:990-1000.</li>
+    <li>I-Lan Longitudinal Aging Study, 11-year mortality follow-up. J Nutr Health Aging 2023. doi:10.1016/j.jnha.2023.100208</li>
+    <li>Bauer J, et al. PROT-AGE Study Group. J Am Med Dir Assoc 2013;14:542-559.</li>
+    <li>Bauer JM, et al. PROVIDE study. J Am Med Dir Assoc 2015;16:740-747.</li>
+    <li>Volkert D, et al. ESPEN practical guideline: clinical nutrition and hydration in geriatrics. Clin Nutr 2022;41:958-989.</li>
+    <li>Kortebein P, et al. JAMA 2007;297:1772-1774；Kortebein P, et al. J Gerontol A 2008;63:1076-1081.</li>
+    <li>Moore DR, et al. J Gerontol A 2015;70:57-62；Kristiansen JB, et al. Front Physiol 2026.</li>
+    <li>Wilkinson DJ, et al. J Physiol 2013;591:2911-2923；Rathmacher JA, et al. ISSN position stand on HMB. JISSN 2024.</li>
+    <li>Deutz NE, et al. HMB and lean body mass during 10 days of bed rest in older adults. Clin Nutr 2013;32:704-712.</li>
+    <li>Deutz NE, et al. NOURISH study. Clin Nutr 2016;35:18-26.</li>
+    <li>Li N, et al. HMB in adults over 50: meta-analysis of 21 RCTs. Front Nutr 2025. doi:10.3389/fnut.2025.1522287</li>
+    <li>Wang G, et al. Resistance training with or without HMB in older adults: meta-analysis. Age Ageing 2026. doi:10.1093/ageing/afag073</li>
+    <li>Phillips SM, et al. Umbrella review of HMB. J Cachexia Sarcopenia Muscle 2022. doi:10.1002/jcsm.13030</li>
+    <li>Cramer JT, et al. J Am Med Dir Assoc 2016；Rathmacher JA, et al. J Gerontol A 2020.</li>
+    <li>GLP-1 receptor agonists and lean mass: meta-analysis of 7 RCTs. Int J Obes 2026. doi:10.1038/s41366-026-02118-y</li>
+    <li>BELIEVE: bimagrumab plus semaglutide. Nat Med 2026. doi:10.1038/s41591-026-04204-0</li>
+    <li>EMBRAZE: apitegromab plus tirzepatide. Nat Med 2026. doi:10.1038/s41591-026-04440-4</li>
+    <li>衛生福利部國民健康署．長者功能評估（長者量六力）；長照 3.0 核定本（2025 年 12 月）。</li>
+    <li>本院運動衛教圖卡與肌少症衛教頁（醫師審定，2026 年 8 到 9 月）。</li>
+  </ol>
+  <aside class="notes">備查，不用講。</aside>
+</section>
+
+</div>
+</div>
+<div class="footer-brand">肌少症：從指引到門診 · 潘湘如 醫師</div>
+
+<script src="vendor/reveal.js"></script>
+<script src="vendor/plugin/notes/notes.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    transition: 'fade',
+    transitionSpeed: 'fast',
+    backgroundTransition: 'fade',
+    center: true,
+    progress: true,
+    controls: true,
+    slideNumber: 'c/t',
+    width: 1280,
+    height: 720,
+    margin: 0.08,
+    preloadIframes: false,
+    plugins: [ RevealNotes ]
+  });
+</script>
+
+<!-- 現場互動（投票、文字雲）。compat 版 SDK 放 vendor/，file:// 直接開也能跑；
+     斷網或 Firestore 規則未開放時 8 秒內降級成提示文字，其餘頁面不受影響。 -->
+<script src="live-config.js"></script>
+<script src="vendor/wordcloud2.min.js"></script>
+<script src="vendor/firebase-app-compat.js"></script>
+<script src="vendor/firebase-firestore-compat.js"></script>
+<script>
+(function () {
+  'use strict';
+  var CFG = window.TALK_LIVE;
+  var pollMsg = document.getElementById('poll-msg');
+  var wcMsg = document.getElementById('wc-msg');
+  var optBox = document.getElementById('poll-opts');
+  var KEYS = ['A', 'B', 'C', 'D'];
+
+  (CFG ? CFG.pollOptions : []).forEach(function (opt, i) {
+    var d = document.createElement('div');
+    d.className = 'poll-opt';
+    d.innerHTML = '<span class="po-fill" id="poll-fill-' + opt.id + '"></span>' +
+                  '<span class="po-k">' + (KEYS[i] || '?') + '</span>' +
+                  '<span class="po-l"></span>' +
+                  '<span class="po-pct" id="poll-pct-' + opt.id + '">0%</span>';
+    d.querySelector('.po-l').textContent = opt.label;
+    optBox.appendChild(d);
+  });
+
+  function degrade(text) {
+    if (pollMsg) pollMsg.textContent = text;
+    if (wcMsg) wcMsg.textContent = text;
+    var empty = document.getElementById('wc-empty');
+    if (empty) empty.style.display = '';
+  }
+  if (!CFG || !CFG.isConfigured()) { degrade('互動未啟用，請改用口頭舉手'); return; }
+  var db;
+  try { firebase.initializeApp(CFG.firebaseConfig); db = firebase.firestore(); }
+  catch (e) { degrade('連線失敗，請改用口頭舉手'); return; }
+
+  var gotData = false;
+  setTimeout(function () { if (!gotData) degrade('連線中斷，請改用口頭舉手'); }, 8000);
+  function alive() { gotData = true; if (pollMsg) pollMsg.textContent = ''; }
+
+  var wcData = [];
+  var COLORS = ['#1B4332', '#2D6A4F', '#52796F', '#BE6C33', '#8A9A5B', '#1D5A6C'];
+  function drawWordCloud() {
+    var canvas = document.getElementById('wc-canvas');
+    if (!canvas || typeof WordCloud === 'undefined') return;
+    var rect = canvas.getBoundingClientRect();
+    if (rect.width < 10 || rect.height < 10) return;
+    canvas.width = rect.width; canvas.height = rect.height;
+    if (!wcData.length) return;
+    var max = wcData[0][1];
+    WordCloud(canvas, {
+      list: wcData.map(function (d) { return [d[0], Math.max(18, Math.round((d[1] / max) * 64))]; }),
+      gridSize: 6, weightFactor: 1,
+      fontFamily: '"Noto Sans TC","Microsoft JhengHei",sans-serif', fontWeight: '700',
+      color: function () { return COLORS[Math.floor(Math.random() * COLORS.length)]; },
+      backgroundColor: 'transparent', rotateRatio: 0.18, shuffle: true
+    });
+  }
+  db.collection(CFG.wordcloudCollection).onSnapshot(function (snap) {
+    alive();
+    var counts = {}, total = 0;
+    snap.forEach(function (doc) { var w = (doc.data() || {}).word; if (!w) return; counts[w] = (counts[w] || 0) + 1; total++; });
+    wcData = Object.keys(counts).map(function (w) { return [w, counts[w]]; }).sort(function (a, b) { return b[1] - a[1]; });
+    document.getElementById('wc-total').textContent = total;
+    document.getElementById('wc-unique').textContent = wcData.length;
+    var empty = document.getElementById('wc-empty');
+    if (empty) empty.style.display = wcData.length ? 'none' : '';
+    if (wcMsg && wcData.length === 0) wcMsg.textContent = '等待第一個答案，文字雲就會出現';
+    drawWordCloud();
+  }, function () { degrade('連線中斷，請改用口頭舉手'); });
+
+  db.collection(CFG.pollCollection).onSnapshot(function (snap) {
+    alive();
+    var counts = {}, total = 0;
+    CFG.pollOptions.forEach(function (o) { counts[o.id] = 0; });
+    snap.forEach(function (doc) { var c = (doc.data() || {}).choice; if (counts[c] === undefined) return; counts[c]++; total++; });
+    document.getElementById('poll-total').textContent = total;
+    CFG.pollOptions.forEach(function (o) {
+      var pct = total ? Math.round((counts[o.id] / total) * 100) : 0;
+      document.getElementById('poll-fill-' + o.id).style.width = pct + '%';
+      document.getElementById('poll-pct-' + o.id).textContent = pct + '%';
+    });
+  }, function () { degrade('連線中斷，請改用口頭舉手'); });
+
+  Reveal.on('slidechanged', function (e) {
+    if (e.currentSlide && e.currentSlide.querySelector('#wc-canvas')) setTimeout(drawWordCloud, 180);
+  });
+  Reveal.on('ready', function () { setTimeout(drawWordCloud, 250); });
+})();
+</script>
+</body>
+</html>

@@ -2,6 +2,28 @@
 
 ## ⏯️ 目前做到哪
 
+**2026-09-12 新增屏東基督教醫院醫師演講簡報（`talks/ptch-2026/`），篩檢工具本身沒動，仍為 v0.2.7。**
+
+### 🎤 屏基演講（2026-09-12 這輪）
+
+- **簡報**：`talks/ptch-2026/index.html`，Reveal.js 5.1 本地化（`vendor/`），52 頁配 40 分鐘，講者備忘錄按 `S`。
+  白底墨綠學術風，字級鐵則同肥胖醫學會簡報（base 46px、正文 ≥20px、註記 16px、出處 13px、佔高 ≤0.90、孤字歸零，
+  已用瀏覽器逐頁實測）。字型子集 `fonts/*-subset.woff2` 由 `build_fonts.py` 產生，改內文後要重跑（VF 原始檔不進 git）。
+- **嵌入**：第 26 頁 `index.html`、第 46 頁 `education.html`、第 47 頁 `存肌接接樂.html` 用 `<iframe data-src>` 相對路徑嵌入，
+  另有「在新視窗開啟」備援；第 36–37 頁運動圖卡取自 healthy-weight-public `docs/assets/exercise/`（縮成 1100px JPEG）。
+- **贊助脈絡**：亞培邀約、主打「安素 HMB 升級配方」。第 2 頁利益揭露；第 30–34 頁為肌肉合成關鍵、臥床代價、HMB 機轉、
+  HMB 證據（含 2026 Age Ageing 統合分析「已做阻力運動者加 HMB 無額外效益」）、含 HMB ONS 用法。
+  產品數字（237 mL：262 kcal、蛋白 10.5 g、CaHMB 約 0.75 g）取自 PChome 商品頁，**演講前以罐身核對**；投影片已寫明一天兩份為研究劑量一半。
+- **指引更新**：AWGS 2025（Nature Aging 2025-12）已納入：取消嚴重分級、新增 50–64 歲切點（握力男 <34／女 <20 kg）、體能表現改結果指標。
+  50–64 歲切點取自解讀文獻（原文付費牆），**演講前對原文 Table 再核**。EWGSOP3 不存在，台灣無本土專屬指引。
+- **互動**：投票（P3）與文字雲（P49）沿用使用者自己的 Firebase 專案 `obesity-ai-firebase`（compat SDK 在 `vendor/`），
+  集合 `ptch_sarcopenia_2026_wordcloud`／`_poll`，觀眾頁 `live.html`（QR 在 P3／P49）。
+  **Firestore 安全性規則還沒加這兩個集合**（片段在 `firestore-rules-snippet.txt`），加之前簡報會顯示「互動未啟用，請改用口頭舉手」，其餘頁面不受影響。
+  html-slide-builder skill 內建的 teacherstudy Firebase 專案對新集合是 permission-denied，不要再試。
+- **未做**：尚未 `git push`（QR 指向 GitHub Pages，push 後約 1–2 分鐘生效）；PPTX 未匯出；演講日期未填（封面寫 2026 年 9 月）。
+- 生圖費用：draw 技能共 6 張 low（約 NT$1.8），採用 1 張淺色封面插畫，其餘深色版已刪。
+
+
 **目前 v0.2.7**。2026-08-30 新增「存肌接接樂」動作小遊戲（獨立頁），沒碰篩檢判定邏輯。
 
 ### 2026-08-30 改了什麼

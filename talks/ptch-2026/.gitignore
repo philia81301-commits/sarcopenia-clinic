@@ -1,0 +1,6 @@
+# Noto variable font 原始檔（27MB），不進 git；build_fonts.py 缺檔時會自動下載
+fonts/*-VF.ttf
+# draw 技能原始輸出
+generated/
+shots/
+__pycache__/

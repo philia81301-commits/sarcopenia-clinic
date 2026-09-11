@@ -1,0 +1,236 @@
+schema_version: "html_slide_deck_v1"
+
+deck:
+  title: "肌少症：從指引到門診——篩檢、判定、處置與衛教落地"
+  presenter: "潘湘如醫師｜家醫科（減重門診）"
+  audience: "醫師（屏東基督教醫院，亞培邀約）"
+  language: "zh-TW"
+  project_slug: "ptch-sarcopenia-2026"
+  slide_count: 52
+
+design_system:
+  palette:
+    accent: "#1B4332"
+    accent2: "#52796F"
+    success: "#8A9A5B"
+    warn: "#B5651D"
+  style_reference: "images/cover_light_20260912_071620.png"
+
+slides:
+  - id: 1
+    title: "肌少症：從指引到門診"
+    summary: "1 分鐘。自我介紹；今天三個承諾：講完知道怎麼篩、怎麼判、明天回門診就能用的東西。"
+    tags: []
+  - id: 2
+    title: "本場演講的支持與內容原則"
+    summary: "30 秒。照唸即可。"
+    tags: []
+  - id: 3
+    title: "您的門診現在怎麼處理肌少症？"
+    summary: "2 分鐘。結果落在哪一格都接得上：A、B 多，今天就是要給流程；C 多，重點放在判定與轉介；D 多，請他們等一下分享做法"
+    tags: ["INTERACT:poll"]
+    interact:
+      type: "poll"
+      options:
+        - "A　沒有特別篩，遇到再說"
+        - "B　會問跌倒、走路慢，但沒有固定量表"
+        - "C　有做 SARC-F 或握力，但後續轉介不固定"
+        - "D　有完整流程：篩檢、判定、轉介、追蹤"
+  - id: 4
+    title: "四十分鐘，三件事，加一組明天就能用的工具"
+    summary: "1 分鐘。"
+    tags: []
+  - id: 5
+    title: "一個減重門診醫師的觀察"
+    summary: "1.5 分鐘。用減重門診的例子開場：病人瘦了很開心，握力卻下降了。"
+    tags: []
+  - id: 6
+    title: "後果是一條鏈，肌少症在最上游"
+    summary: "1 分鐘。"
+    tags: []
+  - id: 7
+    title: "定義怎麼變，數字怎麼讀"
+    summary: "20 秒。"
+    tags: []
+  - id: 8
+    title: "三十多年的演進：從「肌肉量」走向「肌力」"
+    summary: "1.5 分鐘。重點一句：從量走向力。"
+    tags: []
+  - id: 9
+    title: "2024 到 2025：GLIS 與 AWGS 2025 的轉向"
+    summary: "1.5 分鐘。"
+    tags: []
+  - id: 10
+    title: "台灣的數字：先看定義，再看百分比"
+    summary: "1 分鐘。"
+    tags: []
+  - id: 11
+    title: "媒體常引用的數字，引用前先問「用什麼定義」"
+    summary: "1 分鐘。"
+    tags: []
+  - id: 12
+    title: "怎麼診斷"
+    summary: "20 秒。"
+    tags: []
+  - id: 13
+    title: "路徑一：社區與基層門診，先介入再確診"
+    summary: "1.5 分鐘。全場最重要的兩頁之一。"
+    tags: []
+  - id: 14
+    title: "路徑二：醫院與研究，加上肌肉量才能確診"
+    summary: "1 分鐘。"
+    tags: []
+  - id: 15
+    title: "篩檢工具：便宜、快，但要知道它漏什麼"
+    summary: "1.5 分鐘。"
+    tags: []
+  - id: 16
+    title: "篩檢的盲點：初篩陰性不等於沒有肌少症"
+    summary: "1 分鐘。"
+    tags: []
+  - id: 17
+    title: "切點跟著性別走：亞洲版與歐洲版不同"
+    summary: "1 分鐘。"
+    tags: []
+  - id: 18
+    title: "量法一致，數字才能互相比較"
+    summary: "1 分鐘。"
+    tags: []
+  - id: 19
+    title: "確診要量肌肉量：DXA 與 BIA"
+    summary: "1 分鐘。"
+    tags: []
+  - id: 20
+    title: "正在來的新工具，各在哪個階段"
+    summary: "45 秒。"
+    tags: []
+  - id: 21
+    title: "分級矩陣：少測一項，就不是完整判定"
+    summary: "1 分鐘。這兩個錯誤是工具實作時真的發生過的。"
+    tags: []
+  - id: 22
+    title: "AWGS 2025 改了什麼：三個改動"
+    summary: "1.5 分鐘。"
+    tags: []
+  - id: 23
+    title: "新切點表，與門診要不要跟著改"
+    summary: "1.5 分鐘。50 到 64 歲這群是減重門診的主力，要開始篩。"
+    tags: []
+  - id: 24
+    title: "能借力的：長者量六力與社區資源"
+    summary: "1 分鐘。"
+    tags: []
+  - id: 25
+    title: "門診怎麼做：把流程做成工具"
+    summary: "20 秒。"
+    tags: []
+  - id: 26
+    title: "肌少症篩檢紀錄工具"
+    summary: "3 分鐘。示範：選工作站，填 SARC-F 與小腿圍，初篩陽性，握力與五次起坐，出判定與 QR。用「男性、握力 26」讓"
+    tags: []
+  - id: 27
+    title: "做工具時的五個取捨，每一條都對應一個真實事故"
+    summary: "1 分鐘。"
+    tags: []
+  - id: 28
+    title: "怎麼處置"
+    summary: "20 秒。"
+    tags: []
+  - id: 29
+    title: "介入四支柱：前兩根有證據，後兩根看情境"
+    summary: "1 分鐘。"
+    tags: []
+  - id: 30
+    title: "刺激肌肉生長的四個關鍵"
+    summary: "1.5 分鐘。這頁是接下來 HMB 的鋪陳：開關、閾值、分解。"
+    tags: []
+  - id: 31
+    title: "不動的代價：住院十天掉多少肌肉"
+    summary: "1 分鐘。"
+    tags: []
+  - id: 32
+    title: "HMB 是什麼，為什麼從飲食很難吃到"
+    summary: "1.5 分鐘。"
+    tags: []
+  - id: 33
+    title: "HMB 的臨床證據：哪些族群、多大效果"
+    summary: "1.5 分鐘。"
+    tags: []
+  - id: 34
+    title: "含 HMB 的口服營養補充品：對誰用、怎麼用"
+    summary: "1 分鐘。產品只講「例子」與適應族群，不講療效字眼。"
+    tags: []
+  - id: 35
+    title: "運動處方怎麼開：FITT"
+    summary: "1.5 分鐘。"
+    tags: []
+  - id: 36
+    title: "門診三分鐘教得會：肌力動作"
+    summary: "1 分鐘。"
+    tags: []
+  - id: 37
+    title: "核心菜單與原地有氧"
+    summary: "45 秒。"
+    tags: []
+  - id: 38
+    title: "蛋白質怎麼吃：總量夠、每餐分、白胺酸要到"
+    summary: "1 分鐘。"
+    tags: []
+  - id: 39
+    title: "病人聽得懂的版本：一份是多少"
+    summary: "1 分鐘。"
+    tags: []
+  - id: 40
+    title: "其他補充品：證據到哪裡"
+    summary: "45 秒。"
+    tags: []
+  - id: 41
+    title: "藥物：目前沒有核准的肌少症藥，試驗多是「減重藥加保肌藥」"
+    summary: "1 分鐘。"
+    tags: []
+  - id: 42
+    title: "肥胖型肌少症：ESPEN／EASO 2022 怎麼定義"
+    summary: "1 分鐘。"
+    tags: []
+  - id: 43
+    title: "GLP-1 減重會掉多少肌肉"
+    summary: "1.5 分鐘。"
+    tags: []
+  - id: 44
+    title: "減重門診的保肌處方"
+    summary: "1.5 分鐘。對醫師最實用的一頁。"
+    tags: []
+  - id: 45
+    title: "衛教要能落地"
+    summary: "20 秒。"
+    tags: []
+  - id: 46
+    title: "一頁衛教，加「存肌力五連闖」"
+    summary: "1.5 分鐘。示範五連闖一題，帶出「先玩再讀」。"
+    tags: []
+  - id: 47
+    title: "存肌接接樂"
+    summary: "2 分鐘。讓大家掃碼玩，投影上自己玩一關，過關時停在知識卡念出來。"
+    tags: []
+  - id: 48
+    title: "為什麼衛教要做成遊戲"
+    summary: "1 分鐘。"
+    tags: []
+  - id: 49
+    title: "回去之後，您會先改門診的哪一件事？"
+    summary: "1.5 分鐘。沒網路就改成口頭點名兩三位。"
+    tags: ["INTERACT:wordcloud"]
+    interact:
+      type: "wordcloud"
+  - id: 50
+    title: "帶回去的三件事"
+    summary: "1 分鐘。"
+    tags: []
+  - id: 51
+    title: "謝謝，一起把病人的肌肉留住"
+    summary: "Q&amp;A 3 到 5 分鐘。"
+    tags: []
+  - id: 52
+    title: "指引與主要文獻"
+    summary: "備查，不用講。"
+    tags: []

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="robots" content="noindex" />
+<title>現場作答｜肌少症：從指引到門診</title>
+<!-- 觀眾作答頁（手機版）。簡報第 2 頁的 QR 指向本頁。設定值來自 live-config.js（與簡報端共用）。 -->
+<script src="live-config.js"></script>
+<style>
+:root{ --sec:#1f6f8b; --sec-2:#4a8ea3; --pop:#a45208; --bg:#fff; --bg-alt:#f4f6f8; --text:#1c2024; --text-2:#5c6670; --rule:rgba(31,111,139,0.22); --warn:#b0442e; }
+*{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html,body{ margin:0; padding:0; }
+body{ background:var(--bg-alt); color:var(--text); font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif; font-size:16px; line-height:1.7; padding:0 0 env(safe-area-inset-bottom); }
+.wrap{ max-width:520px; margin:0 auto; padding:18px 16px 40px; }
+header{ text-align:center; padding:10px 0 18px; border-bottom:1px solid var(--rule); margin-bottom:18px; }
+header .eyebrow{ font-size:12px; letter-spacing:.12em; color:var(--sec-2); font-weight:700; }
+header h1{ font-size:19px; line-height:1.5; margin:8px 0 6px; color:var(--sec); font-weight:700; }
+header .who{ font-size:13px; color:var(--text-2); }
+.card{ background:var(--bg); border:1px solid var(--rule); border-radius:8px; padding:18px 16px; margin-bottom:16px; }
+.card h2{ font-size:16px; margin:0 0 4px; color:var(--sec); font-weight:700; display:flex; align-items:center; gap:8px; }
+.card h2 .n{ flex:0 0 22px; height:22px; border-radius:50%; background:var(--sec); color:#fff; font-size:12px; display:flex; align-items:center; justify-content:center; font-weight:700; }
+.card .hint{ font-size:14px; color:var(--text-2); margin:0 0 14px; }
+.row{ display:flex; gap:8px; }
+#wc-input{ flex:1; min-width:0; padding:12px 14px; font-size:16px; border:1px solid var(--rule); border-radius:6px; font-family:inherit; background:var(--bg-alt); color:var(--text); outline:none; }
+#wc-input:focus{ border-color:var(--sec-2); background:#fff; }
+.btn{ padding:12px 20px; font-size:15px; font-weight:700; font-family:inherit; background:var(--sec); color:#fff; border:none; border-radius:6px; cursor:pointer; white-space:nowrap; }
+.btn:disabled{ opacity:.45; cursor:default; }
+.mine{ margin-top:12px; font-size:13px; color:var(--text-2); }
+.mine .tag{ display:inline-block; background:var(--bg-alt); border:1px solid var(--rule); border-radius:20px; padding:3px 12px; margin:4px 6px 0 0; color:var(--sec); font-weight:500; }
+.opt{ display:flex; align-items:center; gap:12px; width:100%; text-align:left; padding:14px; margin-bottom:10px; font-size:15px; font-family:inherit; background:var(--bg); color:var(--text); border:1px solid var(--rule); border-radius:6px; cursor:pointer; }
+.opt .k{ flex:0 0 26px; height:26px; border-radius:50%; border:1.5px solid var(--sec-2); color:var(--sec-2); font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+.opt.on{ border-color:var(--sec); background:rgba(31,111,139,0.06); }
+.opt.on .k{ background:var(--sec); border-color:var(--sec); color:#fff; }
+.opt.on .l{ font-weight:700; color:var(--sec); }
+.status{ font-size:13px; text-align:center; padding:10px 12px; border-radius:6px; margin-bottom:16px; line-height:1.6; }
+.status.ok{ background:rgba(129,199,132,0.18); color:#2e6b32; }
+.status.wait{ background:var(--bg-alt); color:var(--text-2); }
+.status.err{ background:rgba(176,68,46,0.10); color:var(--warn); }
+.links{ margin-top:8px; }
+.links a{ display:block; text-align:center; background:var(--sec); color:#fff; text-decoration:none; font-weight:700; padding:12px; border-radius:8px; margin-top:8px; font-size:15px; }
+.links a.alt{ background:#fff; color:var(--sec); border:1px solid var(--rule); }
+footer{ text-align:center; font-size:12px; color:var(--text-2); line-height:1.9; margin-top:24px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">屏東基督教醫院 · 醫師學術演講</div>
+    <h1>肌少症：從指引到門診</h1>
+    <div class="who">潘湘如 醫師｜家醫科</div>
+  </header>
+
+  <div class="status wait" id="status">連線中…</div>
+
+  <div class="card" id="card-poll">
+    <h2><span class="n">1</span>開場投票</h2>
+    <p class="hint" id="poll-q"></p>
+    <div id="poll-opts"></div>
+  </div>
+
+  <div class="card" id="card-wc">
+    <h2><span class="n">2</span>一句話作答（課尾）</h2>
+    <p class="hint" id="wc-q"></p>
+    <div class="row">
+      <input id="wc-input" type="text" maxlength="12" placeholder="輸入關鍵詞（12 字內）" autocomplete="off" enterkeyhint="send" />
+      <button class="btn" id="wc-btn" type="button">送出</button>
+    </div>
+    <div class="mine" id="wc-mine"></div>
+  </div>
+
+  <div class="card">
+    <h2><span class="n">3</span>順手帶走</h2>
+    <div class="links">
+      <a href="../../%E5%AD%98%E8%82%8C%E6%8E%A5%E6%8E%A5%E6%A8%82.html">玩「存肌接接樂」</a>
+      <a class="alt" href="../../education.html">衛教頁：怎麼吃、怎麼練</a>
+      <a class="alt" href="../../index.html">肌少症篩檢紀錄工具</a>
+    </div>
+  </div>
+
+  <footer>
+    答案會即時顯示在台上的投影幕。<br>
+    本頁不收集姓名、院所或任何可識別個人的資料。
+  </footer>
+</div>
+
+<script src="vendor/firebase-app-compat.js"></script>
+<script src="vendor/firebase-firestore-compat.js"></script>
+<script>
+(function () {
+  'use strict';
+  var CFG = window.TALK_LIVE;
+  var statusEl = document.getElementById('status');
+  document.getElementById('poll-q').textContent = CFG.pollQuestion;
+  document.getElementById('wc-q').textContent = CFG.wordcloudQuestion;
+
+  function setStatus(cls, html) { statusEl.className = 'status ' + cls; statusEl.innerHTML = html; }
+  function lockAll(msg) {
+    setStatus('err', msg);
+    document.getElementById('wc-input').disabled = true;
+    document.getElementById('wc-btn').disabled = true;
+    document.querySelectorAll('.opt').forEach(function (b) { b.disabled = true; });
+  }
+  function deviceId() {
+    var k = 'ptch_talk_device_id', v = null;
+    try { v = localStorage.getItem(k); } catch (e) {}
+    if (!v) {
+      v = 'd_' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4);
+      try { localStorage.setItem(k, v); } catch (e) {}
+    }
+    return v;
+  }
+  var UID = deviceId();
+
+  var KEYS = ['A', 'B', 'C', 'D'];
+  var optBox = document.getElementById('poll-opts');
+  CFG.pollOptions.forEach(function (opt, i) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'opt'; b.id = 'opt-' + opt.id;
+    b.innerHTML = '<span class="k">' + (KEYS[i] || '?') + '</span><span class="l"></span>';
+    b.querySelector('.l').textContent = opt.label;
+    optBox.appendChild(b);
+  });
+
+  if (!CFG.isConfigured()) { lockAll('互動功能尚未啟用。<br>現場請依講者指示口頭作答。'); return; }
+  var db;
+  try { firebase.initializeApp(CFG.firebaseConfig); db = firebase.firestore(); }
+  catch (e) { lockAll('連線失敗，請確認網路後重新整理。'); return; }
+  setStatus('ok', '已連線，可以作答了');
+
+  /* 文字雲 */
+  var input = document.getElementById('wc-input');
+  var btn = document.getElementById('wc-btn');
+  var mine = [];
+  try { mine = JSON.parse(localStorage.getItem('ptch_talk_wc_mine') || '[]'); } catch (e) {}
+  function renderMine() {
+    var el = document.getElementById('wc-mine');
+    if (!mine.length) { el.innerHTML = ''; return; }
+    el.innerHTML = '您送出的答案：<br>' + mine.map(function (w) {
+      var d = document.createElement('div'); d.textContent = w;
+      return '<span class="tag">' + d.innerHTML + '</span>';
+    }).join('');
+    if (mine.length >= CFG.wordcloudMaxPerDevice) {
+      input.disabled = true; btn.disabled = true;
+      el.innerHTML += '<div style="margin-top:10px;">已達每人 ' + CFG.wordcloudMaxPerDevice + ' 則上限，謝謝參與。</div>';
+    }
+  }
+  renderMine();
+  function submitWord() {
+    var word = (input.value || '').trim().replace(/\s+/g, ' ');
+    if (!word || mine.length >= CFG.wordcloudMaxPerDevice) return;
+    btn.disabled = true;
+    db.collection(CFG.wordcloudCollection).add({
+      word: word.slice(0, 12),
+      created_at: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(function () {
+      mine.push(word.slice(0, 12));
+      try { localStorage.setItem('ptch_talk_wc_mine', JSON.stringify(mine)); } catch (e) {}
+      input.value = '';
+      setStatus('ok', '已送出，答案會出現在投影幕上');
+      renderMine();
+    }).catch(function () {
+      setStatus('err', '送出失敗，請確認網路後再試一次（若講者尚未開放，請口頭作答）');
+    }).then(function () { if (mine.length < CFG.wordcloudMaxPerDevice) btn.disabled = false; });
+  }
+  btn.addEventListener('click', submitWord);
+  input.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); submitWord(); } });
+
+  /* 投票：一台裝置一份文件，可改票 */
+  var voteRef = db.collection(CFG.pollCollection).doc(UID);
+  var myVote = null;
+  function paintVote() {
+    CFG.pollOptions.forEach(function (opt) {
+      document.getElementById('opt-' + opt.id).classList.toggle('on', myVote === opt.id);
+    });
+  }
+  CFG.pollOptions.forEach(function (opt) {
+    document.getElementById('opt-' + opt.id).addEventListener('click', function () {
+      var prev = myVote; myVote = opt.id; paintVote();
+      voteRef.set({ choice: opt.id, updated_at: firebase.firestore.FieldValue.serverTimestamp() })
+        .then(function () { setStatus('ok', '已投票，可隨時更改'); })
+        .catch(function () { myVote = prev; paintVote(); setStatus('err', '投票失敗，請確認網路後再試一次'); });
+    });
+  });
+  voteRef.get().then(function (snap) {
+    if (snap.exists && snap.data().choice) { myVote = snap.data().choice; paintVote(); }
+  }).catch(function () {});
+})();
+</script>
+</body>
+</html>
