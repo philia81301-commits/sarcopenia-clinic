@@ -75,7 +75,7 @@ section{
 .opener .roman{ font-family:var(--font-head); font-size:2.6em; font-weight:900; color:var(--sec); opacity:.16; line-height:1; margin-bottom:-.28em; }
 .opener h1{ margin-top:.1em; }
 .opener .rule{ width:88px; height:3px; background:var(--sec); margin:.5em 0 .55em; }
-.opener .lead{ font-size:.56em; color:var(--text-2); line-height:1.75; max-width:82%; }
+.opener .lead{ font-size:.7em; color:var(--text-2); line-height:1.7; max-width:92%; }
 
 /* 封面／封底 */
 .title-slide .kicker{ display:inline-block; font-size:.4em; letter-spacing:.14em; color:var(--sec-2); border:1px solid var(--rule); padding:.42em 1.1em; border-radius:2px; margin-bottom:1em; background:rgba(255,255,255,.6); }
@@ -103,6 +103,7 @@ section{
 .adv-grid{ display:grid; gap:20px; margin-top:.6em; grid-template-columns:repeat(4,1fr); }
 .adv-card{ border:1px solid var(--sec-soft); border-top:4px solid var(--sec-2); border-radius:3px; padding:24px 16px; text-align:center; background:var(--sec-tint); }
 .ic{ width:60px; height:60px; display:block; margin:0 auto 12px; stroke:var(--sec); fill:none; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
+.ic-img{ width:112px; height:112px; object-fit:contain; display:block; margin:0 auto 8px; }
 .adv-card .adv-title{ font-size:.56em; font-weight:700; color:var(--sec); margin-bottom:.4em; }
 .adv-card .adv-desc{ font-size:.42em; color:var(--text-2); line-height:1.65; }
 
@@ -238,7 +239,7 @@ section{
   <div class="slide-head"><span class="sec-mark">利益揭露</span><h2>本場演講的支持與內容原則</h2></div>
   <div class="col-box mark-a">
     <div class="cb-title">支持單位</div>
-    <p>本演講由亞培（Abbott）邀請並支付講師費。內容由講者依公開發表文獻自行編寫，贊助方未審核或修改科學內容。講者與所討論產品無持股、專利或顧問等其他財務關係。</p>
+    <p>內容由講者依公開發表文獻自行編寫，亞培（Abbott）未審核或修改科學內容。講者與所討論產品無持股、專利或顧問等其他財務關係。</p>
   </div>
   <div class="col-box mark-p" style="margin-top:14px;">
     <div class="cb-title">內容原則</div>
@@ -279,7 +280,7 @@ section{
     <div class="flow-arrow">→</div>
     <div class="flow-step end"><div class="fs-title">工具</div><div class="fs-desc">篩檢紀錄工具、一頁衛教、運動圖卡、兩款遊戲，現場示範，掃 QR 直接帶走。</div></div>
   </div>
-  <div class="key-box">投影片裡的切點都附年份與出處。門診流程以 AWGS 2019 為基礎，AWGS 2025 的改動會標明「要不要跟著改」。</div>
+  <div class="key-box">門診流程以 <b>AWGS 2019</b> 為基礎；切點均附年份與出處，AWGS 2025 的改動在第 Ⅱ 部分對照。</div>
   <aside class="notes">1 分鐘。</aside>
 </section>
 
@@ -289,7 +290,7 @@ section{
   <div class="two-col">
     <div class="col-box mark-w">
       <div class="cb-title">減重減掉的不只是脂肪</div>
-      <p>GLP-1 類藥物減重，減掉的體重中約有 <span class="em-num">四分之一到四成</span>是瘦體重。</p>
+      <p>GLP-1 類藥物減重，減掉的體重中約有 <span class="em-num">四分之一到四成</span><span style="white-space:nowrap;">是瘦體重。</span></p>
       <p>50 歲以上、原本活動量少的病人，減 10 公斤可能同時減掉 3 公斤肌肉。肥胖型肌少症是門診的日常。</p>
     </div>
     <div class="col-box mark-a">
@@ -327,7 +328,7 @@ section{
     <div class="roman">Ⅰ</div>
     <h1>定義怎麼變，數字怎麼讀</h1>
     <div class="rule"></div>
-    <p class="lead">從肌肉量走向肌力，再到 2025 年把體能表現移出診斷要件。台灣的盛行率要先看定義。</p>
+    <p class="lead">從肌肉量走向肌力，再到 2025 年把體能表現移出診斷要件；<br>台灣的盛行率要先看定義。</p>
   </div>
   <aside class="notes">20 秒。</aside>
 </section>
@@ -376,7 +377,7 @@ section{
       </ul>
     </div>
   </div>
-  <div class="key-box">歐洲目前仍以 EWGSOP2（2019）為現行版本。亞洲與台灣的最新依據是 AWGS 2025，切點細節在第 Ⅱ 部分對照。</div>
+  <div class="key-box">歐洲現行仍為 EWGSOP2（2019）；亞洲與台灣的最新依據是 AWGS 2025。</div>
   <p class="cite">Kirk B, et al. Age Ageing 2024;53:afae052. Chen LK, et al. Nat Aging 2025, doi:10.1038/s43587-025-01004-y.</p>
   <aside class="notes">1.5 分鐘。</aside>
 </section>
@@ -399,13 +400,12 @@ section{
   <div class="slide-head"><span class="sec-mark">Ⅰ · 流行病學</span><h2>媒體常引用的數字，引用前先問「用什麼定義」</h2></div>
   <table class="tbl lg">
     <tr><th>常見說法</th><th>來源</th><th>怎麼解讀</th></tr>
-    <tr><td>65 歲以上 34.1%</td><td>國民營養調查 106 到 109 年，媒體轉引</td><td class="hl">定義未公開，疑為小腿圍等廣義風險判定，應稱「篩檢陽性」</td></tr>
-    <tr><td>男 23.6%、女 18.6%</td><td>國健署 2018，二手引用</td><td class="hl">原始調查與定義查不到，不宜作主要數字</td></tr>
-    <tr><td>約 7%、<span style="white-space:nowrap;">推估 30 萬人</span></td><td>Kuo 等 2019，社區 65 歲以上，AWGS 2014</td><td>可引用，但為 2014 定義</td></tr>
+    <tr><td>65 歲以上 34.1%</td><td>國民營養調查 106 到 109 年，媒體轉引</td><td class="hl">定義未公開，疑為小腿圍等廣義風險判定，<span style="white-space:nowrap;">應稱「篩檢陽性」</span></td></tr>
+    <tr><td><span style="white-space:nowrap;">男 23.6%、女 18.6%</span></td><td>國健署 2018，二手引用</td><td class="hl">原始調查與定義查不到，不宜作主要數字</td></tr>
+    <tr><td>約 7%、<span style="white-space:nowrap;">推估 30 萬人</span></td><td>Kuo 等 2019，社區 65 歲以上，<span style="white-space:nowrap;">AWGS 2014</span></td><td>可引用，但為 2014 定義</td></tr>
     <tr><td>8.5%</td><td>I-Lan 世代，AWGS 2019</td><td>目前最適合作社區確診盛行率的本土數字</td></tr>
   </table>
-  <div class="key-box">投影片上的每個百分比都要標「確診」或「篩檢陽性」，以及用哪一版定義。</div>
-  <aside class="notes">1 分鐘。</aside>
+  <aside class="notes">1 分鐘。提醒聽眾：引用百分比時標明「確診」或「篩檢陽性」與定義版本。</aside>
 </section>
 
 <!-- ===================== Ⅱ 診斷 ===================== -->
@@ -416,14 +416,14 @@ section{
     <div class="roman">Ⅱ</div>
     <h1>怎麼診斷</h1>
     <div class="rule"></div>
-    <p class="lead">AWGS 2019 兩條路徑、每一步的切點與量法、分級，以及 AWGS 2025 的改動與台灣的政策接口。</p>
+    <p class="lead">AWGS 2019 兩條路徑、切點、量法與分級；<br>AWGS 2025 的改動，以及台灣的政策接口。</p>
   </div>
   <aside class="notes">20 秒。</aside>
 </section>
 
 <!-- 13 社區路徑 -->
 <section data-sec="2">
-  <div class="slide-head"><span class="sec-mark">Ⅱ · AWGS 2019 · 現行工具的基礎</span><h2>路徑一：社區與基層門診，先介入再確診</h2></div>
+  <div class="slide-head"><span class="sec-mark">Ⅱ · AWGS 2019 · 現行工具的基礎</span><h2>路徑一：社區與基層門診，先篩檢</h2></div>
   <div class="flow">
     <div class="flow-step"><div class="fs-title">找個案</div><div class="fs-desc">小腿圍 男 &lt;34、女 &lt;33 cm<br>SARC-F ≥ 4 分<br>SARC-CalF ≥ 11 分</div></div>
     <div class="flow-arrow">→</div>
@@ -441,14 +441,14 @@ section{
   <div class="slide-head"><span class="sec-mark">Ⅱ · AWGS 2019</span><h2>路徑二：醫院與研究，加上肌肉量才能確診</h2></div>
   <div class="flow">
     <div class="flow-step"><div class="fs-title">找個案</div><div class="fs-desc">同路徑一，加臨床線索：功能下降、非刻意體重減輕、憂鬱、認知障礙、反覆跌倒、營養不良、慢性病</div></div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-step"><div class="fs-title">肌力 ＋ 體能</div><div class="fs-desc">握力<br>6 公尺步速 &lt;1.0 m/s<br>SPPB ≤ 9、五次起坐 ≥ 12 秒</div></div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-step"><div class="fs-title">肌肉量 ASMI</div><div class="fs-desc">DXA 男 &lt;7.0、女 &lt;5.4 kg/m²<br>BIA 男 &lt;7.0、女 &lt;5.7 kg/m²</div></div>
-    <div class="flow-arrow">→</div>
-    <div class="flow-step end"><div class="fs-title">肌少症／嚴重</div><div class="fs-desc">量低 ＋ 力低或能低 ＝ 肌少症<br>三者皆低 ＝ 嚴重肌少症</div></div>
+    <div class="flow-arrow fragment" data-fragment-index="1">→</div>
+    <div class="flow-step fragment" data-fragment-index="1"><div class="fs-title">肌力 ＋ 體能</div><div class="fs-desc">握力<br>6 公尺步速 &lt;1.0 m/s<br>SPPB ≤ 9、五次起坐 ≥ 12 秒</div></div>
+    <div class="flow-arrow fragment" data-fragment-index="2">→</div>
+    <div class="flow-step fragment" data-fragment-index="2"><div class="fs-title">肌肉量 ASMI</div><div class="fs-desc">DXA 男 &lt;7.0、女 &lt;5.4 kg/m²<br>BIA 男 &lt;7.0、女 &lt;5.7 kg/m²</div></div>
+    <div class="flow-arrow fragment" data-fragment-index="3">→</div>
+    <div class="flow-step end fragment" data-fragment-index="3"><div class="fs-title">肌少症／嚴重</div><div class="fs-desc">量低 ＋ 力低或能低 ＝ 肌少症<br>三者皆低 ＝ 嚴重肌少症</div></div>
   </div>
-  <div class="quote-box">轉介到醫院後走這條線。骨鬆病人排 DXA 時一併做身體組成，是最省事的接口。</div>
+  <div class="quote-box fragment" data-fragment-index="4">轉介到醫院後走這條線。骨鬆病人排 DXA 時一併做身體組成，是最省事的接口。</div>
   <aside class="notes">1 分鐘。</aside>
 </section>
 
@@ -458,8 +458,8 @@ section{
   <table class="tbl">
     <tr><th style="width:17%">工具</th><th>怎麼做</th><th style="width:19%">陽性切點</th><th style="width:30%">特性與提醒</th></tr>
     <tr><td><strong>SARC-F</strong></td><td>5 題：搬 4.5 公斤、走過房間、起身、爬 10 階、跌倒次數，各 0 到 2 分</td><td class="hl">≥ 4 分</td><td>特異度高、<strong>敏感度低</strong>，早期個案會漏</td></tr>
-    <tr><td><strong>SARC-CalF</strong></td><td>SARC-F 加小腿圍低於切點加 10 分</td><td class="hl">≥ 11 分</td><td>敏感度明顯提升，AWGS 2019 建議社區優先用</td></tr>
-    <tr><td><strong>小腿圍</strong></td><td>坐姿、膝踝 90 度、不隔褲襪、最粗處量兩次取大值</td><td class="hl">男 &lt;34、女 &lt;33 cm</td><td>肌肉量的代理指標；水腫、肥胖會高估</td></tr>
+    <tr><td><strong>SARC-CalF</strong></td><td>SARC-F 加小腿圍低於切點加 10 分</td><td class="hl">≥ 11 分</td><td>敏感度明顯提升，AWGS 2019 <span style="white-space:nowrap;">建議社區優先用</span></td></tr>
+    <tr><td><strong>小腿圍</strong></td><td>坐姿、膝踝 90 度、不隔褲襪、最粗處<span style="white-space:nowrap;">量兩次取大值</span></td><td class="hl">男 &lt;34、女 &lt;33 cm</td><td>肌肉量的代理指標；水腫、肥胖會高估</td></tr>
     <tr><td><strong>指環測試</strong></td><td>雙手拇指與食指圈住小腿最粗處</td><td class="hl">圈得住且有空隙</td><td>零工具；AWGS 2025 正式列入</td></tr>
   </table>
   <aside class="notes">1.5 分鐘。</aside>
@@ -487,7 +487,7 @@ section{
       </ul>
     </div>
   </div>
-  <div class="key-box">工具上「初篩陰性也能加測」這個選項，就是為了這群人。加測後才發現低下的個案，結果會標「以實測為準」。</div>
+  <div class="key-box">「初篩陰性也能加測」就是為了這群人；加測才發現低下者，結果標「以實測為準」。</div>
   <aside class="notes">1 分鐘。</aside>
 </section>
 
@@ -512,17 +512,17 @@ section{
   <div class="slide-head"><span class="sec-mark">Ⅱ · 第二步 肌力與體能</span><h2>量法一致，數字才能互相比較</h2></div>
   <div class="adv-grid" style="grid-template-columns:repeat(3,1fr);">
     <div class="adv-card">
-      <svg class="ic"><use href="#ic-grip"/></svg>
+      <img class="ic-img" src="images/icon_grip.png" alt="握力計">
       <div class="adv-title">握力</div>
       <div class="adv-desc">手肘伸直（Smedley 式）或屈 90 度（Jamar 式）擇一固定；雙手各至少 2 次取最大值；記錄握力計型式。</div>
     </div>
     <div class="adv-card">
-      <svg class="ic"><use href="#ic-chair"/></svg>
+      <img class="ic-img" src="images/icon_chair.png" alt="椅子起坐">
       <div class="adv-title">五次起坐</div>
-      <div class="adv-desc">雙手抱胸、不扶、連續站起坐下 5 次計時。門診沒有步行走道時，是最實用的體能指標。</div>
+      <div class="adv-desc">雙手抱胸、不扶、連續站起坐下 5 次計時。門診沒有步行走道時，是最實用的<span style="white-space:nowrap;">體能指標。</span></div>
     </div>
     <div class="adv-card">
-      <svg class="ic"><use href="#ic-tape"/></svg>
+      <img class="ic-img" src="images/icon_tape.png" alt="皮尺量小腿圍">
       <div class="adv-title">小腿圍</div>
       <div class="adv-desc">坐姿、膝踝 90 度、不隔褲襪、最粗處水平環繞、量兩次取大值、記到小數一位。</div>
     </div>
@@ -615,7 +615,7 @@ section{
       <ul>
         <li>65 歲以上握力切點<strong>沒變</strong>，現有流程照用</li>
         <li>五次起坐仍要量，用途改為追蹤</li>
-        <li><strong>50 到 64 歲</strong>的減重、糖尿病病人納入篩檢，用新切點</li>
+        <li><strong>50 到 64 歲</strong>的減重、糖尿病病人納入篩檢，<span style="white-space:nowrap;">用新切點</span></li>
         <li>結果文字不再寫「嚴重肌少症」</li>
       </ul>
     </div>
@@ -633,7 +633,7 @@ section{
       <div class="cb-title">國健署「長者量六力」（WHO ICOPE）</div>
       <ul>
         <li>65 歲以上，原住民 55 歲以上；六力：認知、行動、營養、視力、聽力、憂鬱</li>
-        <li>行動力：<strong>五次起坐 ≤ 14 秒</strong>（WHO 標準；AWGS 用 12 秒）</li>
+        <li>行動力：<strong>五次起坐 ≤ 14 秒</strong>（WHO 標準；<span style="white-space:nowrap;">AWGS 用 12 秒）</span></li>
         <li>營養：3 個月內體重減 3 公斤或食慾差</li>
         <li>異常者轉家醫科或老年醫學門診；LINE 官方帳號 @hpaicope</li>
       </ul>
@@ -711,10 +711,10 @@ section{
 <section data-sec="4">
   <div class="slide-head"><span class="sec-mark">Ⅳ · 總覽</span><h2>介入四支柱：前兩根有證據，後兩根看情境</h2></div>
   <div class="adv-grid">
-    <div class="adv-card"><svg class="ic"><use href="#ic-dumbbell"/></svg><div class="adv-title">阻力運動</div><div class="adv-desc">每週 2 到 3 次、漸進負荷。證據最強、效果最大。</div></div>
-    <div class="adv-card"><svg class="ic"><use href="#ic-plate"/></svg><div class="adv-title">蛋白質</div><div class="adv-desc">1.2 到 1.5 g/kg/day，三餐平均、每餐 25 到 30 g。</div></div>
-    <div class="adv-card"><svg class="ic"><use href="#ic-sun"/></svg><div class="adv-title">HMB、維生素 D 與口服營養品</div><div class="adv-desc">住院、臥床、攝食不足者；搭配運動與足量蛋白質才有意義。</div></div>
-    <div class="adv-card"><svg class="ic"><use href="#ic-clipboard"/></svg><div class="adv-title">追蹤與轉介</div><div class="adv-desc">3 個月回測握力與起坐；復健、營養師、跌倒防治。</div></div>
+    <div class="adv-card"><img class="ic-img" src="images/icon_dumbbell.png" alt="啞鈴"><div class="adv-title">阻力運動</div><div class="adv-desc">每週 2 到 3 次、漸進負荷。證據最強、效果最大。</div></div>
+    <div class="adv-card"><img class="ic-img" src="images/icon_plate.png" alt="蛋白質食物"><div class="adv-title">蛋白質</div><div class="adv-desc">1.2 到 1.5 g/kg/day，三餐平均、每餐 25 到 30 g。</div></div>
+    <div class="adv-card"><img class="ic-img" src="images/icon_supplement.png" alt="營養補充品"><div class="adv-title">HMB 與營養補充</div><div class="adv-desc">住院、臥床、攝食不足者；搭配運動與足量蛋白質才有意義。</div></div>
+    <div class="adv-card"><img class="ic-img" src="images/icon_followup.png" alt="追蹤"><div class="adv-title">追蹤與轉介</div><div class="adv-desc">3 個月回測握力與起坐；復健、營養師、跌倒防治。</div></div>
   </div>
   <div class="key-box">運動是主菜，蛋白質是配菜，補充品是調味。沒有主菜，其他都沒有作用。</div>
   <aside class="notes">1 分鐘。</aside>
@@ -724,13 +724,13 @@ section{
 <section data-sec="4">
   <div class="slide-head"><span class="sec-mark">Ⅳ · 肌肉為什麼會長</span><h2>刺激肌肉生長的四個關鍵</h2></div>
   <div class="adv-grid">
-    <div class="adv-card"><svg class="ic"><use href="#ic-dumbbell"/></svg><div class="adv-title">機械刺激</div><div class="adv-desc">阻力收縮啟動 mTORC1；運動後對胺基酸的敏感度持續 24 小時以上。</div></div>
-    <div class="adv-card"><svg class="ic"><use href="#ic-switch"/></svg><div class="adv-title">白胺酸閾值</div><div class="adv-desc">老年人每餐約 2.5 到 3 g 白胺酸（25 到 30 g 優質蛋白）才開得了合成開關。</div></div>
-    <div class="adv-card"><svg class="ic"><use href="#ic-clock"/></svg><div class="adv-title">總量與分配</div><div class="adv-desc">一天 1.2 到 1.5 g/kg，三餐平均；集中在晚餐，24 小時合成量少 25%。</div></div>
-    <div class="adv-card"><svg class="ic"><use href="#ic-bed"/></svg><div class="adv-title">減少不動與發炎</div><div class="adv-desc">臥床、急性疾病、慢性發炎會打開分解路徑，抵銷合成。</div></div>
+    <div class="adv-card"><img class="ic-img" src="images/icon_muscle.png" alt="肌肉與槓鈴"><div class="adv-title">機械刺激</div><div class="adv-desc">阻力收縮啟動 mTORC1；運動後對胺基酸的敏感度持續 <span style="white-space:nowrap;">24 小時以上。</span></div></div>
+    <div class="adv-card"><img class="ic-img" src="images/icon_switch.png" alt="開關與分子"><div class="adv-title">白胺酸閾值</div><div class="adv-desc">老年人每餐約 2.5 到 3 g 白胺酸（25 到 30 g 優質蛋白）才開得了合成開關。</div></div>
+    <div class="adv-card"><img class="ic-img" src="images/icon_meals.png" alt="時鐘與三餐"><div class="adv-title">總量與分配</div><div class="adv-desc">一天 1.2 到 1.5 g/kg，三餐平均；集中在晚餐，24 小時合成量少 25%。</div></div>
+    <div class="adv-card"><img class="ic-img" src="images/icon_bedrest.png" alt="臥床"><div class="adv-title">減少不動與發炎</div><div class="adv-desc">臥床、急性疾病、慢性發炎會打開分解路徑，抵銷合成。</div></div>
   </div>
   <div class="key-box"><b>合成阻抗</b>：老年人每餐飽和劑量約 0.40 g/kg（年輕人 0.24），但<b>運動後多數研究看不到年齡差異</b>。</div>
-  <p class="cite">Moore DR, et al. J Gerontol A 2015；Burd NA, et al. J Nutr 2011；Mamerow MM, et al. J Nutr 2014；Kristiansen JB, et al. Front Physiol 2026.</p>
+  <p class="cite">Moore 2015 J Gerontol A；Burd 2011 J Nutr；Mamerow 2014 J Nutr；Kristiansen 2026 Front Physiol.</p>
   <aside class="notes">1.5 分鐘。這頁是 HMB 的鋪陳：開關、閾值、分解。合成阻抗可以被運動抵銷，是給醫師的核心訊息。</aside>
 </section>
 
@@ -803,7 +803,7 @@ section{
     <div class="col-box mark-p">
       <div class="cb-title">怎麼用</div>
       <ul>
-        <li>研究劑量 HMB <strong>3 g/日</strong>，連續至少 <strong>12 週</strong>，3 個月回測握力與起坐</li>
+        <li>研究劑量 HMB <strong>3 g/日</strong>，連續至少 <strong>12 週</strong>，3 個月回測<span style="white-space:nowrap;">握力與起坐</span></li>
         <li>與每餐 25 到 30 g 蛋白質、阻力運動並行；當作餐間補充，不取代正餐</li>
         <li>處方前評估腎功能、血糖與整體熱量需求</li>
       </ul>
@@ -871,7 +871,7 @@ section{
       <tr><th>對象</th><th>每日蛋白質</th></tr>
       <tr><td>健康長者</td><td>1.0 到 1.2 g/kg</td></tr>
       <tr><td class="hl">肌少症、急慢性病、住院</td><td class="hl">1.2 到 1.5 g/kg</td></tr>
-      <tr><td>AWGS 2025</td><td>65 歲以上 1.2 到 1.6；65 歲以下 ≥ 1.6 g/kg</td></tr>
+      <tr><td>AWGS 2025</td><td>65 歲以上 1.2 到 1.6；<span style="white-space:nowrap;">65 歲以下 ≥ 1.6 g/kg</span></td></tr>
       <tr><td>嚴重疾病、傷口、<span style="white-space:nowrap;">營養不良</span></td><td>最高 2.0 g/kg</td></tr>
       <tr><td>慢性腎病未透析</td><td>個別化，與腎臟科、營養師討論</td></tr>
     </table>
@@ -914,7 +914,7 @@ section{
   <table class="tbl">
     <tr><th style="width:22%">項目</th><th>證據</th><th style="width:34%">門診建議</th></tr>
     <tr><td><strong>維生素 D</strong></td><td>單獨補充無效（2022 統合分析）；PROVIDE（乳清加白胺酸加 800 IU D，13 週）：起坐 −1.0 秒、四肢肌肉量 +0.17 kg，握力與 SPPB 無差異</td><td class="hl">不足者補到足夠，800 到 1,000 IU/日</td></tr>
-    <tr><td><strong>口服營養補充品</strong></td><td>住院營養不良者為 ESPEN A 級建議；搭配運動才看得到肌力改善</td><td>攝食不足、體重下降者</td></tr>
+    <tr><td><strong>口服營養補充品</strong></td><td>住院營養不良者為 ESPEN A 級建議；搭配運動才看得到<span style="white-space:nowrap;">肌力改善</span></td><td>攝食不足、體重下降者</td></tr>
     <tr><td><strong>肌酸</strong></td><td>與阻力運動併用：下肢肌力 SMD 0.29、瘦體重 SMD 0.27</td><td>做阻力訓練者可考慮 3 到 5 g/日</td></tr>
     <tr><td><strong>Omega-3、益生菌</strong></td><td>對肌肉蛋白合成無效；證據小而不一致</td><td>AWGS 2025 列為低證據等級</td></tr>
   </table>
@@ -946,9 +946,9 @@ section{
     <div class="flow-arrow">→</div>
     <div class="flow-step"><div class="fs-title">診斷二：身體組成</div><div class="fs-desc">DXA 四肢瘦體重／體重偏低<br>體脂率 女 ≥ 40%、男 ≥ 30%</div></div>
     <div class="flow-arrow">→</div>
-    <div class="flow-step end"><div class="fs-title">分期</div><div class="fs-desc">第一期無併發症<br>第二期有代謝、失能或心肺併發症</div></div>
+    <div class="flow-step end"><div class="fs-title">分期</div><div class="fs-desc">第一期無併發症<br>第二期有代謝、失能或<span style="white-space:nowrap;">心肺併發症</span></div></div>
   </div>
-  <div class="quote-box">肥胖病人的 BMI 與小腿圍都會「正常」，肌少症只能靠握力與身體組成抓出來。減重門診的第一次評估就該量握力。</div>
+  <div class="quote-box">肥胖病人的 BMI 與小腿圍都會「正常」，肌少症只能靠握力與身體組成抓出來。減重門診的第一次評估<span style="white-space:nowrap;">就該量握力。</span></div>
   <p class="cite">Donini LM, et al. ESPEN and EASO consensus statement. Clin Nutr 2022;41:990-1000.</p>
   <aside class="notes">1 分鐘。</aside>
 </section>
@@ -962,7 +962,7 @@ section{
     <div class="stat-card"><div class="num">−1.7<span class="unit">kg</span></div><div class="label">2026 統合分析，7 篇 RCT<br>GLP-1 組瘦體重絕對值變化</div></div>
   </div>
   <div class="two-col">
-    <div class="col-box mark-w"><div class="cb-title">只有 43% 的使用者蛋白質達 1.2 g/kg</div><p>平均攝取約 77 g/日。減重期食慾下降，蛋白質是最先掉的。</p></div>
+    <div class="col-box mark-w"><div class="cb-title">只有 43% 的使用者蛋白質達 1.2 g/kg</div><p>平均攝取約 77 g/日。減重期食慾下降，蛋白質是<span style="white-space:nowrap;">最先掉的。</span></p></div>
     <div class="col-box mark-a"><div class="cb-title">瘦體重下降不等於肌少症</div><p>要併功能判定：握力、起坐。停藥後體重回升而肌肉不回來，是肥胖型肌少症的潛在機轉。</p></div>
   </div>
   <p class="cite">STEP 1 DXA substudy；SURMOUNT-1；Int J Obes 2026 meta-analysis, doi:10.1038/s41366-026-02118-y；J Nutr Health Aging 2025.</p>
@@ -1019,7 +1019,7 @@ section{
     <iframe class="demo-frame" style="height:500px;" data-src="../../education.html" title="肌少症衛教頁"></iframe>
     <div class="qr-side">
       <img src="images/qr-education.png" alt="衛教頁 QR">
-      <div class="qr-cap">篩檢陽性時工具自動出這個 QR</div>
+      <div class="qr-cap">篩檢陽性時<br>工具自動出這個 QR</div>
       <div class="qr-sub">不含任何個人資料<br>列印為雙面兩頁<br>頁面順序「遊戲先」：五題四選一，答對才出下一題，答錯不扣分</div>
     </div>
   </div>
@@ -1053,7 +1053,7 @@ section{
     </div>
     <div>
       <div class="col-box mark-b"><div class="cb-title">給長輩用的細節</div><p>主角用手繪不用 emoji（舊手機缺字會空白）；觸控拖曳；配色固定亮色；字級不縮。</p></div>
-      <div class="col-box mark-b" style="margin-top:12px;"><div class="cb-title">帶走三句話</div><p>蛋白質三餐平均分配；要出力，散步不夠；半年瘦 3 公斤要就醫。</p></div>
+      <div class="col-box mark-b" style="margin-top:12px;"><div class="cb-title">帶走三句話</div><p>蛋白質三餐平均分配；要出力，散步不夠；半年瘦 3 公斤<span style="white-space:nowrap;">要就醫。</span></p></div>
     </div>
   </div>
   <div class="key-box">另有 Wordwall 10 題測驗，可分享、可現場競賽排行榜。工具、衛教、遊戲都以 CC BY-NC-ND 4.0 公開，可直接拿去用。</div>
@@ -1086,7 +1086,7 @@ section{
   <div class="slide-head"><span class="sec-mark">結論</span><h2>帶回去的三件事</h2></div>
   <div class="adv-grid" style="grid-template-columns:repeat(3,1fr);">
     <div class="adv-card" style="text-align:left;"><div class="adv-title"><span class="em-num">1</span>　篩：三分鐘</div><div class="adv-desc" style="color:var(--text);">SARC-F 加小腿圍（SARC-CalF ≥ 11）。半年瘦 3 公斤、跌倒、走路變慢、減重治療中，直接量握力。</div></div>
-    <div class="adv-card" style="text-align:left;"><div class="adv-title"><span class="em-num">2</span>　判：切點跟著性別與年齡</div><div class="adv-desc" style="color:var(--text);">65 歲以上握力男 &lt;28、女 &lt;18 kg；50 到 64 歲男 &lt;34、女 &lt;20 kg。Possible sarcopenia 就開始介入，確診再排 DXA 或 BIA。</div></div>
+    <div class="adv-card" style="text-align:left;"><div class="adv-title"><span class="em-num">2</span>　判：切點跟著性別與年齡</div><div class="adv-desc" style="color:var(--text);">65 歲以上握力男 &lt;28、女 &lt;18 kg；50 到 64 歲男 &lt;34、女 &lt;20 kg。Possible sarcopenia 就開始介入，確診再排 <span style="white-space:nowrap;">DXA 或 BIA。</span></div></div>
     <div class="adv-card" style="text-align:left;"><div class="adv-title"><span class="em-num">3</span>　處：主菜是運動</div><div class="adv-desc" style="color:var(--text);">阻力運動每週 2 到 3 次；蛋白質 1.2 到 1.5 g/kg 三餐平均；住院、臥床、吃不夠者加 HMB 口服營養品；3 個月回測。</div></div>
   </div>
   <div class="key-box">篩檢工具、衛教頁、運動圖卡、遊戲都是公開網址，掃下一頁的 QR 明天就能用。</div>
