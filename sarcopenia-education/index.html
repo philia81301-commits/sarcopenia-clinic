@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>肌少症：看得見的老化，看得見的逆轉</title>
+  <link rel="stylesheet" href="vendor/reveal/dist/reset.css" />
+  <link rel="stylesheet" href="vendor/reveal/dist/reveal.css" />
+  <link rel="stylesheet" href="vendor/reveal/dist/theme/night.css" />
+  <style>
+    :root {
+      --accent:  #e8643a;
+      --accent2: #4fc3f7;
+      --success: #81c784;
+      --warn:    #ffb74d;
+      --r-background-color: #181c2c;
+    }
+
+    /* 非底圖頁用深藏青取代預設全黑，較不沉重 */
+    .reveal .slide-background {
+      background: linear-gradient(160deg, #1a1e30 0%, #14172400 100%), #181c2c !important;
+    }
+
+    .reveal { font-family: 'Segoe UI', 'Noto Sans TC', sans-serif; }
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: 'Segoe UI', 'Noto Sans TC', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .reveal h1 { font-size: 2.2em; }
+    .reveal h2 { font-size: 1.6em; color: var(--accent2); }
+    .reveal .progress { color: var(--accent); }
+    .reveal .fragment { opacity: 0.2; }
+    .reveal .fragment.visible { opacity: 1; }
+    .reveal section > p.lead { font-size: 0.78em; color: #ccc; margin-top: 0.3em; }
+    .reveal section > p.quote {
+      font-size: 0.62em; color: #ddd; font-style: italic;
+      border-left: 3px solid var(--accent); padding-left: 14px; margin-top: 1em;
+    }
+
+    /* 封面 */
+    .title-slide { text-align: center; }
+    .title-slide .tag {
+      display: inline-block; background: var(--accent); color: #fff;
+      padding: 5px 16px; border-radius: 20px; font-size: 0.62em;
+      letter-spacing: 0.08em; margin-bottom: 0.8em; font-weight: 600;
+    }
+    .title-slide .subtitle { font-size: 0.8em; color: #bbb; margin-top: 0.5em; }
+    .title-slide .author   { margin-top: 2em; font-size: 0.58em; color: #999; }
+
+    /* 統計數字卡 */
+    .stat-row { display: flex; gap: 16px; justify-content: center; margin-top: 1em; flex-wrap: wrap; }
+    .stat-card {
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px; padding: 18px 20px; text-align: center; flex: 1; min-width: 150px;
+    }
+    .stat-card .num   { font-size: 1.6em; font-weight: 800; color: var(--accent); line-height: 1; }
+    .stat-card .label { font-size: 0.56em; color: #ddd; margin-top: 8px; }
+
+    /* 優勢卡（並列特點，含圖標） */
+    .adv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 1.2em; }
+    .adv-card {
+      background: rgba(255,255,255,0.05); border-top: 4px solid var(--accent2);
+      border-radius: 10px; padding: 36px 20px; text-align: center;
+    }
+    .adv-card .adv-icon { margin-bottom: 16px; }
+    .adv-card .adv-icon img {
+      width: 96px; height: 96px; object-fit: contain; display: block; margin: 0 auto;
+      filter: drop-shadow(0 0 10px rgba(79,195,247,0.6));
+    }
+    .adv-card .adv-title { font-size: 0.85em; font-weight: 700; color: var(--accent2); margin-bottom: 12px; }
+    .adv-card .adv-desc  { font-size: 0.66em; color: #ddd; line-height: 1.6; }
+
+    /* 條列清單（無圖標版） */
+    .plain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 1.2em; }
+    .plain-card {
+      background: rgba(255,255,255,0.05); border-radius: 10px; padding: 34px 26px; text-align: left;
+    }
+    .plain-card .pc-title { font-size: 0.85em; font-weight: 700; color: var(--accent2); margin-bottom: 12px; }
+    .plain-card .pc-desc  { font-size: 0.64em; color: #ddd; line-height: 1.6; }
+
+    /* 時間軸（連鎖警示） */
+    .timeline-h { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 1.8em; flex-wrap: wrap; row-gap: 18px; }
+    .timeline-h .th-pair { display: flex; align-items: center; gap: 14px; }
+    .timeline-h .th-item {
+      background: rgba(255,183,77,0.1); border: 1px solid rgba(255,183,77,0.35);
+      border-radius: 12px; padding: 26px 22px; font-size: 0.74em; font-weight: 600; color: #fff; text-align: center; min-width: 150px;
+    }
+    .timeline-h .th-arrow { font-size: 1.5em; color: var(--warn); }
+    .timeline-h .th-final {
+      background: rgba(232,100,58,0.18); border: 1px solid rgba(232,100,58,0.55);
+      color: #fff; font-size: 1em; font-weight: 800; padding: 34px 30px;
+      box-shadow: 0 0 22px rgba(232,100,58,0.35);
+    }
+
+    /* 投票（靜態展示，無即時計票） */
+    .poll-box { margin-top: 1.4em; }
+    .poll-note { font-size: 0.5em; color: #999; margin-bottom: 0.8em; }
+    .poll-opt {
+      display: flex; align-items: center; gap: 20px; background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.15); border-radius: 12px;
+      padding: 26px 32px; margin-bottom: 18px; text-align: left; cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .poll-opt:hover, .poll-opt.picked { background: rgba(79,195,247,0.15); border-color: var(--accent2); }
+    .poll-opt .opt-letter {
+      flex-shrink: 0; width: 50px; height: 50px; border-radius: 50%;
+      background: var(--accent2); color: #06222e; font-weight: 800;
+      display: flex; align-items: center; justify-content: center; font-size: 0.75em;
+    }
+    .poll-opt .opt-text { font-size: 0.82em; color: #fff; font-weight: 600; }
+    .poll-opt .opt-desc { font-size: 0.58em; color: #aaa; margin-top: 5px; }
+
+    /* VIZ 滑桿：未介入 vs 規律介入後 */
+    .viz-wrap { position: relative; height: 480px; border-radius: 14px; overflow: hidden;
+      background: #12121f; margin-top: 0.6em; }
+    .viz-panel { position: absolute; inset: 0; padding: 46px 34px 20px; text-align: left; }
+    .viz-panel .vp-label { font-size: 0.6em; font-weight: 800; letter-spacing: 0.04em; margin-bottom: 12px; }
+    .viz-panel ul { list-style: none; padding: 0; margin: 0; }
+    .viz-panel ul li {
+      font-size: 0.56em; padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex; align-items: center; gap: 12px;
+    }
+    .viz-panel ul li .viz-icon-wrap {
+      width: 50px; height: 50px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .viz-panel ul li img {
+      width: 32px; height: 32px; object-fit: contain;
+      filter: drop-shadow(0 0 4px rgba(79,195,247,0.6));
+    }
+    #viz-before { background: linear-gradient(135deg, #241a12, #1a1a2e); }
+    #viz-before .vp-label { color: var(--warn); }
+    #viz-before ul li { color: #eee; }
+    #viz-before ul li .viz-icon-wrap { background: rgba(255,183,77,0.22); box-shadow: 0 0 0 1px rgba(255,183,77,0.4) inset; }
+    #viz-after {
+      background: linear-gradient(135deg, #0c2b28, #1a1a2e);
+      clip-path: inset(0 100% 0 0);
+    }
+    #viz-after .vp-label { color: var(--success); }
+    #viz-after ul li { color: #eee; }
+    #viz-after ul li .viz-icon-wrap { background: rgba(129,199,132,0.22); box-shadow: 0 0 0 1px rgba(129,199,132,0.4) inset; }
+    #viz-divider {
+      position: absolute; top: 0; left: 0; width: 3px; height: 100%;
+      background: linear-gradient(to bottom, transparent, var(--accent2), transparent);
+      box-shadow: 0 0 12px var(--accent2); pointer-events: none;
+    }
+    .viz-tag { position: absolute; top: 14px; font-size: 0.48em; font-weight: 700;
+      padding: 5px 12px; border-radius: 6px; letter-spacing: 0.05em; z-index: 3; }
+    .viz-tag.left  { left: 20px; background: rgba(255,183,77,0.2); color: var(--warn); }
+    .viz-tag.right { right: 20px; background: rgba(129,199,132,0.2); color: var(--success); }
+    #viz-slider { width: 90%; margin: 18px auto 0; display: block; }
+
+    /* 防跌小卡 */
+    .tip-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 1.4em; }
+    .tip-card {
+      background: rgba(255,255,255,0.05); border-radius: 10px; padding: 30px 20px; text-align: center;
+    }
+    .tip-card img { width: 64px; height: 64px; object-fit: contain; margin-bottom: 14px;
+      filter: drop-shadow(0 0 8px rgba(79,195,247,0.5)); }
+    .tip-card .tip-emoji { font-size: 2.4em; margin-bottom: 10px; line-height: 1; }
+    .tip-card .tip-text { font-size: 0.62em; color: #eee; line-height: 1.6; }
+
+    /* 運動處方卡 */
+    .ex-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-top: 1.4em; }
+    .ex-card { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 22px 12px; text-align: center; }
+    .ex-card img { width: 76px; height: 76px; object-fit: contain; margin-bottom: 12px;
+      filter: drop-shadow(0 0 10px rgba(79,195,247,0.6)); }
+    .ex-card .ex-name { font-size: 0.56em; font-weight: 700; color: var(--accent2); margin-bottom: 6px; }
+    .ex-card .ex-reps { font-size: 0.5em; color: #ccc; }
+
+    /* 切點速記：四格卡（含男女雙值） */
+    .cutoff-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 1.2em; }
+    .cutoff-card {
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 14px; padding: 28px 16px; text-align: center;
+    }
+    .cutoff-emoji { font-size: 1.8em; margin-bottom: 10px; line-height: 1; }
+    .cutoff-label { font-size: 0.56em; color: #ccc; font-weight: 600; margin-bottom: 16px; }
+    .cutoff-pair { display: flex; gap: 8px; justify-content: center; margin-bottom: 10px; }
+    .cutoff-chip { background: rgba(255,255,255,0.07); border-radius: 10px; padding: 10px 10px; flex: 1; }
+    .cutoff-chip .cc-sex { display: block; font-size: 0.42em; color: #999; margin-bottom: 4px; }
+    .cutoff-chip .cc-val { display: block; font-size: 0.85em; font-weight: 800; color: var(--accent); }
+    .cutoff-single { font-size: 1.5em; font-weight: 800; color: var(--accent); margin: 10px 0; }
+    .cutoff-unit { font-size: 0.46em; color: #999; margin-top: 6px; }
+
+    /* 飲食：目標值＋食物換算卡 */
+    .target-callout {
+      background: rgba(232,100,58,0.12); border: 1px solid rgba(232,100,58,0.35);
+      border-radius: 14px; padding: 24px 30px; margin-top: 1.2em; text-align: left;
+    }
+    .target-callout .tc-emoji { font-size: 1.5em; margin-right: 14px; vertical-align: middle; }
+    .target-callout .tc-num { font-size: 1.3em; font-weight: 800; color: var(--accent); vertical-align: middle; }
+    .target-callout .tc-num .tc-unit { font-size: 0.38em; font-weight: 600; color: #eee; margin-left: 14px; }
+    .target-callout .tc-sub { font-size: 0.58em; color: #eee; margin-top: 10px; }
+    .target-callout .tc-sub b { color: var(--accent2); }
+
+    .food-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 1.2em; }
+    .food-chip { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 22px 14px; text-align: center; }
+    .food-chip .fc-emoji { font-size: 1.8em; margin-bottom: 8px; line-height: 1; }
+    .food-chip .fc-name { font-size: 0.52em; color: #eee; margin-bottom: 12px; }
+    .food-chip .fc-val { font-size: 0.85em; font-weight: 800; color: var(--accent2); }
+    .food-chip .fc-val span { font-size: 0.48em; margin-left: 2px; color: #aaa; font-weight: 600; }
+
+    /* 科技賦能 三步驟 */
+    .step-row { display: flex; align-items: center; gap: 10px; margin-top: 1em; justify-content: center; flex-wrap: wrap; }
+    .step-card { background: rgba(255,255,255,0.06); border-radius: 10px; padding: 14px 16px; font-size: 0.54em; color: #eee; min-width: 160px; text-align: center; }
+    .step-arrow { font-size: 1em; color: var(--accent2); }
+    .qr-box { margin-top: 1em; display: flex; align-items: center; justify-content: center; gap: 20px; }
+    .qr-box img { width: 110px; height: 110px; background: #fff; padding: 6px; border-radius: 8px; }
+    .qr-box .qr-text { font-size: 0.52em; color: #ddd; text-align: left; }
+    .n-note { font-size: 0.44em; color: var(--warn); margin-top: 0.8em; }
+
+    /* 封底 */
+    .end-slide { text-align: center; }
+    .end-slide .checklist { list-style: none; padding: 0; margin: 1em auto; max-width: 620px; text-align: left; }
+    .end-slide .checklist li { font-size: 0.62em; color: #fff; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .end-slide .checklist li b { color: var(--accent2); }
+    .end-slide .tagline { font-size: 0.66em; color: #bbb; margin-top: 1.2em; }
+    .end-slide .end-link { font-size: 0.5em; color: var(--accent2); margin-top: 0.8em; }
+  </style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- 1. 封面 [BG] -->
+    <section data-background-image="images/cover.png" data-background-opacity="0.35" data-background-size="cover">
+      <div class="title-slide">
+        <div class="tag">肌少症衛教｜高雄榮總家庭醫學部</div>
+        <h1>肌少症</h1>
+        <h2 style="color:var(--accent); margin-top:0.2em;">看得見的老化，看得見的逆轉</h2>
+        <p class="author">潘湘如醫師｜家庭醫學部　高雄榮民總醫院</p>
+      </div>
+    </section>
+
+    <!-- 2. 開場提問 [INTERACT:poll 靜態] -->
+    <section>
+      <h2>開場提問</h2>
+      <p class="lead">舉手投票：肌少症是……？</p>
+      <div class="poll-box">
+        <div class="poll-note">現場舉手／口頭統計即可，不需要工具</div>
+        <div class="poll-opt" onclick="this.classList.toggle('picked')">
+          <div class="opt-letter">A</div>
+          <div>
+            <div class="opt-text">老化必然</div>
+            <div class="opt-desc">年紀到了就這樣，沒辦法</div>
+          </div>
+        </div>
+        <div class="poll-opt" onclick="this.classList.toggle('picked')">
+          <div class="opt-letter">B</div>
+          <div>
+            <div class="opt-text">可以逆轉</div>
+            <div class="opt-desc">吃對＋練對，肌力回得來</div>
+          </div>
+        </div>
+      </div>
+      <p class="quote">答案在接下來幾頁揭曉。</p>
+    </section>
+
+    <!-- 3. 你我門診都看過 -->
+    <section>
+      <h2>你我門診都看過</h2>
+      <p class="lead">站不太起來、爬樓梯要扶</p>
+      <div class="plain-grid">
+        <div class="plain-card">
+          <div class="pc-title">起立困難</div>
+          <div class="pc-desc">從椅子站起來<br>要撐扶手</div>
+        </div>
+        <div class="plain-card">
+          <div class="pc-title">爬樓梯喘</div>
+          <div class="pc-desc">10 階樓梯<br>要中途休息</div>
+        </div>
+        <div class="plain-card">
+          <div class="pc-title">走路變慢</div>
+          <div class="pc-desc">過馬路<br>綠燈常常來不及</div>
+        </div>
+      </div>
+      <p class="quote">這些不是「老了本來就這樣」——是肌肉正在流失，而且可以介入。</p>
+    </section>
+
+    <!-- 4. 定義 [ICON] -->
+    <section>
+      <h2>定義：肌少症＝三件事同時變差</h2>
+      <div class="adv-grid">
+        <div class="adv-card fragment">
+          <div class="adv-icon"><img src="images/icon_def_mass.png" alt="肌肉量"></div>
+          <div class="adv-title">肌肉量</div>
+          <div class="adv-desc">小腿圍、<br>DXA／BIA 偏低</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-icon"><img src="images/icon_def_strength.png" alt="肌力"></div>
+          <div class="adv-title">肌力</div>
+          <div class="adv-desc">握力下降，<br>提物、開罐困難</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-icon"><img src="images/icon_def_performance.png" alt="體能表現"></div>
+          <div class="adv-title">體能表現</div>
+          <div class="adv-desc">步速變慢，<br>起坐、爬梯吃力</div>
+        </div>
+      </div>
+      <p class="quote">三項中肌肉量＋（肌力或體能）任一項不足，就達到「肌少症可能」的門檻。</p>
+    </section>
+
+    <!-- 5. 為什麼要在意 [BG 高衝擊警示] -->
+    <section data-background-image="images/warning.png" data-background-opacity="0.28" data-background-size="cover">
+      <h2>為什麼要在意</h2>
+      <p class="lead">放著不管，會往這裡走</p>
+      <div class="timeline-h">
+        <div class="th-pair fragment"><div class="th-item">肌力下降</div><div class="th-arrow">→</div></div>
+        <div class="th-pair fragment"><div class="th-item">跌倒風險上升</div><div class="th-arrow">→</div></div>
+        <div class="th-pair fragment"><div class="th-item">髖部骨折</div><div class="th-arrow">→</div></div>
+        <div class="th-pair fragment"><div class="th-item th-final">長期失能</div></div>
+      </div>
+      <p class="quote">篩檢不是為了貼標籤，是為了在跌倒與骨折之前，先把介入做進去。</p>
+    </section>
+
+    <!-- 6. 怎麼篩：門診三步驟 [ICON] -->
+    <section>
+      <h2>怎麼篩：門診三步驟</h2>
+      <div class="adv-grid">
+        <div class="adv-card fragment">
+          <div class="adv-icon"><img src="images/icon_scr_quest.png" alt="SARC-F"></div>
+          <div class="adv-title">① SARC-F 問卷</div>
+          <div class="adv-desc">5 題自填：肌力／行走／起身／爬梯／跌倒</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-icon"><img src="images/icon_scr_calf.png" alt="小腿圍"></div>
+          <div class="adv-title">② 小腿圍</div>
+          <div class="adv-desc">SARC-CalF：加量小腿圍後合併計分</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-icon"><img src="images/icon_scr_awgs.png" alt="AWGS 2019"></div>
+          <div class="adv-title">③ AWGS 2019</div>
+          <div class="adv-desc">握力＋五次起坐，判定肌少症等級</div>
+        </div>
+      </div>
+      <p class="quote">陽性判定：SARC-F ≥ 4 分，或 SARC-CalF ≥ 11 分 → 進入 AWGS 2019 判定。</p>
+    </section>
+
+    <!-- 7. 切點速記 -->
+    <section>
+      <h2>切點速記</h2>
+      <p class="lead">AWGS 2019　數字對照</p>
+      <div class="cutoff-grid">
+        <div class="cutoff-card fragment">
+          <div class="cutoff-emoji">📏</div>
+          <div class="cutoff-label">小腿圍</div>
+          <div class="cutoff-pair">
+            <div class="cutoff-chip"><span class="cc-sex">男</span><span class="cc-val">&lt;34</span></div>
+            <div class="cutoff-chip"><span class="cc-sex">女</span><span class="cc-val">&lt;33</span></div>
+          </div>
+          <div class="cutoff-unit">公分</div>
+        </div>
+        <div class="cutoff-card fragment">
+          <div class="cutoff-emoji">💪</div>
+          <div class="cutoff-label">握力</div>
+          <div class="cutoff-pair">
+            <div class="cutoff-chip"><span class="cc-sex">男</span><span class="cc-val">&lt;28</span></div>
+            <div class="cutoff-chip"><span class="cc-sex">女</span><span class="cc-val">&lt;18</span></div>
+          </div>
+          <div class="cutoff-unit">公斤</div>
+        </div>
+        <div class="cutoff-card fragment">
+          <div class="cutoff-emoji">🪑</div>
+          <div class="cutoff-label">五次起坐</div>
+          <div class="cutoff-single">≥ 12</div>
+          <div class="cutoff-unit">秒</div>
+        </div>
+        <div class="cutoff-card fragment">
+          <div class="cutoff-emoji">📋</div>
+          <div class="cutoff-label">SARC-F</div>
+          <div class="cutoff-single">≥ 4</div>
+          <div class="cutoff-unit">分</div>
+        </div>
+      </div>
+      <p class="quote">低於切點越多項，越需要優先介入與轉介評估（DXA／BIA 確診）。</p>
+    </section>
+
+    <!-- 8. 逆轉關鍵①飲食 -->
+    <section>
+      <h2>逆轉關鍵① 飲食</h2>
+      <p class="lead">蛋白質要「夠」，還要「分散」</p>
+      <div class="target-callout fragment">
+        <span class="tc-emoji">🎯</span>
+        <span class="tc-num">1.2–1.5<span class="tc-unit">公克／公斤體重／天</span></span>
+        <div class="tc-sub">60 公斤長輩 → 每天約 <b>72–90 克</b>，三餐平均分配</div>
+      </div>
+      <div class="food-grid">
+        <div class="food-chip fragment"><div class="fc-emoji">🥚</div><div class="fc-name">雞蛋 1顆</div><div class="fc-val">7.0<span>g</span></div></div>
+        <div class="food-chip fragment"><div class="fc-emoji">🥛</div><div class="fc-name">牛奶 240cc</div><div class="fc-val">8.0<span>g</span></div></div>
+        <div class="food-chip fragment"><div class="fc-emoji">⬜</div><div class="fc-name">嫩豆腐 半盒</div><div class="fc-val">7.0<span>g</span></div></div>
+        <div class="food-chip fragment"><div class="fc-emoji">🍖</div><div class="fc-name">魚或肉 1掌心</div><div class="fc-val">21.0<span>g</span></div></div>
+      </div>
+      <p class="quote">每餐吃到 2–3 份蛋白質；牙口不好就換型態：豆腐、蒸蛋、絞肉。</p>
+    </section>
+
+    <!-- 9. 逆轉關鍵②運動 [ICON] -->
+    <section>
+      <h2>逆轉關鍵② 運動</h2>
+      <p class="lead">散步不夠，要「出力」</p>
+      <p class="lead" style="margin-top:2px;">目標：每週 2–3 次，每次約 20 分鐘阻力運動</p>
+      <div class="ex-grid">
+        <div class="ex-card fragment">
+          <img src="images/icon_ex_squat.png" alt="扶椅深蹲">
+          <div class="ex-name">扶椅深蹲</div>
+          <div class="ex-reps">10下×3組</div>
+        </div>
+        <div class="ex-card fragment">
+          <img src="images/icon_ex_legraise.png" alt="坐姿抬腿">
+          <div class="ex-name">坐姿抬腿</div>
+          <div class="ex-reps">左右10下×3組</div>
+        </div>
+        <div class="ex-card fragment">
+          <img src="images/icon_ex_standsit.png" alt="站起坐下">
+          <div class="ex-name">站起坐下</div>
+          <div class="ex-reps">10下×3組</div>
+        </div>
+        <div class="ex-card fragment">
+          <img src="images/icon_ex_band.png" alt="彈力帶拉手">
+          <div class="ex-name">彈力帶拉手</div>
+          <div class="ex-reps">10下×3組</div>
+        </div>
+        <div class="ex-card fragment">
+          <img src="images/icon_ex_toe.png" alt="踮腳尖">
+          <div class="ex-name">踮腳尖</div>
+          <div class="ex-reps">15下×2組</div>
+        </div>
+      </div>
+      <p class="quote">喘到說不出話、胸悶、頭暈就停下來。心臟病、剛開刀、關節嚴重疼痛者請先問過醫師。</p>
+    </section>
+
+    <!-- 10. VIZ：看得見的逆轉（新增） -->
+    <section>
+      <h2>看得見的逆轉</h2>
+      <p class="lead">拖動滑桿，比較規律介入前後的日常功能</p>
+      <div class="viz-wrap">
+        <div class="viz-tag left">未介入</div>
+        <div class="viz-tag right">規律介入 3–6 個月後</div>
+        <div id="viz-before" class="viz-panel">
+          <div class="vp-label">肌少症未介入</div>
+          <ul>
+            <li><span class="viz-icon-wrap"><img src="images/icon_viz_stand.png" alt=""></span>起立要撐扶手</li>
+            <li><span class="viz-icon-wrap"><img src="images/icon_viz_stairs.png" alt=""></span>爬10階樓梯要中途休息</li>
+            <li><span class="viz-icon-wrap"><img src="images/icon_viz_carry.png" alt=""></span>拿重物、開罐吃力</li>
+            <li><span class="viz-icon-wrap"><img src="images/icon_viz_balance.png" alt=""></span>跌倒風險偏高</li>
+          </ul>
+        </div>
+        <div id="viz-after" class="viz-panel">
+          <div class="vp-label">吃夠蛋白質＋規律阻力運動</div>
+          <ul>
+            <li><span class="viz-icon-wrap"><img src="images/icon_viz_stand.png" alt=""></span>起立不需扶手</li>
+            <li><span class="viz-icon-wrap"><img src="images/icon_viz_stairs.png" alt=""></span>爬樓梯不中斷</li>
+            <li><span class="viz-icon-wrap"><img src="images/icon_viz_carry.png" alt=""></span>提物、開罐穩定有力</li>
+            <li><span class="viz-icon-wrap"><img src="images/icon_viz_balance.png" alt=""></span>跌倒風險下降</li>
+          </ul>
+        </div>
+        <div id="viz-divider"></div>
+      </div>
+      <input id="viz-slider" type="range" min="0" max="100" value="0">
+      <p class="quote">改變幅度因人而異，關鍵是「早篩檢＋持續做」，不是等奇蹟。</p>
+    </section>
+
+    <!-- 11. 順便防跌 -->
+    <section>
+      <h2>順便防跌</h2>
+      <p class="lead">把跌倒風險也降下來</p>
+      <div class="tip-grid">
+        <div class="tip-card"><div class="tip-emoji">🛁</div><div class="tip-text"><b>浴室、床邊裝扶手</b><br>不要摸黑走動</div></div>
+        <div class="tip-card"><div class="tip-emoji">💡</div><div class="tip-text"><b>夜裡先開小夜燈</b><br>地上不放電線與雜物</div></div>
+        <div class="tip-card"><div class="tip-emoji">👟</div><div class="tip-text"><b>穿包鞋、防滑鞋</b><br>不要穿拖鞋走動</div></div>
+        <div class="tip-card"><div class="tip-emoji">💊</div><div class="tip-text"><b>藥物會頭暈想睡</b><br>回診主動跟醫師講</div></div>
+        <div class="tip-card"><div class="tip-emoji">👁️</div><div class="tip-text"><b>每年檢查一次視力</b><br>看不清是跌倒大原因</div></div>
+      </div>
+    </section>
+
+    <!-- 12. 科技賦能 -->
+    <section>
+      <h2>科技賦能</h2>
+      <p class="lead">家醫部的隨身篩檢工具｜單頁 PWA，離線可用，門診、社區通用</p>
+      <div class="step-row">
+        <div class="step-card">① 基本資料</div>
+        <div class="step-arrow">→</div>
+        <div class="step-card">② SARC-F ＋ 小腿圍<br><span style="opacity:.7">當場計算、當場判定</span></div>
+        <div class="step-arrow">→</div>
+        <div class="step-card">③ AWGS 2019 判定<br><span style="opacity:.7">陽性掃碼看衛教（不含個資）</span></div>
+      </div>
+      <div class="qr-box">
+        <img src="images/qr_tool.png" alt="篩檢工具 QR Code">
+        <div class="qr-text">陽性個案掃碼即看衛教內容<br>飲食運動內容直接帶回家<br>當日統計即時可看</div>
+      </div>
+      <p class="n-note">n &lt; 10 不顯示百分比</p>
+    </section>
+
+    <!-- 13. 互動總結 [INTERACT:poll 靜態] -->
+    <section>
+      <h2>互動總結</h2>
+      <p class="lead">今天，你願意帶走哪一件事？</p>
+      <div class="poll-box">
+        <div class="poll-note">現場舉手／口頭統計即可，不需要工具</div>
+        <div class="poll-opt" onclick="this.classList.toggle('picked')">
+          <div class="opt-letter">A</div>
+          <div class="opt-text">🥚 每餐加一份蛋白質</div>
+        </div>
+        <div class="poll-opt" onclick="this.classList.toggle('picked')">
+          <div class="opt-letter">B</div>
+          <div class="opt-text">🏋️ 這週開始阻力運動</div>
+        </div>
+        <div class="poll-opt" onclick="this.classList.toggle('picked')">
+          <div class="opt-letter">C</div>
+          <div class="opt-text">🤝 揪家中長輩來篩檢</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14. 結語 [BG] -->
+    <section data-background-image="images/ending.png" data-background-opacity="0.4" data-background-size="cover">
+      <div class="end-slide">
+        <h1 style="color:var(--accent2);">三件事，帶回家</h1>
+        <ul class="checklist">
+          <li><b>早篩檢</b>　SARC-F＋小腿圍，門診五分鐘完成</li>
+          <li><b>吃夠蛋白質</b>　每公斤 1.2–1.5 克，三餐分散</li>
+          <li><b>規律阻力運動</b>　每週 2–3 次，散步不夠力</li>
+        </ul>
+        <p class="tagline">謝謝聆聽　歡迎提問</p>
+        <p class="end-link">篩檢工具｜philia81301-commits.github.io/sarcopenia-clinic</p>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="vendor/reveal/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    transition: 'slide',
+    transitionSpeed: 'default',
+    backgroundTransition: 'fade',
+    center: true,
+    progress: true,
+    controls: true,
+    slideNumber: 'c/t',
+    plugins: []
+  });
+
+  document.getElementById('viz-slider').addEventListener('input', function () {
+    const v = +this.value;
+    document.getElementById('viz-after').style.clipPath = `inset(0 ${100 - v}% 0 0)`;
+    document.getElementById('viz-divider').style.left = v + '%';
+  });
+</script>
+</body>
+</html>
